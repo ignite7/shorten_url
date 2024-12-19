@@ -1,0 +1,103 @@
+<?php
+
+namespace App\Models;
+
+// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Traits\SelfCastingModel;
+use Database\Factories\UserFactory;
+use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Concerns\HasUlids;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Hash;
+use Laravel\Sanctum\HasApiTokens;
+
+/**
+ * @property string $id
+ * @property string $role
+ * @property string $first_name
+ * @property string $last_name
+ * @property string $email
+ * @property Collection<Url> $urls
+ * @property Collection<Request> $requests
+ */
+class User extends Authenticatable
+{
+    /** @use HasFactory<UserFactory> */
+    use HasApiTokens, HasFactory, HasUlids, Notifiable, SelfCastingModel, SoftDeletes;
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'role',
+        'first_name',
+        'last_name',
+        'email',
+        'password',
+    ];
+
+    /**
+     * The attributes that should be hidden for serialization.
+     *
+     * @var array<int, string>
+     */
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
+
+    /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'role' => 'string',
+            'first_name' => 'string',
+            'last_name' => 'string',
+            'email' => 'string',
+            'email_verified_at' => 'datetime',
+            'password' => 'hashed',
+        ];
+    }
+
+    /**
+     * @return Attribute<string>
+     */
+    protected function password(): Attribute
+    {
+        return Attribute::make(
+            get: static fn (string $value) => $value,
+            set: static fn (string $value) => Hash::make($value)
+        );
+    }
+
+    /**
+     * @return Attribute<string>
+     */
+    protected function fullName(): Attribute
+    {
+        return Attribute::get(
+            fn () => "$this->first_name $this->last_name"
+        );
+    }
+
+    public function urls(): HasMany
+    {
+        return $this->hasMany(Url::class);
+    }
+
+    public function requests(): HasMany
+    {
+        return $this->hasMany(Request::class);
+    }
+}

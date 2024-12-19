@@ -1,0 +1,55 @@
+<?php
+
+namespace Database\Factories;
+
+use App\Enums\HttpMethod;
+use App\Models\Request;
+use App\Models\Url;
+use App\Models\User;
+use Illuminate\Database\Eloquent\Factories\Factory;
+
+/**
+ * @extends Factory<Request>
+ */
+class RequestFactory extends Factory
+{
+    /**
+     * Define the model's default state.
+     *
+     * @return array<string, mixed>
+     */
+    public function definition(): array
+    {
+        return [
+            'url_id' => Url::factory(),
+            'user_id' => User::factory(),
+            'method' => fake()->randomElement(HttpMethod::values()),
+            'uri' => fake()->url(),
+            'query' => collect(),
+            'headers' => collect(),
+            'body' => collect(),
+            'ip_address' => fake()->randomElement([fake()->ipv4(), fake()->ipv6()]),
+            'user_agent' => fake()->userAgent(),
+        ];
+    }
+
+    public function withoutUser(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'url_id' => Url::factory()->withoutUser(),
+            'user_id' => null,
+        ]);
+    }
+
+    public function regularUser(): static
+    {
+        return $this->state(function () {
+            $user = User::factory()->regularRole()->create();
+
+            return [
+                'url_id' => Url::factory()->create(['user_id' => $user]),
+                'user_id' => $user,
+            ];
+        });
+    }
+}

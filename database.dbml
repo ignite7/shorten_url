@@ -1,0 +1,63 @@
+Project shorten_url {
+  database_type: 'MySQL'
+  Note: '''
+    # Shorten URL Database
+  '''
+}
+
+Table users {
+  id ulid [pk]
+  role user_role_names [
+    not null,
+    note: 'options `admin`, `staff` and `regular`'
+  ]
+  first_name varchar(255) [not null]
+  last_name varchar(255) [not null]
+  email varchar(255) [not null, unique]
+  email_verified_at timestamp [null, default: null]
+  password varchar(255) [not null]
+  remember_token varchar(100) [null, default: null]
+  created_at timestamp [not null, default: `now()`]
+  updated_at timestamp [not null, default: `now()`]
+  deleted_at timestamp [null, default: null]
+  note: '''
+    Relationships:
+    `User` has many `Url`
+    `User` has many `Request`,
+  '''
+}
+
+Table urls {
+  id ulid [pk]
+  user_id ulid [null, ref: > users.id, default: null]
+  source longtext [not null]
+  created_at timestamp [not null, default: `now()`]
+  updated_at timestamp [not null, default: `now()`]
+  deleted_at timestamp [null, default: null]
+  note: '''
+    Relationships:
+    `Url` has one `User`
+    `Url` has many `Request`
+  '''
+}
+
+Table requests {
+  id ulid [pk]
+  url_id ulid [not null, ref: > urls.id]
+  user_id ulid [null, ref: > users.id, default: null]
+  method request_methods [not null]
+  uri longtext [not null]
+  query json [not null, default: `collect()`]
+  headers json [not null, default: `collect()`]
+  body json [not null, default: `collect()`]
+  ip_address longtext [not null]
+  user_agent longtext [null]
+  created_at timestamp [not null, default: `now()`]
+  updated_at timestamp [not null, default: `now()`]
+  deleted_at timestamp [null, default: null]
+  note: '''
+    Relationships:
+    `Request` has one `Url`
+    `Request` has one `User`
+  '''
+}

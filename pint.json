@@ -1,0 +1,13 @@
+{
+    "preset": "laravel",
+    "exclude": [
+        "entrypoints",
+        "mysql",
+        "nginx",
+        "php",
+        "public",
+        "resources",
+        "storage",
+        "vendor"
+    ]
+}
