@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\DeletedModels\Models\Concerns\KeepsDeletedModels;
 
 /**
  * @property string $id
@@ -21,7 +21,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Url extends Model
 {
     /** @use HasFactory<UrlFactory> */
-    use HasFactory, HasUlids, SelfCastingModel, SoftDeletes;
+    use HasFactory, HasUlids, SelfCastingModel, KeepsDeletedModels;
 
     protected $fillable = [
         'source',

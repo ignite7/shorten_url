@@ -7,8 +7,8 @@ use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Collection;
+use Spatie\DeletedModels\Models\Concerns\KeepsDeletedModels;
 
 /**
  * @property string $id
@@ -25,7 +25,7 @@ use Illuminate\Support\Collection;
 class Request extends Model
 {
     /** @use HasFactory<\Database\Factories\RequestFactory> */
-    use HasFactory, HasUlids, SelfCastingModel, SoftDeletes;
+    use HasFactory, HasUlids, SelfCastingModel, KeepsDeletedModels;
 
     protected $fillable = [
         'method',
