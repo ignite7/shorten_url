@@ -1,5 +1,5 @@
-import { Config } from "ziggy-js";
-import IUser from "@interfaces/IUser";
+import IUser from '@interfaces/IUser';
+import { Config } from 'ziggy-js';
 
 export type PageProps<
   T extends Record<string, unknown> = Record<string, unknown>,
