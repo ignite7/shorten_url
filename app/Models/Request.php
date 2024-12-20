@@ -25,7 +25,7 @@ use Spatie\DeletedModels\Models\Concerns\KeepsDeletedModels;
 class Request extends Model
 {
     /** @use HasFactory<\Database\Factories\RequestFactory> */
-    use HasFactory, HasUlids, SelfCastingModel, KeepsDeletedModels;
+    use HasFactory, HasUlids, KeepsDeletedModels, SelfCastingModel;
 
     protected $fillable = [
         'method',

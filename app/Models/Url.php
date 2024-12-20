@@ -21,7 +21,7 @@ use Spatie\DeletedModels\Models\Concerns\KeepsDeletedModels;
 class Url extends Model
 {
     /** @use HasFactory<UrlFactory> */
-    use HasFactory, HasUlids, SelfCastingModel, KeepsDeletedModels;
+    use HasFactory, HasUlids, KeepsDeletedModels, SelfCastingModel;
 
     protected $fillable = [
         'source',
