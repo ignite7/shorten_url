@@ -31,10 +31,17 @@ export default defineConfig({
       vueTsc: true,
     }),
   ],
+  css: {
+    modules: {
+      localsConvention: 'camelCase',
+    },
+  },
   resolve: {
     alias: {
       '@styles': path.resolve(__dirname, 'resources/js/assets/styles'),
+      '@helpers': path.resolve(__dirname, 'resources/js/helpers'),
       '@interfaces': path.resolve(__dirname, 'resources/js/interfaces'),
+      '@layouts': path.resolve(__dirname, 'resources/js/layouts'),
       '@types': path.resolve(__dirname, 'resources/js/types'),
       '@pages': path.resolve(__dirname, 'resources/js/pages'),
     },

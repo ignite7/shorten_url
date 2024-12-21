@@ -21,11 +21,23 @@
       "@styles/*": [
         "./resources/js/assets/styles/*"
       ],
+      "@helpers": [
+        "./resources/js/helpers"
+      ],
+      "@helpers/*": [
+        "./resources/js/helpers/*"
+      ],
       "@interfaces": [
         "./resources/js/interfaces"
       ],
       "@interfaces/*": [
         "./resources/js/interfaces/*"
+      ],
+      "@layouts": [
+        "./resources/js/layouts"
+      ],
+      "@layouts/*": [
+        "./resources/js/layouts/*"
       ],
       "@types": [
         "./resources/js/types"

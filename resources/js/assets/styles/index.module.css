@@ -1,0 +1,44 @@
+/* Base */
+* {
+  box-sizing: border-box !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+html {
+  font-size: 62.5% !important;
+}
+
+body {
+  font-size: 1.6rem !important;
+}
+
+/* Set font sizes */
+h1 {
+  font-size: 40px !important;
+}
+
+h2 {
+  font-size: 32px !important;
+}
+
+h3 {
+  font-size: 28px !important;
+}
+
+h4 {
+  font-size: 24px !important;
+}
+
+h5 {
+  font-size: 20px !important;
+}
+
+h6,
+p {
+  font-size: 16px !important;
+}
+
+:root {
+  --white: #ffffff !important;
+}

@@ -1,21 +1,23 @@
-import '@styles/base.css';
+import '@styles/index.module.css';
 import '../css/app.css';
 import './bootstrap';
-
 import { createInertiaApp } from '@inertiajs/vue3';
-import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { createApp, DefineComponent, h } from 'vue';
 import { ZiggyVue } from '../../vendor/tightenco/ziggy';
+import InertiaAppHelper from '@helpers/inertiaAppHelper';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Shorten URL';
 
 createInertiaApp({
-  title: (title) => `${title} - ${appName}`,
-  resolve: (name) =>
-    resolvePageComponent(
-      `./pages/${name}.vue`,
-      import.meta.glob<DefineComponent>('./pages/**/*.vue'),
-    ),
+  title: (title: string) => `${title} - ${appName}`,
+  resolve: (name: string) => {
+    const pages: Record<string, DefineComponent> = import.meta.glob(
+      './pages/**/*.vue',
+      { eager: true },
+    );
+
+    return InertiaAppHelper.resolve(name, pages);
+  },
   setup({ el, App, props, plugin }) {
     createApp({ render: () => h(App, props) })
       .use(plugin)
