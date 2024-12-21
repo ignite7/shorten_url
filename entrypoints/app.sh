@@ -7,11 +7,13 @@ set -o nounset
 composer install --quiet --no-progress --no-interaction
 npm install --silent --no-progress --ignore-optional
 
+# Migrate and seed
+php artisan migrate:refresh --seed
+
 # Flush
 sh entrypoints/flush.sh
 
-# Artisan
-php artisan migrate:refresh --seed
+# Link storage
 php artisan storage:link
 
 # Run

@@ -5,6 +5,6 @@ use Inertia\Inertia;
 
 Route::get('/', static function () {
     return Inertia::render('Home', [
-        'name' => 'World',
+        'name' => 'Kai',
     ]);
 });

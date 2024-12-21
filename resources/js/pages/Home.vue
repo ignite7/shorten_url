@@ -1,14 +1,20 @@
 <script setup lang="ts">
-import { Head, usePage } from '@inertiajs/vue3';
-import IUser from '@interfaces/IUser';
-import { PageProps } from '@types';
+import { Head } from '@inertiajs/vue3';
+import { ref } from 'vue';
 
-const {
-  props: { name = 'There!' },
-} = usePage<PageProps & IUser>();
+interface IProps {
+  name?: string;
+}
+
+const { name } = withDefaults(defineProps<IProps>(), {
+  name: 'John Doe'
+});
+
+const renderName = ref<string>(name);
 </script>
 
 <template>
   <Head title="Home" />
-  <h1>Hello, {{ name }}</h1>
+  <h1>Hello, {{ renderName }}</h1>
+  <input type="text" v-model="renderName" />
 </template>
