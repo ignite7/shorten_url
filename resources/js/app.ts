@@ -1,10 +1,10 @@
-import '@styles/index.module.css';
-import '../css/app.css';
-import './bootstrap';
+import InertiaAppHelper from '@helpers/inertiaAppHelper';
 import { createInertiaApp } from '@inertiajs/vue3';
+import '@styles/index.module.css';
 import { createApp, DefineComponent, h } from 'vue';
 import { ZiggyVue } from '../../vendor/tightenco/ziggy';
-import InertiaAppHelper from '@helpers/inertiaAppHelper';
+import '../css/app.css';
+import './bootstrap';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Shorten URL';
 
@@ -13,7 +13,7 @@ createInertiaApp({
   resolve: (name: string) => {
     const pages: Record<string, DefineComponent> = import.meta.glob(
       './pages/**/*.vue',
-      { eager: true },
+      { eager: true }
     );
 
     return InertiaAppHelper.resolve(name, pages);
