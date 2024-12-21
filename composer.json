@@ -18,6 +18,7 @@
     "tightenco/ziggy": "^2.0"
   },
   "require-dev": {
+    "aaronfrancis/solo": "^0.2.2",
     "fakerphp/faker": "^1.23",
     "laravel/breeze": "^2.3",
     "laravel/pail": "^1.1",
@@ -65,6 +66,7 @@
     "pint": "@php vendor/bin/pint --config=pint.json",
     "pest": "@php vendor/bin/pest",
     "phpstan": "@php vendor/bin/phpstan --memory-limit=512M",
+    "code-fixer": "composer run pint && npm run prettier:lint",
     "dbdocs-login": "dbdocs login",
     "dbdocs-build": "dbdocs build database.dbml --project shorten_url"
   },
