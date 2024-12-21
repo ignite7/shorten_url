@@ -7,7 +7,7 @@ interface IProps {
 }
 
 const { name } = withDefaults(defineProps<IProps>(), {
-  name: 'John Doe'
+  name: 'John Doe',
 });
 
 const renderName = ref<string>(name);
