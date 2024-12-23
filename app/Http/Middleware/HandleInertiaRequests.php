@@ -2,6 +2,8 @@
 
 namespace App\Http\Middleware;
 
+use App\Enums\FlashMessageType;
+use App\Helpers\FlashHelper;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 use Tighten\Ziggy\Ziggy;
@@ -35,9 +37,16 @@ class HandleInertiaRequests extends Middleware
             'auth' => [
                 'user' => $request->user(),
             ],
-            'ziggy' => fn () => [
+            'ziggy' => fn() => [
                 ...(new Ziggy)->toArray(),
                 'location' => $request->url(),
+            ],
+            'flash' => [
+                'message' => fn() => $request->session()->get(FlashHelper::MESSAGE_KEY),
+                'type' => fn() => $request->session()->get(
+                    FlashHelper::MESSAGE_TYPE_KEY,
+                    FlashMessageType::SUCCESS->value
+                ),
             ],
         ];
     }

@@ -1,10 +1,12 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 
 Route::get('/', static function () {
-    return Inertia::render('Home', [
+    return inertia('Home', [
         'name' => 'Kai',
     ]);
-});
+})->name('home');
+
+
+require __DIR__ . '/guest.php';

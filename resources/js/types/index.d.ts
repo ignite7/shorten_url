@@ -1,4 +1,5 @@
 import IUser from '@interfaces/IUser';
+import IFlash from '@interfaces/IFlash';
 import { Config } from 'ziggy-js';
 
 export type PageProps<
@@ -8,4 +9,5 @@ export type PageProps<
     user: IUser;
   };
   ziggy: Config & { location: string };
+  flash: IFlash;
 };
