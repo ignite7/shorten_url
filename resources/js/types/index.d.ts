@@ -1,5 +1,5 @@
-import IUser from '@interfaces/IUser';
 import IFlash from '@interfaces/IFlash';
+import IUser from '@interfaces/IUser';
 import { Config } from 'ziggy-js';
 
 export type PageProps<

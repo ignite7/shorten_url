@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Session;
 final class FlashHelper
 {
     public const string MESSAGE_KEY = 'message';
+
     public const string MESSAGE_TYPE_KEY = 'message_type';
 
     public static function message(string $message, FlashMessageType $type): void

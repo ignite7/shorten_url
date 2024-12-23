@@ -8,5 +8,4 @@ Route::get('/', static function () {
     ]);
 })->name('home');
 
-
-require __DIR__ . '/guest.php';
+require __DIR__.'/guest.php';
