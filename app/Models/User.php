@@ -13,7 +13,6 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
-use Laravel\Sanctum\HasApiTokens;
 use Spatie\DeletedModels\Models\Concerns\KeepsDeletedModels;
 
 /**
@@ -28,7 +27,7 @@ use Spatie\DeletedModels\Models\Concerns\KeepsDeletedModels;
 class User extends Authenticatable
 {
     /** @use HasFactory<UserFactory> */
-    use HasApiTokens, HasFactory, HasUlids, KeepsDeletedModels, Notifiable, SelfCastingModel;
+    use  HasFactory, HasUlids, KeepsDeletedModels, Notifiable, SelfCastingModel;
 
     /**
      * The attributes that are mass assignable.
@@ -76,8 +75,8 @@ class User extends Authenticatable
     protected function password(): Attribute
     {
         return Attribute::make(
-            get: static fn (string $value) => $value,
-            set: static fn (string $value) => Hash::make($value)
+            get: static fn(string $value) => $value,
+            set: static fn(string $value) => Hash::make($value)
         );
     }
 
@@ -87,7 +86,7 @@ class User extends Authenticatable
     protected function fullName(): Attribute
     {
         return Attribute::get(
-            fn () => "$this->first_name $this->last_name"
+            fn() => "$this->first_name $this->last_name"
         );
     }
 

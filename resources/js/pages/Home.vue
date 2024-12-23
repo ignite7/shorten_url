@@ -6,9 +6,7 @@ interface IProps {
   name?: string;
 }
 
-const { name } = withDefaults(defineProps<IProps>(), {
-  name: 'John Doe',
-});
+const { name = 'John Doe' } = defineProps<IProps>();
 
 const renderName = ref<string>(name);
 </script>
