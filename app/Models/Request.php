@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Traits\SelfCastingModel;
+use Database\Factories\RequestFactory;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -24,7 +25,7 @@ use Spatie\DeletedModels\Models\Concerns\KeepsDeletedModels;
  */
 class Request extends Model
 {
-    /** @use HasFactory<\Database\Factories\RequestFactory> */
+    /** @use HasFactory<RequestFactory> */
     use HasFactory, HasUlids, KeepsDeletedModels, SelfCastingModel;
 
     protected $fillable = [
