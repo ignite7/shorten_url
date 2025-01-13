@@ -5,8 +5,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -20,7 +19,7 @@ return new class extends Migration
             $table->longText('uri');
             $table->json('query')->default(collect());
             $table->json('headers')->default(collect());
-            $table->json('body')->default(collect());
+            $table->longText('body')->default(null);
             $table->ipAddress();
             $table->longText('user_agent')->nullable()->default(null);
             $table->timestamps();

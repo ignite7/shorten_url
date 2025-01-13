@@ -24,6 +24,7 @@ class Url extends Model
     use HasFactory, HasUlids, KeepsDeletedModels, SelfCastingModel;
 
     protected $fillable = [
+        'user_id',
         'source',
     ];
 

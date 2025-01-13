@@ -28,6 +28,8 @@ class Request extends Model
     use HasFactory, HasUlids, KeepsDeletedModels, SelfCastingModel;
 
     protected $fillable = [
+        'url_id',
+        'user_id',
         'method',
         'uri',
         'query',
@@ -52,7 +54,7 @@ class Request extends Model
             'uri' => 'string',
             'query' => 'collection',
             'headers' => 'collection',
-            'body' => 'collection',
+            'body' => 'string',
             'ip_address' => 'string',
             'user_agent' => 'string',
         ];

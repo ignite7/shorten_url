@@ -1,21 +1,21 @@
 <?php
 
-namespace App\Actions\Guest\User;
+namespace App\Actions\Auth;
 
 use App\Enums\UserRole;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Validation\Rule;
 use Lorisleiva\Actions\ActionRequest;
-use Lorisleiva\Actions\Concerns\AsAction;
+use Lorisleiva\Actions\Concerns\AsController;
 
 class Signup
 {
-    use AsAction;
+    use AsController;
 
-    public function handle(array $data): void
+    public function handle(array $data): User
     {
-        User::query()->create([
+        return User::query()->create([
             ...$data,
             'role' => UserRole::REGULAR->value,
         ]);
@@ -24,11 +24,6 @@ class Signup
     public function getControllerMiddleware(): array
     {
         return ['guest'];
-    }
-
-    public function authorize(ActionRequest $request): bool
-    {
-        return true;
     }
 
     public function rules(): array
