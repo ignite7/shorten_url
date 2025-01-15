@@ -30,9 +30,11 @@ it('cannot get the user of the url if it is nullable', function () {
 it('can get the requests of the url', function () {
     $user = User::factory()->create();
     $url = Url::factory()->for($user)->create();
-    $requests = Request::factory(5)->for($url)->for($user)->create();
+    $requests = Request::factory(5)->for($url)
+        ->for($user)->create();
 
     expect($url->requests)->toHaveCount(5)
         ->and($requests)->toHaveCount(5)
-        ->and($url->requests->pluck('id')->toArray())->toMatchArray($requests->pluck('id')->toArray());
+        ->and($url->requests->pluck('id')->toArray())
+        ->toMatchArray($requests->pluck('id')->toArray());
 });

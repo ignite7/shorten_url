@@ -35,7 +35,7 @@ class RequestFactory extends Factory
 
     public function withoutUser(): static
     {
-        return $this->state(fn(array $attributes) => [
+        return $this->state(fn (array $attributes) => [
             'url_id' => Url::factory()->withoutUser(),
             'user_id' => null,
         ]);

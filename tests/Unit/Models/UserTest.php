@@ -39,15 +39,18 @@ it('can get the urls of the user', function () {
 
     expect($user->urls)->toHaveCount(5)
         ->and($urls)->toHaveCount(5)
-        ->and($user->urls->pluck('id')->toArray())->toMatchArray($urls->pluck('id')->toArray());
+        ->and($user->urls->pluck('id')->toArray())
+        ->toMatchArray($urls->pluck('id')->toArray());
 });
 
 it('can get the requests of the user', function () {
     $user = User::factory()->create();
     $url = Url::factory()->for($user)->create();
-    $requests = Request::factory(5)->for($url)->for($user)->create();
+    $requests = Request::factory(5)->for($url)
+        ->for($user)->create();
 
     expect($user->requests)->toHaveCount(5)
         ->and($requests)->toHaveCount(5)
-        ->and($user->requests->pluck('id')->toArray())->toMatchArray($requests->pluck('id')->toArray());
+        ->and($user->requests->pluck('id')->toArray())
+        ->toMatchArray($requests->pluck('id')->toArray());
 });
