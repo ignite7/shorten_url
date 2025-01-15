@@ -27,7 +27,7 @@ class RequestFactory extends Factory
             'uri' => fake()->url(),
             'query' => collect(),
             'headers' => collect(),
-            'body' => collect(),
+            'body' => fake()->text(),
             'ip_address' => fake()->randomElement([fake()->ipv4(), fake()->ipv6()]),
             'user_agent' => fake()->userAgent(),
         ];
@@ -35,7 +35,7 @@ class RequestFactory extends Factory
 
     public function withoutUser(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn(array $attributes) => [
             'url_id' => Url::factory()->withoutUser(),
             'user_id' => null,
         ]);

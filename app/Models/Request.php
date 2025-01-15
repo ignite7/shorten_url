@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Spatie\DeletedModels\Models\Concerns\KeepsDeletedModels;
 
@@ -21,7 +22,9 @@ use Spatie\DeletedModels\Models\Concerns\KeepsDeletedModels;
  * @property string $ip_address
  * @property string $user_agent
  * @property Url $url
- * @property User|null $user
+ * @property ?User $user
+ * @property ?Carbon $created_at
+ * @property ?Carbon $updated_at
  */
 class Request extends Model
 {
@@ -41,6 +44,7 @@ class Request extends Model
     ];
 
     protected $hidden = [
+        'id',
         'url_id',
         'user_id',
     ];
@@ -58,6 +62,8 @@ class Request extends Model
             'body' => 'string',
             'ip_address' => 'string',
             'user_agent' => 'string',
+            'created_at' => 'datetime',
+            'updated_at' => 'datetime',
         ];
     }
 

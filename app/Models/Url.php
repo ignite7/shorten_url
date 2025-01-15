@@ -10,13 +10,16 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Carbon;
 use Spatie\DeletedModels\Models\Concerns\KeepsDeletedModels;
 
 /**
  * @property string $id
  * @property string $source
- * @property User|null $user
+ * @property ?User $user
  * @property Collection<Request> $requests
+ * @property ?Carbon $created_at
+ * @property ?Carbon $updated_at
  */
 class Url extends Model
 {
@@ -29,6 +32,7 @@ class Url extends Model
     ];
 
     protected $hidden = [
+        'id',
         'user_id',
     ];
 
@@ -39,6 +43,8 @@ class Url extends Model
     {
         return [
             'source' => 'string',
+            'created_at' => 'datetime',
+            'updated_at' => 'datetime',
         ];
     }
 

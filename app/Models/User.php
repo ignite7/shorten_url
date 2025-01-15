@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Hash;
 use Spatie\DeletedModels\Models\Concerns\KeepsDeletedModels;
 
@@ -23,6 +24,12 @@ use Spatie\DeletedModels\Models\Concerns\KeepsDeletedModels;
  * @property string $email
  * @property Collection<Url> $urls
  * @property Collection<Request> $requests
+ * @property string $password
+ * @property ?string $remember_token
+ * @property ?Carbon $email_verified_at
+ * @property ?Carbon $created_at
+ * @property ?Carbon $updated_at
+ * @property-read string $fullName
  */
 class User extends Authenticatable
 {
@@ -48,6 +55,7 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $hidden = [
+        'id',
         'password',
         'remember_token',
     ];
@@ -66,6 +74,9 @@ class User extends Authenticatable
             'email' => 'string',
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'remember_token' => 'string',
+            'created_at' => 'datetime',
+            'updated_at' => 'datetime',
         ];
     }
 
@@ -75,8 +86,8 @@ class User extends Authenticatable
     protected function password(): Attribute
     {
         return Attribute::make(
-            get: static fn (string $value) => $value,
-            set: static fn (string $value) => Hash::make($value)
+            get: static fn(string $value) => $value,
+            set: static fn(string $value) => Hash::make($value)
         );
     }
 
@@ -86,7 +97,7 @@ class User extends Authenticatable
     protected function fullName(): Attribute
     {
         return Attribute::get(
-            fn () => "$this->first_name $this->last_name"
+            fn() => "$this->first_name $this->last_name"
         );
     }
 
