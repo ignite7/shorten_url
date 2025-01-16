@@ -7,6 +7,7 @@ WORKDIR /var/www
 RUN apk add --no-cache \
     build-base autoconf g++ make linux-headers libpng-dev libjpeg-turbo-dev freetype-dev \
     zip vim unzip git curl libzip-dev sqlite-dev icu-dev nodejs npm \
+    aspell aspell-en \
     && pecl install xdebug \
     && docker-php-ext-enable xdebug \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \

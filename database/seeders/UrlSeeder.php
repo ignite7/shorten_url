@@ -16,7 +16,9 @@ final class UrlSeeder extends Seeder
      */
     public function run(): void
     {
-        if (! $user = User::unsafeInstance(User::query()->firstWhere('email', UserFactory::REGULAR_EMAIL)) instanceof User) {
+        $user = User::unsafeInstance(User::query()->firstWhere('email', UserFactory::REGULAR_EMAIL));
+
+        if (!$user instanceof User) {
             return;
         }
 

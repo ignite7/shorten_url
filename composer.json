@@ -30,6 +30,7 @@
     "laravel/telescope": "^5.2",
     "mockery/mockery": "^1.6",
     "nunomaduro/collision": "^8.1",
+    "peckphp/peck": "^0.1.1",
     "pestphp/pest": "^3.7",
     "pestphp/pest-plugin-laravel": "^3.0",
     "pestphp/pest-plugin-type-coverage": "^3.2",
@@ -72,6 +73,7 @@
     "pest:type-coverage": "@php vendor/bin/pest --type-coverage --memory-limit=2G --min=100",
     "phpstan": "@php vendor/bin/phpstan --memory-limit=2G",
     "rector": "@php vendor/bin/rector",
+    "peck": "@php vendor/bin/peck",
     "code-fixer": [
       "@pint",
       "npm run prettier:lint"
@@ -84,7 +86,8 @@
       "@pest:type-coverage",
       "@phpstan",
       "@rector",
-      "@code-fixer"
+      "@code-fixer",
+      "@peck"
     ],
     "pre-commit": [
       "@rector",

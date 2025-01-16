@@ -18,7 +18,9 @@ final class RequestSeeder extends Seeder
      */
     public function run(): void
     {
-        if ($user = User::unsafeInstance(User::query()->firstWhere('email', UserFactory::REGULAR_EMAIL)) instanceof User) {
+        $user = User::unsafeInstance(User::query()->firstWhere('email', UserFactory::REGULAR_EMAIL));
+
+        if ($user instanceof User) {
             $ipv4 = fake()->ipv4();
             $userAgent = fake()->userAgent();
             $user->urls->chunk(100)->each(static function (Collection $urls) use ($user, $ipv4, $userAgent): void {
