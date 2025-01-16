@@ -94,7 +94,7 @@ final class User extends Authenticatable
     /**
      * @return Attribute<string>
      */
-    private function fullName(): Attribute
+    protected function fullName(): Attribute
     {
         return Attribute::get(
             fn (): string => "$this->first_name $this->last_name"
