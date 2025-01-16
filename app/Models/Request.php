@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use App\Traits\SelfCastingModel;
@@ -26,7 +28,7 @@ use Spatie\DeletedModels\Models\Concerns\KeepsDeletedModels;
  * @property ?Carbon $created_at
  * @property ?Carbon $updated_at
  */
-class Request extends Model
+final class Request extends Model
 {
     /** @use HasFactory<RequestFactory> */
     use HasFactory, HasUlids, KeepsDeletedModels, SelfCastingModel;
@@ -49,6 +51,16 @@ class Request extends Model
         'user_id',
     ];
 
+    public function url(): BelongsTo
+    {
+        return $this->belongsTo(Url::class);
+    }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
+
     /**
      * @return string[]
      */
@@ -65,15 +77,5 @@ class Request extends Model
             'created_at' => 'datetime',
             'updated_at' => 'datetime',
         ];
-    }
-
-    public function url(): BelongsTo
-    {
-        return $this->belongsTo(Url::class);
-    }
-
-    public function user(): BelongsTo
-    {
-        return $this->belongsTo(User::class);
     }
 }

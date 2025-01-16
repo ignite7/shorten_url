@@ -1,23 +1,25 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Providers;
 
 use AaronFrancis\Solo\Commands\EnhancedTailCommand;
 use AaronFrancis\Solo\Facades\Solo;
 use Illuminate\Support\ServiceProvider;
 
-class SoloServiceProvider extends ServiceProvider
+final class SoloServiceProvider extends ServiceProvider
 {
-    public function register()
+    public function register(): void
     {
         // Solo may not (should not!) exist in prod, so we have to
         // check here first to see if it's installed.
-        if (class_exists('\AaronFrancis\Solo\Manager')) {
+        if (class_exists(\AaronFrancis\Solo\Manager::class)) {
             $this->configure();
         }
     }
 
-    public function configure()
+    public function configure(): void
     {
         Solo::useTheme('dark')
             // Commands that auto start.
@@ -41,7 +43,7 @@ class SoloServiceProvider extends ServiceProvider
             ]);
     }
 
-    public function boot()
+    public function boot(): void
     {
         //
     }

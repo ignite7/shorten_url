@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -31,7 +33,7 @@ use Spatie\DeletedModels\Models\Concerns\KeepsDeletedModels;
  * @property ?Carbon $updated_at
  * @property-read string $fullName
  */
-class User extends Authenticatable
+final class User extends Authenticatable
 {
     /** @use HasFactory<UserFactory> */
     use HasFactory, HasUlids, KeepsDeletedModels, Notifiable, SelfCastingModel;
@@ -60,6 +62,16 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+    public function urls(): HasMany
+    {
+        return $this->hasMany(Url::class);
+    }
+
+    public function requests(): HasMany
+    {
+        return $this->hasMany(Request::class);
+    }
+
     /**
      * Get the attributes that should be cast.
      *
@@ -83,10 +95,10 @@ class User extends Authenticatable
     /**
      * @return Attribute<string>
      */
-    protected function password(): Attribute
+    private function password(): Attribute
     {
         return Attribute::make(
-            get: static fn (string $value) => $value,
+            get: static fn (string $value): string => $value,
             set: static fn (string $value) => Hash::make($value)
         );
     }
@@ -94,20 +106,10 @@ class User extends Authenticatable
     /**
      * @return Attribute<string>
      */
-    protected function fullName(): Attribute
+    private function fullName(): Attribute
     {
         return Attribute::get(
-            fn () => "$this->first_name $this->last_name"
+            fn (): string => "$this->first_name $this->last_name"
         );
-    }
-
-    public function urls(): HasMany
-    {
-        return $this->hasMany(Url::class);
-    }
-
-    public function requests(): HasMany
-    {
-        return $this->hasMany(Request::class);
     }
 }

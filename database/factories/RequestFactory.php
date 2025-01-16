@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Factories;
 
 use App\Enums\HttpMethod;
@@ -11,7 +13,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 /**
  * @extends Factory<Request>
  */
-class RequestFactory extends Factory
+final class RequestFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -35,7 +37,7 @@ class RequestFactory extends Factory
 
     public function withoutUser(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn (array $attributes): array => [
             'url_id' => Url::factory()->withoutUser(),
             'user_id' => null,
         ]);
@@ -43,7 +45,7 @@ class RequestFactory extends Factory
 
     public function regularUser(): static
     {
-        return $this->state(function () {
+        return $this->state(function (): array {
             $user = User::factory()->regularRole()->create();
 
             return [

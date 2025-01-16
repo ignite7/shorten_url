@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Factories;
 
 use App\Enums\UserRole;
@@ -10,18 +12,18 @@ use Illuminate\Support\Str;
 /**
  * @extends Factory<User>
  */
-class UserFactory extends Factory
+final class UserFactory extends Factory
 {
-    /**
-     * The current password being used by the factory.
-     */
-    protected static ?string $password;
-
     public const string ADMIN_EMAIL = 'admin@shortenurl.io';
 
     public const string STAFF_EMAIL = 'staff@shortenurl.io';
 
     public const string REGULAR_EMAIL = 'regular@shortenurl.io';
+
+    /**
+     * The current password being used by the factory.
+     */
+    private static ?string $password = null;
 
     /**
      * Define the model's default state.
@@ -46,7 +48,7 @@ class UserFactory extends Factory
      */
     public function unverified(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn (array $attributes): array => [
             'email_verified_at' => null,
         ]);
     }
@@ -56,9 +58,9 @@ class UserFactory extends Factory
      */
     public function admin(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn (array $attributes): array => [
             'role' => UserRole::ADMIN->value,
-            'email' => static::ADMIN_EMAIL,
+            'email' => self::ADMIN_EMAIL,
         ]);
     }
 
@@ -67,9 +69,9 @@ class UserFactory extends Factory
      */
     public function staff(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn (array $attributes): array => [
             'role' => UserRole::STAFF->value,
-            'email' => static::STAFF_EMAIL,
+            'email' => self::STAFF_EMAIL,
         ]);
     }
 
@@ -78,9 +80,9 @@ class UserFactory extends Factory
      */
     public function regular(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn (array $attributes): array => [
             'role' => UserRole::REGULAR->value,
-            'email' => static::REGULAR_EMAIL,
+            'email' => self::REGULAR_EMAIL,
         ]);
     }
 
@@ -89,7 +91,7 @@ class UserFactory extends Factory
      */
     public function regularRole(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn (array $attributes): array => [
             'role' => UserRole::REGULAR->value,
         ]);
     }

@@ -3,8 +3,7 @@
 echo "Running pre-commit hook..."
 
 # Command to run before committing
-docker exec app composer run pint \
-    && docker exec app npm run prettier:lint
+docker exec app composer pre-commit
 
 # If the command fails, exit with a non-zero status to abort the commit
 if [ $? -ne 0 ]; then

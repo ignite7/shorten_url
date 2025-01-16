@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Policies;
 
 use App\Enums\UserRole;
 use App\Models\User;
 
-class UserPolicy
+final class UserPolicy
 {
     /**
      * Determine whether the user can view any models.
@@ -21,7 +23,11 @@ class UserPolicy
      */
     public function view(User $user, User $model): bool
     {
-        return $user->is($model) || $this->viewAny($user);
+        if ($user->is($model)) {
+            return true;
+        }
+
+        return $this->viewAny($user);
     }
 
     /**
@@ -37,7 +43,11 @@ class UserPolicy
      */
     public function update(User $user, User $model): bool
     {
-        return $user->is($model) || $this->create($user);
+        if ($user->is($model)) {
+            return true;
+        }
+
+        return $this->create($user);
     }
 
     /**
@@ -45,13 +55,17 @@ class UserPolicy
      */
     public function delete(User $user, User $model): bool
     {
-        return $user->is($model) || $this->create($user);
+        if ($user->is($model)) {
+            return true;
+        }
+
+        return $this->create($user);
     }
 
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, User $model): bool
+    public function restore(User $user): bool
     {
         return $this->create($user);
     }
@@ -59,7 +73,7 @@ class UserPolicy
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, User $model): bool
+    public function forceDelete(User $user): bool
     {
         return $this->create($user);
     }

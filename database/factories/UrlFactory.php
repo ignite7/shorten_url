@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Factories;
 
 use App\Models\Url;
@@ -9,7 +11,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 /**
  * @extends Factory<Url>
  */
-class UrlFactory extends Factory
+final class UrlFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -26,7 +28,7 @@ class UrlFactory extends Factory
 
     public function withoutUser(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn (array $attributes): array => [
             'user_id' => null,
         ]);
     }

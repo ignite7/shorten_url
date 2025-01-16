@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use App\Enums\HttpMethod;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -12,10 +14,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('requests', static function (Blueprint $table) {
+        Schema::create('requests', static function (Blueprint $table): void {
             $table->ulid('id')->primary();
-            $table->foreignUlid('url_id')->constrained();
-            $table->foreignUlid('user_id')->nullable()->constrained();
+            $table->foreignUlid('url_id')->constrained()->cascadeOnDelete();
+            $table->foreignUlid('user_id')->nullable()->constrained()->cascadeOnDelete();
             $table->enum('method', HttpMethod::values());
             $table->longText('uri');
             $table->json('query')->default(collect());

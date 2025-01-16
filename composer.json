@@ -22,6 +22,7 @@
     "aaronfrancis/solo": "^0.2.2",
     "barryvdh/laravel-debugbar": "^3.14",
     "fakerphp/faker": "^1.23",
+    "larastan/larastan": "^3.0",
     "laravel/breeze": "^2.3",
     "laravel/pail": "^1.1",
     "laravel/pint": "^1.13",
@@ -31,7 +32,8 @@
     "nunomaduro/collision": "^8.1",
     "pestphp/pest": "^3.7",
     "pestphp/pest-plugin-laravel": "^3.0",
-    "phpstan/phpstan": "^2.0"
+    "pestphp/pest-plugin-type-coverage": "^3.2",
+    "rector/rector": "^2.0.6"
   },
   "autoload": {
     "psr-4": {
@@ -66,11 +68,28 @@
       "npx concurrently -c \"#93c5fd,#c4b5fd,#fb7185,#fdba74\" \"php artisan serve\" \"php artisan queue:listen --tries=1\" \"php artisan pail --timeout=0\" \"npm run dev\" --names=server,queue,logs,vite"
     ],
     "pint": "@php vendor/bin/pint --config=pint.json",
-    "pest": "@php vendor/bin/pest",
-    "phpstan": "@php vendor/bin/phpstan --memory-limit=512M",
-    "code-fixer": "composer run pint && npm run prettier:lint",
+    "pest": "@php vendor/bin/pest --parallel --coverage --exactly=100",
+    "pest:type-coverage": "@php vendor/bin/pest --type-coverage --memory-limit=2G --min=100",
+    "phpstan": "@php vendor/bin/phpstan --memory-limit=2G",
+    "rector": "@php vendor/bin/rector",
+    "code-fixer": [
+      "@pint",
+      "npm run prettier:lint"
+    ],
     "dbdocs-login": "dbdocs login",
-    "dbdocs-build": "dbdocs build database.dbml --project shorten_url"
+    "dbdocs-build": "dbdocs build database.dbml --project shorten_url",
+    "test": [
+      "@pint",
+      "@pest",
+      "@pest:type-coverage",
+      "@phpstan",
+      "@rector",
+      "@code-fixer"
+    ],
+    "pre-commit": [
+      "@rector",
+      "@code-fixer"
+    ]
   },
   "extra": {
     "laravel": {

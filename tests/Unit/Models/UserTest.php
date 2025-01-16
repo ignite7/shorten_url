@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 use App\Models\Request;
 use App\Models\Url;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 
-it('can get the user in an array format', function () {
+it('can get the user in an array format', function (): void {
     $user = User::factory()->create();
 
     expect($user->toArray())->toMatchArray([
@@ -19,7 +21,7 @@ it('can get the user in an array format', function () {
     ]);
 });
 
-it('can hash the password using the setter', function () {
+it('can hash the password using the setter', function (): void {
     $password = 'password1234!';
     $user = User::factory()->create(['password' => $password]);
 
@@ -27,13 +29,13 @@ it('can hash the password using the setter', function () {
         ->and(Hash::check($password, $user->password))->toBeTrue();
 });
 
-it('can get the full name of the user', function () {
+it('can get the full name of the user', function (): void {
     $user = User::factory()->create();
 
     expect($user->fullName)->toBe("$user->first_name $user->last_name");
 });
 
-it('can get the urls of the user', function () {
+it('can get the urls of the user', function (): void {
     $user = User::factory()->create();
     $urls = Url::factory(5)->for($user)->create();
 
@@ -43,7 +45,7 @@ it('can get the urls of the user', function () {
         ->toMatchArray($urls->pluck('id')->toArray());
 });
 
-it('can get the requests of the user', function () {
+it('can get the requests of the user', function (): void {
     $user = User::factory()->create();
     $url = Url::factory()->for($user)->create();
     $requests = Request::factory(5)->for($url)

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Actions\Urls;
 
 use App\Enums\FlashMessageType;
@@ -13,7 +15,7 @@ use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsController;
 use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
-class ShortenUrl
+final class ShortenUrl
 {
     use AsController;
 
