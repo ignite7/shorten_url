@@ -18,7 +18,7 @@ final class UrlSeeder extends Seeder
     {
         $user = User::unsafeInstance(User::query()->firstWhere('email', UserFactory::REGULAR_EMAIL));
 
-        if (!$user instanceof User) {
+        if (! $user instanceof User) {
             return;
         }
 
