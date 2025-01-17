@@ -1,12 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 use App\Models\User;
 use App\Policies\UserPolicy;
 
-
-describe('view any', function () {
-    describe('admin', function () {
-        it('can view any', function () {
+describe('view any', function (): void {
+    describe('admin', function (): void {
+        it('can view any', function (): void {
             $user = User::factory()->adminRole()->create();
 
             $policy = new UserPolicy();
@@ -15,8 +16,8 @@ describe('view any', function () {
         });
     });
 
-    describe('staff', function () {
-        it('can view any', function () {
+    describe('staff', function (): void {
+        it('can view any', function (): void {
             $user = User::factory()->staffRole()->create();
 
             $policy = new UserPolicy();
@@ -25,8 +26,8 @@ describe('view any', function () {
         });
     });
 
-    describe('regular', function () {
-        it('cannot view any', function () {
+    describe('regular', function (): void {
+        it('cannot view any', function (): void {
             $user = User::factory()->regularRole()->create();
 
             $policy = new UserPolicy();
@@ -36,9 +37,9 @@ describe('view any', function () {
     });
 });
 
-describe('view', function () {
-    describe('admin', function () {
-        it('can view itself', function () {
+describe('view', function (): void {
+    describe('admin', function (): void {
+        it('can view itself', function (): void {
             $admin = User::factory()->adminRole()->create();
 
             $policy = new UserPolicy();
@@ -46,7 +47,7 @@ describe('view', function () {
             expect($policy->view($admin, $admin))->toBeTrue();
         });
 
-        it('can view staff', function () {
+        it('can view staff', function (): void {
             $admin = User::factory()->adminRole()->create();
 
             $staff = User::factory()->staffRole()->create();
@@ -56,7 +57,7 @@ describe('view', function () {
             expect($policy->view($admin, $staff))->toBeTrue();
         });
 
-        it('can view regular', function () {
+        it('can view regular', function (): void {
             $admin = User::factory()->adminRole()->create();
 
             $regular = User::factory()->regularRole()->create();
@@ -67,8 +68,8 @@ describe('view', function () {
         });
     });
 
-    describe('staff', function () {
-        it('can view itself', function () {
+    describe('staff', function (): void {
+        it('can view itself', function (): void {
             $staff = User::factory()->staffRole()->create();
 
             $policy = new UserPolicy();
@@ -76,7 +77,7 @@ describe('view', function () {
             expect($policy->view($staff, $staff))->toBeTrue();
         });
 
-        it('can view admin', function () {
+        it('can view admin', function (): void {
             $staff = User::factory()->staffRole()->create();
 
             $admin = User::factory()->adminRole()->create();
@@ -86,7 +87,7 @@ describe('view', function () {
             expect($policy->view($staff, $admin))->toBeTrue();
         });
 
-        it('can view regular', function () {
+        it('can view regular', function (): void {
             $staff = User::factory()->staffRole()->create();
 
             $regular = User::factory()->regularRole()->create();
@@ -97,8 +98,8 @@ describe('view', function () {
         });
     });
 
-    describe('regular', function () {
-        it('can view itself', function () {
+    describe('regular', function (): void {
+        it('can view itself', function (): void {
             $regular = User::factory()->regularRole()->create();
 
             $policy = new UserPolicy();
@@ -106,7 +107,7 @@ describe('view', function () {
             expect($policy->view($regular, $regular))->toBeTrue();
         });
 
-        it('cannot view admin', function () {
+        it('cannot view admin', function (): void {
             $regular = User::factory()->regularRole()->create();
 
             $admin = User::factory()->adminRole()->create();
@@ -116,7 +117,7 @@ describe('view', function () {
             expect($policy->view($regular, $admin))->toBeFalse();
         });
 
-        it('cannot view staff', function () {
+        it('cannot view staff', function (): void {
             $regular = User::factory()->regularRole()->create();
 
             $staff = User::factory()->staffRole()->create();
@@ -126,7 +127,7 @@ describe('view', function () {
             expect($policy->view($regular, $staff))->toBeFalse();
         });
 
-        it('cannot view other regular users', function () {
+        it('cannot view other regular users', function (): void {
             $regular = User::factory()->regularRole()->create();
 
             $otherRegular = User::factory()->regularRole()->create();
@@ -138,9 +139,9 @@ describe('view', function () {
     });
 });
 
-describe('create', function () {
-    describe('admin', function () {
-        it('can create', function () {
+describe('create', function (): void {
+    describe('admin', function (): void {
+        it('can create', function (): void {
             $user = User::factory()->adminRole()->create();
 
             $policy = new UserPolicy();
@@ -149,8 +150,8 @@ describe('create', function () {
         });
     });
 
-    describe('staff', function () {
-        it('cannot create', function () {
+    describe('staff', function (): void {
+        it('cannot create', function (): void {
             $user = User::factory()->staffRole()->create();
 
             $policy = new UserPolicy();
@@ -159,8 +160,8 @@ describe('create', function () {
         });
     });
 
-    describe('regular', function () {
-        it('cannot create', function () {
+    describe('regular', function (): void {
+        it('cannot create', function (): void {
             $user = User::factory()->regularRole()->create();
 
             $policy = new UserPolicy();
@@ -170,9 +171,9 @@ describe('create', function () {
     });
 });
 
-describe('update', function () {
-    describe('admin', function () {
-        it('can update itself', function () {
+describe('update', function (): void {
+    describe('admin', function (): void {
+        it('can update itself', function (): void {
             $admin = User::factory()->adminRole()->create();
 
             $policy = new UserPolicy();
@@ -180,7 +181,7 @@ describe('update', function () {
             expect($policy->update($admin, $admin))->toBeTrue();
         });
 
-        it('can update staff', function () {
+        it('can update staff', function (): void {
             $admin = User::factory()->adminRole()->create();
 
             $staff = User::factory()->staffRole()->create();
@@ -190,7 +191,7 @@ describe('update', function () {
             expect($policy->update($admin, $staff))->toBeTrue();
         });
 
-        it('can update regular', function () {
+        it('can update regular', function (): void {
             $admin = User::factory()->adminRole()->create();
 
             $regular = User::factory()->regularRole()->create();
@@ -200,7 +201,7 @@ describe('update', function () {
             expect($policy->update($admin, $regular))->toBeTrue();
         });
 
-        it('cannot update other admin', function () {
+        it('cannot update other admin', function (): void {
             $admin = User::factory()->adminRole()->create();
 
             $otherAdmin = User::factory()->adminRole()->create();
@@ -211,8 +212,8 @@ describe('update', function () {
         });
     });
 
-    describe('staff', function () {
-        it('can update itself', function () {
+    describe('staff', function (): void {
+        it('can update itself', function (): void {
             $staff = User::factory()->staffRole()->create();
 
             $policy = new UserPolicy();
@@ -220,7 +221,7 @@ describe('update', function () {
             expect($policy->update($staff, $staff))->toBeTrue();
         });
 
-        it('cannot update admin', function () {
+        it('cannot update admin', function (): void {
             $staff = User::factory()->staffRole()->create();
 
             $admin = User::factory()->adminRole()->create();
@@ -230,7 +231,7 @@ describe('update', function () {
             expect($policy->update($staff, $admin))->toBeFalse();
         });
 
-        it('cannot update other staff', function () {
+        it('cannot update other staff', function (): void {
             $staff = User::factory()->staffRole()->create();
 
             $otherStaff = User::factory()->staffRole()->create();
@@ -240,7 +241,7 @@ describe('update', function () {
             expect($policy->update($staff, $otherStaff))->toBeFalse();
         });
 
-        it('can update regular', function () {
+        it('can update regular', function (): void {
             $staff = User::factory()->staffRole()->create();
 
             $regular = User::factory()->regularRole()->create();
@@ -251,8 +252,8 @@ describe('update', function () {
         });
     });
 
-    describe('regular', function () {
-        it('can update itself', function () {
+    describe('regular', function (): void {
+        it('can update itself', function (): void {
             $regular = User::factory()->regularRole()->create();
 
             $policy = new UserPolicy();
@@ -260,7 +261,7 @@ describe('update', function () {
             expect($policy->update($regular, $regular))->toBeTrue();
         });
 
-        it('cannot update admin', function () {
+        it('cannot update admin', function (): void {
             $regular = User::factory()->regularRole()->create();
 
             $admin = User::factory()->adminRole()->create();
@@ -270,7 +271,7 @@ describe('update', function () {
             expect($policy->update($regular, $admin))->toBeFalse();
         });
 
-        it('cannot update staff', function () {
+        it('cannot update staff', function (): void {
             $regular = User::factory()->regularRole()->create();
 
             $staff = User::factory()->staffRole()->create();
@@ -280,7 +281,7 @@ describe('update', function () {
             expect($policy->update($regular, $staff))->toBeFalse();
         });
 
-        it('cannot update other regular users', function () {
+        it('cannot update other regular users', function (): void {
             $regular = User::factory()->regularRole()->create();
 
             $otherRegular = User::factory()->regularRole()->create();
@@ -292,9 +293,9 @@ describe('update', function () {
     });
 });
 
-describe('delete', function () {
-    describe('admin', function () {
-        it('can delete itself', function () {
+describe('delete', function (): void {
+    describe('admin', function (): void {
+        it('can delete itself', function (): void {
             $admin = User::factory()->adminRole()->create();
 
             $policy = new UserPolicy();
@@ -302,7 +303,7 @@ describe('delete', function () {
             expect($policy->delete($admin, $admin))->toBeTrue();
         });
 
-        it('can delete staff', function () {
+        it('can delete staff', function (): void {
             $admin = User::factory()->adminRole()->create();
 
             $staff = User::factory()->staffRole()->create();
@@ -312,7 +313,7 @@ describe('delete', function () {
             expect($policy->delete($admin, $staff))->toBeTrue();
         });
 
-        it('can delete regular', function () {
+        it('can delete regular', function (): void {
             $admin = User::factory()->adminRole()->create();
 
             $regular = User::factory()->regularRole()->create();
@@ -322,7 +323,7 @@ describe('delete', function () {
             expect($policy->delete($admin, $regular))->toBeTrue();
         });
 
-        it('cannot delete themselves', function () {
+        it('cannot delete themselves', function (): void {
             $admin = User::factory()->adminRole()->create();
 
             $otherAdmin = User::factory()->adminRole()->create();
@@ -333,8 +334,8 @@ describe('delete', function () {
         });
     });
 
-    describe('staff', function () {
-        it('can delete itself', function () {
+    describe('staff', function (): void {
+        it('can delete itself', function (): void {
             $staff = User::factory()->staffRole()->create();
 
             $policy = new UserPolicy();
@@ -342,7 +343,7 @@ describe('delete', function () {
             expect($policy->delete($staff, $staff))->toBeTrue();
         });
 
-        it('cannot delete themselves', function () {
+        it('cannot delete themselves', function (): void {
             $staff = User::factory()->staffRole()->create();
 
             $otherStaff = User::factory()->staffRole()->create();
@@ -352,7 +353,7 @@ describe('delete', function () {
             expect($policy->delete($staff, $otherStaff))->toBeFalse();
         });
 
-        it('cannot delete admin', function () {
+        it('cannot delete admin', function (): void {
             $staff = User::factory()->staffRole()->create();
 
             $admin = User::factory()->adminRole()->create();
@@ -362,7 +363,7 @@ describe('delete', function () {
             expect($policy->delete($staff, $admin))->toBeFalse();
         });
 
-        it('can delete regular', function () {
+        it('can delete regular', function (): void {
             $staff = User::factory()->staffRole()->create();
 
             $regular = User::factory()->regularRole()->create();
@@ -373,8 +374,8 @@ describe('delete', function () {
         });
     });
 
-    describe('regular', function () {
-        it('can delete itself', function () {
+    describe('regular', function (): void {
+        it('can delete itself', function (): void {
             $regular = User::factory()->regularRole()->create();
 
             $policy = new UserPolicy();
@@ -382,7 +383,7 @@ describe('delete', function () {
             expect($policy->delete($regular, $regular))->toBeTrue();
         });
 
-        it('cannot delete admin', function () {
+        it('cannot delete admin', function (): void {
             $regular = User::factory()->regularRole()->create();
 
             $admin = User::factory()->adminRole()->create();
@@ -392,7 +393,7 @@ describe('delete', function () {
             expect($policy->delete($regular, $admin))->toBeFalse();
         });
 
-        it('cannot delete staff', function () {
+        it('cannot delete staff', function (): void {
             $regular = User::factory()->regularRole()->create();
 
             $staff = User::factory()->staffRole()->create();
@@ -402,7 +403,7 @@ describe('delete', function () {
             expect($policy->delete($regular, $staff))->toBeFalse();
         });
 
-        it('cannot delete themselves', function () {
+        it('cannot delete themselves', function (): void {
             $regular = User::factory()->regularRole()->create();
 
             $otherRegular = User::factory()->regularRole()->create();
@@ -414,9 +415,9 @@ describe('delete', function () {
     });
 });
 
-describe('restore', function () {
-    describe('admin', function () {
-        it('cannot restore itself', function () {
+describe('restore', function (): void {
+    describe('admin', function (): void {
+        it('cannot restore itself', function (): void {
             $admin = User::factory()->adminRole()->create();
 
             $policy = new UserPolicy();
@@ -424,7 +425,7 @@ describe('restore', function () {
             expect($policy->restore($admin, $admin))->toBeFalse();
         });
 
-        it('can restore staff', function () {
+        it('can restore staff', function (): void {
             $admin = User::factory()->adminRole()->create();
 
             $staff = User::factory()->staffRole()->create();
@@ -434,7 +435,7 @@ describe('restore', function () {
             expect($policy->restore($admin, $staff))->toBeTrue();
         });
 
-        it('can restore regular', function () {
+        it('can restore regular', function (): void {
             $admin = User::factory()->adminRole()->create();
 
             $regular = User::factory()->regularRole()->create();
@@ -445,8 +446,8 @@ describe('restore', function () {
         });
     });
 
-    describe('staff', function () {
-        it('cannot restore itself', function () {
+    describe('staff', function (): void {
+        it('cannot restore itself', function (): void {
             $staff = User::factory()->staffRole()->create();
 
             $policy = new UserPolicy();
@@ -454,7 +455,7 @@ describe('restore', function () {
             expect($policy->restore($staff, $staff))->toBeFalse();
         });
 
-        it('cannot restore other staff', function () {
+        it('cannot restore other staff', function (): void {
             $staff = User::factory()->staffRole()->create();
 
             $otherStaff = User::factory()->staffRole()->create();
@@ -464,7 +465,7 @@ describe('restore', function () {
             expect($policy->restore($staff, $otherStaff))->toBeFalse();
         });
 
-        it('cannot restore admin', function () {
+        it('cannot restore admin', function (): void {
             $staff = User::factory()->staffRole()->create();
 
             $admin = User::factory()->adminRole()->create();
@@ -474,7 +475,7 @@ describe('restore', function () {
             expect($policy->restore($staff, $admin))->toBeFalse();
         });
 
-        it('can restore regular', function () {
+        it('can restore regular', function (): void {
             $staff = User::factory()->staffRole()->create();
 
             $regular = User::factory()->regularRole()->create();
@@ -485,8 +486,8 @@ describe('restore', function () {
         });
     });
 
-    describe('regular', function () {
-        it('cannot restore itself', function () {
+    describe('regular', function (): void {
+        it('cannot restore itself', function (): void {
             $regular = User::factory()->regularRole()->create();
 
             $policy = new UserPolicy();
@@ -494,7 +495,7 @@ describe('restore', function () {
             expect($policy->restore($regular, $regular))->toBeFalse();
         });
 
-        it('cannot restore other regular', function () {
+        it('cannot restore other regular', function (): void {
             $regular = User::factory()->regularRole()->create();
 
             $otherRegular = User::factory()->regularRole()->create();
@@ -504,7 +505,7 @@ describe('restore', function () {
             expect($policy->restore($regular, $otherRegular))->toBeFalse();
         });
 
-        it('cannot restore admin', function () {
+        it('cannot restore admin', function (): void {
             $regular = User::factory()->regularRole()->create();
 
             $admin = User::factory()->adminRole()->create();
@@ -514,7 +515,7 @@ describe('restore', function () {
             expect($policy->restore($regular, $admin))->toBeFalse();
         });
 
-        it('cannot restore staff', function () {
+        it('cannot restore staff', function (): void {
             $regular = User::factory()->regularRole()->create();
 
             $staff = User::factory()->staffRole()->create();
@@ -526,9 +527,9 @@ describe('restore', function () {
     });
 });
 
-describe('forceDelete', function () {
-    describe('admin', function () {
-        it('cannot force delete itself', function () {
+describe('forceDelete', function (): void {
+    describe('admin', function (): void {
+        it('cannot force delete itself', function (): void {
             $admin = User::factory()->adminRole()->create();
 
             $policy = new UserPolicy();
@@ -536,7 +537,7 @@ describe('forceDelete', function () {
             expect($policy->forceDelete($admin, $admin))->toBeFalse();
         });
 
-        it('cannot force delete other admin', function () {
+        it('cannot force delete other admin', function (): void {
             $admin = User::factory()->adminRole()->create();
 
             $otherAdmin = User::factory()->adminRole()->create();
@@ -546,7 +547,7 @@ describe('forceDelete', function () {
             expect($policy->forceDelete($admin, $otherAdmin))->toBeFalse();
         });
 
-        it('can force delete staff', function () {
+        it('can force delete staff', function (): void {
             $admin = User::factory()->adminRole()->create();
 
             $staff = User::factory()->staffRole()->create();
@@ -556,7 +557,7 @@ describe('forceDelete', function () {
             expect($policy->forceDelete($admin, $staff))->toBeTrue();
         });
 
-        it('can force delete regular', function () {
+        it('can force delete regular', function (): void {
             $admin = User::factory()->adminRole()->create();
 
             $regular = User::factory()->regularRole()->create();
@@ -567,8 +568,8 @@ describe('forceDelete', function () {
         });
     });
 
-    describe('staff', function () {
-        it('cannot force delete itself', function () {
+    describe('staff', function (): void {
+        it('cannot force delete itself', function (): void {
             $staff = User::factory()->staffRole()->create();
 
             $policy = new UserPolicy();
@@ -576,7 +577,7 @@ describe('forceDelete', function () {
             expect($policy->forceDelete($staff, $staff))->toBeFalse();
         });
 
-        it('cannot force delete other staff', function () {
+        it('cannot force delete other staff', function (): void {
             $staff = User::factory()->staffRole()->create();
 
             $otherStaff = User::factory()->staffRole()->create();
@@ -586,7 +587,7 @@ describe('forceDelete', function () {
             expect($policy->forceDelete($staff, $otherStaff))->toBeFalse();
         });
 
-        it('cannot force delete admin', function () {
+        it('cannot force delete admin', function (): void {
             $staff = User::factory()->staffRole()->create();
 
             $admin = User::factory()->adminRole()->create();
@@ -596,7 +597,7 @@ describe('forceDelete', function () {
             expect($policy->forceDelete($staff, $admin))->toBeFalse();
         });
 
-        it('cannot force delete regular', function () {
+        it('cannot force delete regular', function (): void {
             $staff = User::factory()->staffRole()->create();
 
             $regular = User::factory()->regularRole()->create();
@@ -607,8 +608,8 @@ describe('forceDelete', function () {
         });
     });
 
-    describe('regular', function () {
-        it('cannot force delete itself', function () {
+    describe('regular', function (): void {
+        it('cannot force delete itself', function (): void {
             $regular = User::factory()->regularRole()->create();
 
             $policy = new UserPolicy();
@@ -616,7 +617,7 @@ describe('forceDelete', function () {
             expect($policy->forceDelete($regular, $regular))->toBeFalse();
         });
 
-        it('cannot force delete other regular', function () {
+        it('cannot force delete other regular', function (): void {
             $regular = User::factory()->regularRole()->create();
 
             $otherRegular = User::factory()->regularRole()->create();
@@ -626,7 +627,7 @@ describe('forceDelete', function () {
             expect($policy->forceDelete($regular, $otherRegular))->toBeFalse();
         });
 
-        it('cannot force delete admin', function () {
+        it('cannot force delete admin', function (): void {
             $regular = User::factory()->regularRole()->create();
 
             $admin = User::factory()->adminRole()->create();
@@ -636,7 +637,7 @@ describe('forceDelete', function () {
             expect($policy->forceDelete($regular, $admin))->toBeFalse();
         });
 
-        it('cannot force delete staff', function () {
+        it('cannot force delete staff', function (): void {
             $regular = User::factory()->regularRole()->create();
 
             $staff = User::factory()->staffRole()->create();

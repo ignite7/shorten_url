@@ -9,18 +9,12 @@ use App\Models\User;
 
 final class UserPolicy
 {
-    private static function isAdminOrStaff(User $user): bool
-    {
-        return $user->role === UserRole::ADMIN->value
-            || $user->role === UserRole::STAFF->value;
-    }
-
     /**
      * Determine whether the user can view any models.
      */
     public function viewAny(User $user): bool
     {
-        return self::isAdminOrStaff($user);
+        return $this->isAdminOrStaff($user);
     }
 
     /**
@@ -32,7 +26,7 @@ final class UserPolicy
             return true;
         }
 
-        return self::isAdminOrStaff($user);
+        return $this->isAdminOrStaff($user);
     }
 
     /**
@@ -71,7 +65,7 @@ final class UserPolicy
         }
 
         // Admins and staff can update regular users
-        return self::isAdminOrStaff($user);
+        return $this->isAdminOrStaff($user);
     }
 
     /**
@@ -109,7 +103,7 @@ final class UserPolicy
         }
 
         // Admins and staff can delete regular users
-        return $model->role === UserRole::REGULAR->value && self::isAdminOrStaff($user);
+        return $model->role === UserRole::REGULAR->value && $this->isAdminOrStaff($user);
     }
 
     /**
@@ -157,5 +151,11 @@ final class UserPolicy
         }
 
         return $user->role === UserRole::ADMIN->value;
+    }
+
+    private function isAdminOrStaff(User $user): bool
+    {
+        return $user->role === UserRole::ADMIN->value
+            || $user->role === UserRole::STAFF->value;
     }
 }
