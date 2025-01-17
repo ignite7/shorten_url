@@ -18,9 +18,9 @@ use Spatie\DeletedModels\Models\Concerns\KeepsDeletedModels;
  * @property string $id
  * @property string $method
  * @property string $uri
- * @property Collection $query
- * @property Collection $headers
- * @property Collection $body
+ * @property Collection<int, string> $query
+ * @property Collection<int, string> $headers
+ * @property string $body
  * @property string $ip_address
  * @property string $user_agent
  * @property Url $url
@@ -30,7 +30,11 @@ use Spatie\DeletedModels\Models\Concerns\KeepsDeletedModels;
  */
 final class Request extends Model
 {
-    /** @use HasFactory<RequestFactory> */
+    /**
+     * @use HasFactory<RequestFactory>
+     *
+     * @phpstan-use SelfCastingModel<$this>
+     */
     use HasFactory, HasUlids, KeepsDeletedModels, SelfCastingModel;
 
     protected $fillable = [
@@ -51,11 +55,17 @@ final class Request extends Model
         'user_id',
     ];
 
+    /**
+     * @return BelongsTo<Url, $this>
+     */
     public function url(): BelongsTo
     {
         return $this->belongsTo(Url::class);
     }
 
+    /**
+     * @return BelongsTo<User, $this>
+     */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);

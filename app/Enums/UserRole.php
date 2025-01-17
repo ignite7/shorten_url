@@ -8,6 +8,9 @@ use App\Traits\EnumUtils;
 
 enum UserRole: string
 {
+    /**
+     * @phpstan-use EnumUtils<string>
+     */
     use EnumUtils;
 
     case ADMIN = 'admin';

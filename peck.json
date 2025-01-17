@@ -1,9 +1,12 @@
 {
-    "preset": "laravel",
-    "ignore": {
-        "words": [
-            "php"
-        ],
-        "paths": []
-    }
+  "preset": "laravel",
+  "ignore": {
+    "words": [
+      "php",
+      "phpstan",
+      "utils",
+      "signup"
+    ],
+    "paths": []
+  }
 }

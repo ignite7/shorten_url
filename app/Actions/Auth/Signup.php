@@ -8,6 +8,7 @@ use App\Enums\UserRole;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\Rules\Unique;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsController;
 
@@ -15,19 +16,28 @@ final class Signup
 {
     use AsController;
 
-    public function handle(array $data): User
+    public function handle(ActionRequest $request): User
     {
         return User::query()->create([
-            ...$data,
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
+            'email' => $request->email,
+            'password' => $request->password,
             'role' => UserRole::REGULAR->value,
         ]);
     }
 
+    /**
+     * @return array<int, string>
+     */
     public function getControllerMiddleware(): array
     {
         return ['guest'];
     }
 
+    /**
+     * @return array<string, list<Unique|string>>
+     */
     public function rules(): array
     {
         return [
@@ -41,8 +51,7 @@ final class Signup
 
     public function asController(ActionRequest $request): RedirectResponse
     {
-        $data = $request->except('password_confirmation');
-        $this->handle($data);
+        $this->handle($request);
 
         return to_route('dashboard');
     }

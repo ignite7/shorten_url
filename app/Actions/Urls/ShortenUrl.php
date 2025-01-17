@@ -9,7 +9,6 @@ use App\Helpers\FlashHelper;
 use App\Http\Middleware\ShortenUrlMiddleware;
 use App\Models\Url;
 use Illuminate\Contracts\Routing\ResponseFactory;
-use Illuminate\Foundation\Application;
 use Illuminate\Http\Response;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsController;
@@ -21,7 +20,7 @@ final class ShortenUrl
 
     public function handle(ActionRequest $request): Url
     {
-        $userId = $request->user()?->id ?? null;
+        $userId = $request->user()?->id;
 
         $url = Url::query()->create([
             ...$request->validated(),
@@ -33,11 +32,17 @@ final class ShortenUrl
         return $url;
     }
 
+    /**
+     * @return array<int, string>
+     */
     public function getControllerMiddleware(): array
     {
         return ['guest', ShortenUrlMiddleware::class];
     }
 
+    /**
+     * @return array<string, list<string>>
+     */
     public function rules(): array
     {
         return [
@@ -45,7 +50,7 @@ final class ShortenUrl
         ];
     }
 
-    public function asController(ActionRequest $request): Application|Response|ResponseFactory
+    public function asController(ActionRequest $request): Response|ResponseFactory
     {
         $this->handle($request);
 

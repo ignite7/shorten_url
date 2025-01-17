@@ -23,8 +23,8 @@ use Spatie\DeletedModels\Models\Concerns\KeepsDeletedModels;
  * @property string $first_name
  * @property string $last_name
  * @property string $email
- * @property Collection<Url> $urls
- * @property Collection<Request> $requests
+ * @property Collection<int, Url> $urls
+ * @property Collection<int, Request> $requests
  * @property string $password
  * @property ?string $remember_token
  * @property ?Carbon $email_verified_at
@@ -34,13 +34,17 @@ use Spatie\DeletedModels\Models\Concerns\KeepsDeletedModels;
  */
 final class User extends Authenticatable
 {
-    /** @use HasFactory<UserFactory> */
+    /**
+     * @use HasFactory<UserFactory>
+     *
+     * @phpstan-use SelfCastingModel<$this>
+     */
     use HasFactory, HasUlids, KeepsDeletedModels, Notifiable, SelfCastingModel;
 
     /**
      * The attributes that are mass assignable.
      *
-     * @var array<int, string>
+     * @var list<string>
      */
     protected $fillable = [
         'role',
@@ -53,7 +57,7 @@ final class User extends Authenticatable
     /**
      * The attributes that should be hidden for serialization.
      *
-     * @var array<int, string>
+     * @var list<string>
      */
     protected $hidden = [
         'id',
@@ -61,11 +65,17 @@ final class User extends Authenticatable
         'remember_token',
     ];
 
+    /**
+     * @return HasMany<Url, $this>
+     */
     public function urls(): HasMany
     {
         return $this->hasMany(Url::class);
     }
 
+    /**
+     * @return HasMany<Request, $this>
+     */
     public function requests(): HasMany
     {
         return $this->hasMany(Request::class);
@@ -92,7 +102,7 @@ final class User extends Authenticatable
     }
 
     /**
-     * @return Attribute<string>
+     * @return Attribute<non-falsy-string, never>
      */
     protected function fullName(): Attribute
     {

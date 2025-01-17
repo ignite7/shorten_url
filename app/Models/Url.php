@@ -19,13 +19,17 @@ use Spatie\DeletedModels\Models\Concerns\KeepsDeletedModels;
  * @property string $id
  * @property string $source
  * @property ?User $user
- * @property Collection<Request> $requests
+ * @property Collection<int, Request> $requests
  * @property ?Carbon $created_at
  * @property ?Carbon $updated_at
  */
 final class Url extends Model
 {
-    /** @use HasFactory<UrlFactory> */
+    /**
+     * @use HasFactory<UrlFactory>
+     *
+     * @phpstan-use SelfCastingModel<$this>
+     */
     use HasFactory, HasUlids, KeepsDeletedModels, SelfCastingModel;
 
     protected $fillable = [
@@ -38,11 +42,17 @@ final class Url extends Model
         'user_id',
     ];
 
+    /**
+     * @return BelongsTo<User, $this>
+     */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
+    /**
+     * @return HasMany<Request, $this>
+     */
     public function requests(): HasMany
     {
         return $this->hasMany(Request::class);

@@ -21,11 +21,6 @@ final class UserFactory extends Factory
     public const string REGULAR_EMAIL = 'regular@shortenurl.io';
 
     /**
-     * The current password being used by the factory.
-     */
-    private static ?string $password = null;
-
-    /**
      * Define the model's default state.
      *
      * @return array<string, mixed>
@@ -43,20 +38,14 @@ final class UserFactory extends Factory
         ];
     }
 
-    /**
-     * Indicate that the model's email address should be unverified.
-     */
-    public function unverified(): static
+    public function unverified(): self
     {
         return $this->state(fn (array $attributes): array => [
             'email_verified_at' => null,
         ]);
     }
 
-    /**
-     * @return $this
-     */
-    public function admin(): static
+    public function admin(): self
     {
         return $this->state(fn (array $attributes): array => [
             'role' => UserRole::ADMIN->value,
@@ -64,10 +53,7 @@ final class UserFactory extends Factory
         ]);
     }
 
-    /**
-     * @return $this
-     */
-    public function staff(): static
+    public function staff(): self
     {
         return $this->state(fn (array $attributes): array => [
             'role' => UserRole::STAFF->value,
@@ -75,10 +61,7 @@ final class UserFactory extends Factory
         ]);
     }
 
-    /**
-     * @return $this
-     */
-    public function regular(): static
+    public function regular(): self
     {
         return $this->state(fn (array $attributes): array => [
             'role' => UserRole::REGULAR->value,
@@ -86,10 +69,7 @@ final class UserFactory extends Factory
         ]);
     }
 
-    /**
-     * @return $this
-     */
-    public function regularRole(): static
+    public function regularRole(): self
     {
         return $this->state(fn (array $attributes): array => [
             'role' => UserRole::REGULAR->value,

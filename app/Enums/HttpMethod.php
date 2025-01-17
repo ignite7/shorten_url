@@ -9,6 +9,9 @@ use Symfony\Component\HttpFoundation\Request;
 
 enum HttpMethod: string
 {
+    /**
+     * @phpstan-use EnumUtils<string>
+     */
     use EnumUtils;
 
     case HEAD = Request::METHOD_HEAD;
