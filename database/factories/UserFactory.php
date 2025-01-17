@@ -69,6 +69,20 @@ final class UserFactory extends Factory
         ]);
     }
 
+    public function adminRole(): self
+    {
+        return $this->state(fn (array $attributes): array => [
+            'role' => UserRole::ADMIN->value,
+        ]);
+    }
+
+    public function staffRole(): self
+    {
+        return $this->state(fn (array $attributes): array => [
+            'role' => UserRole::STAFF->value,
+        ]);
+    }
+
     public function regularRole(): self
     {
         return $this->state(fn (array $attributes): array => [

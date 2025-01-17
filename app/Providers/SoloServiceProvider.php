@@ -32,9 +32,9 @@ final class SoloServiceProvider extends ServiceProvider
                 'Queue' => 'php artisan queue:listen',
                 'Flush' => 'sh entrypoints/flush.sh',
                 'Migrate & Seed' => 'php artisan migrate:refresh --seed',
-                'Code Fixer' => 'composer run code-fixer',
-                'PHPStan' => 'composer run phpstan',
-                'Pest' => 'composer run pest',
+                'Code Fixer' => 'composer code-fixer',
+                'PHPStan' => 'composer phpstan',
+                'Pest' => 'composer pest',
                 'Route List' => 'php artisan route:list',
             ])
             // FQCNs of trusted classes that can add commands.
