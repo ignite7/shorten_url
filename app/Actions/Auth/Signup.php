@@ -24,6 +24,7 @@ final class Signup
             'email' => $request->email,
             'password' => $request->password,
             'role' => UserRole::REGULAR->value,
+            'email_verified_at' => null,
         ]);
     }
 

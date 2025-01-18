@@ -23,8 +23,8 @@ final class ShortenUrl
         $userId = $request->user()?->id;
 
         $url = Url::query()->create([
-            ...$request->validated(),
             'user_id' => $userId,
+            'source' => $request->source,
         ]);
 
         StoreRequest::run($request, $url->id, $userId);
@@ -37,7 +37,7 @@ final class ShortenUrl
      */
     public function getControllerMiddleware(): array
     {
-        return ['guest', ShortenUrlMiddleware::class];
+        return [ShortenUrlMiddleware::class];
     }
 
     /**

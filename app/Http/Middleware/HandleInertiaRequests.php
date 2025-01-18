@@ -17,7 +17,9 @@ final class HandleInertiaRequests extends Middleware
      */
     public function version(Request $request): ?string
     {
+        // @codeCoverageIgnoreStart
         return parent::version($request);
+        // @codeCoverageIgnoreEnd
     }
 
     /**

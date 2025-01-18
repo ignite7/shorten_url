@@ -29,7 +29,7 @@ final class ShortenUrlMiddleware
                 ->whereDate('created_at', now())
                 ->count();
 
-            if ($requests > 5) {
+            if ($requests >= 5) {
                 return response(status: Response::HTTP_TOO_MANY_REQUESTS);
             }
         }

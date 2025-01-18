@@ -10,5 +10,3 @@ Route::name('urls.')
     ->group(static function (): void {
         Route::post('/', ShortenUrl::class)->name('store');
     });
-
-//Route::post('signup', Signup::class)->name('signup');
