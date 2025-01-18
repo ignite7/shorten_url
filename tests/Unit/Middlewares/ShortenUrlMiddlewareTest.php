@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 use App\Models\User;
 
-beforeEach(function () {
+beforeEach(function (): void {
     $this->route = route('urls.store', absolute: false);
 });
 
