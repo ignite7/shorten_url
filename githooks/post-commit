@@ -1,0 +1,20 @@
+#!/bin/bash
+
+printf "Running post-commit hook... 🚀"
+
+# Check if there are uncommitted changes in the working directory or index
+if [ -n "$(git status --porcelain)" ]; then
+    printf "New changes detected after the pre-commit hook 📑"
+
+    # Stage all changes
+    git add .
+
+    # Commit the changes with a specific message without triggering the pre-commit hook
+    git commit -m "chore: auto-save changes after pre-commit" --no-verify
+
+    printf "Changes committed with message: 'chore: auto-save changes after pre-commit' 📝"
+else
+    printf "No new changes detected after the pre-commit hook 🤷‍♂️"
+fi
+
+printf "Post-commit hook completed! 🎉"
