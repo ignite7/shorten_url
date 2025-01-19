@@ -148,7 +148,7 @@ describe('can run `ShortenUrl` action', function (): void {
             ['source' => $source]
         );
 
-        $request->setUserResolver(fn() => $admin);
+        $request->setUserResolver(fn () => $admin);
 
         $shortenUrl = Url::instance(ShortenUrl::run($request));
         $shortenUrlRequest = $shortenUrl->requests->first();
@@ -172,7 +172,7 @@ describe('can run `ShortenUrl` action', function (): void {
             ['source' => $source]
         );
 
-        $request->setUserResolver(fn() => $staff);
+        $request->setUserResolver(fn () => $staff);
 
         $shortenUrl = Url::instance(ShortenUrl::run($request));
         $shortenUrlRequest = $shortenUrl->requests->first();
@@ -196,7 +196,7 @@ describe('can run `ShortenUrl` action', function (): void {
             ['source' => $source]
         );
 
-        $request->setUserResolver(fn() => $regular);
+        $request->setUserResolver(fn () => $regular);
 
         $shortenUrl = Url::instance(ShortenUrl::run($request));
         $shortenUrlRequest = $shortenUrl->requests->first();
