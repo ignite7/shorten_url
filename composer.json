@@ -76,18 +76,18 @@
     "peck": "@php vendor/bin/peck",
     "code-fixer": [
       "@pint",
+      "@rector",
       "npm run prettier:lint"
     ],
-    "dbdocs-login": "dbdocs login",
-    "dbdocs-build": "dbdocs build database.dbml --project shorten_url",
     "test": [
       "@pest",
       "@pest:type-coverage",
       "@phpstan",
-      "@rector",
-      "@code-fixer",
-      "@peck"
-    ]
+      "@peck",
+      "@code-fixer"
+    ],
+    "dbdocs-login": "dbdocs login",
+    "dbdocs-build": "dbdocs build database.dbml --project shorten_url"
   },
   "extra": {
     "laravel": {

@@ -31,17 +31,15 @@ final class SoloServiceProvider extends ServiceProvider
             // Commands that auto start.
             ->addCommands([
                 'Vite' => 'npm run dev',
-                EnhancedTailCommand::make('Logs', 'tail -f -n 100 '.storage_path('logs/laravel.log')),
+                EnhancedTailCommand::make('Logs', 'tail -f -n 100 ' . storage_path('logs/laravel.log')),
             ])
             // Not auto-started
             ->addLazyCommands([
                 'Queue' => 'php artisan queue:listen',
-                'Flush' => 'sh entrypoints/flush.sh',
-                'Migrate & Seed' => 'php artisan migrate:refresh --seed',
                 'Code Fixer' => 'composer code-fixer',
-                'PHPStan' => 'composer phpstan',
-                'Pest' => 'composer pest',
-                'Route List' => 'php artisan route:list',
+                'Migrate & Seed' => 'php artisan migrate:refresh --seed',
+                'Flush' => 'sh entrypoints/flush.sh',
+                'Route List' => 'php artisan route:list -v',
             ])
             // FQCNs of trusted classes that can add commands.
             ->allowCommandsAddedFrom([
