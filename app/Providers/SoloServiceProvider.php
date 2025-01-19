@@ -10,6 +10,9 @@ use Illuminate\Support\ServiceProvider;
 
 final class SoloServiceProvider extends ServiceProvider
 {
+    /**
+     * @return void
+     */
     public function register(): void
     {
         // Solo may not (should not!) exist in prod, so we have to
@@ -19,6 +22,9 @@ final class SoloServiceProvider extends ServiceProvider
         }
     }
 
+    /**
+     * @return void
+     */
     public function configure(): void
     {
         Solo::useTheme('dark')
@@ -43,6 +49,9 @@ final class SoloServiceProvider extends ServiceProvider
             ]);
     }
 
+    /**
+     * @return void
+     */
     public function boot(): void
     {
         //

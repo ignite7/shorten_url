@@ -6,6 +6,7 @@ namespace Database\Factories;
 
 use App\Enums\UserRole;
 use App\Models\User;
+use Database\Factories\Traits\RefreshOnCreate;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
@@ -14,6 +15,11 @@ use Illuminate\Support\Str;
  */
 final class UserFactory extends Factory
 {
+    /**
+     * @use RefreshOnCreate<User>
+     */
+    use RefreshOnCreate;
+
     public const string ADMIN_EMAIL = 'admin@shortenurl.io';
 
     public const string STAFF_EMAIL = 'staff@shortenurl.io';

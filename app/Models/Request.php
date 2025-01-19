@@ -37,6 +37,9 @@ final class Request extends Model
      */
     use HasFactory, HasUlids, KeepsDeletedModels, SelfCastingModel;
 
+    /**
+     * @var list<string>
+     */
     protected $fillable = [
         'url_id',
         'user_id',
@@ -49,6 +52,9 @@ final class Request extends Model
         'user_agent',
     ];
 
+    /**
+     * @var list<string>
+     */
     protected $hidden = [
         'id',
         'url_id',

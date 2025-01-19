@@ -20,6 +20,10 @@ final class ShortenUrl
 {
     use AsController, AsObject;
 
+    /**
+     * @param  ActionRequest  $request
+     * @return Url
+     */
     public function handle(ActionRequest $request): Url
     {
         return DB::transaction(static function () use ($request): Url {
@@ -54,6 +58,10 @@ final class ShortenUrl
         ];
     }
 
+    /**
+     * @param  ActionRequest  $request
+     * @return Response|ResponseFactory
+     */
     public function asController(ActionRequest $request): Response|ResponseFactory
     {
         if ($request->user()?->cannot('create', Url::class)) {

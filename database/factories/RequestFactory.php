@@ -8,6 +8,7 @@ use App\Enums\HttpMethod;
 use App\Models\Request;
 use App\Models\Url;
 use App\Models\User;
+use Database\Factories\Traits\RefreshOnCreate;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -15,6 +16,11 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 final class RequestFactory extends Factory
 {
+    /**
+     * @use RefreshOnCreate<Request>
+     */
+    use RefreshOnCreate;
+
     /**
      * Define the model's default state.
      *

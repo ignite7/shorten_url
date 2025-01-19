@@ -7,7 +7,7 @@ namespace App\Policies;
 use App\Enums\UserRole;
 use App\Models\User;
 
-final class UrlPolicy
+final readonly class UrlPolicy
 {
     /**
      * Determine whether the user can create models.

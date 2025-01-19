@@ -32,11 +32,17 @@ final class Url extends Model
      */
     use HasFactory, HasUlids, KeepsDeletedModels, SelfCastingModel;
 
+    /**
+     * @var list<string>
+     */
     protected $fillable = [
         'user_id',
         'source',
     ];
 
+    /**
+     * @var list<string>
+     */
     protected $hidden = [
         'id',
         'user_id',

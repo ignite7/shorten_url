@@ -17,6 +17,8 @@ final class AppServiceProvider extends ServiceProvider
 {
     /**
      * Register any application services.
+     *
+     * @return void
      */
     public function register(): void
     {
@@ -25,6 +27,8 @@ final class AppServiceProvider extends ServiceProvider
 
     /**
      * Bootstrap any application services.
+     *
+     * @return void
      */
     public function boot(): void
     {
@@ -36,31 +40,49 @@ final class AppServiceProvider extends ServiceProvider
         $this->configureVite();
     }
 
+    /**
+     * @return void
+     */
     private function configureCommands(): void
     {
         DB::prohibitDestructiveCommands($this->app->isProduction());
     }
 
+    /**
+     * @return void
+     */
     private function configureModels(): void
     {
         Model::shouldBeStrict();
     }
 
+    /**
+     * @return void
+     */
     private function configureDates(): void
     {
         Date::use(CarbonImmutable::class);
     }
 
+    /**
+     * @return void
+     */
     private function configurePasswordValidation(): void
     {
         Password::defaults(static fn () => Password::min(12)->uncompromised());
     }
 
+    /**
+     * @return void
+     */
     private function configureUrls(): void
     {
         URL::forceHttps($this->app->isProduction());
     }
 
+    /**
+     * @return void
+     */
     private function configureVite(): void
     {
         // Vite::prefetch(concurrency: 3);

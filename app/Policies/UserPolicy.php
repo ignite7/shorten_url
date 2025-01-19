@@ -7,10 +7,11 @@ namespace App\Policies;
 use App\Enums\UserRole;
 use App\Models\User;
 
-final class UserPolicy
+final readonly class UserPolicy
 {
     /**
-     * Determine whether the user can view any models.
+     * @param  User  $user
+     * @return bool
      */
     public function viewAny(User $user): bool
     {
@@ -18,7 +19,9 @@ final class UserPolicy
     }
 
     /**
-     * Determine whether the user can view the model.
+     * @param  User  $user
+     * @param  User  $model
+     * @return bool
      */
     public function view(User $user, User $model): bool
     {
@@ -30,7 +33,8 @@ final class UserPolicy
     }
 
     /**
-     * Determine whether the user can create models.
+     * @param  User  $user
+     * @return bool
      */
     public function create(User $user): bool
     {
@@ -38,7 +42,9 @@ final class UserPolicy
     }
 
     /**
-     * Determine whether the user can update the model.
+     * @param  User  $user
+     * @param  User  $model
+     * @return bool
      */
     public function update(User $user, User $model): bool
     {
@@ -69,7 +75,9 @@ final class UserPolicy
     }
 
     /**
-     * Determine whether the user can delete the model.
+     * @param  User  $user
+     * @param  User  $model
+     * @return bool
      */
     public function delete(User $user, User $model): bool
     {
@@ -107,7 +115,9 @@ final class UserPolicy
     }
 
     /**
-     * Determine whether the user can restore the model.
+     * @param  User  $user
+     * @param  User  $model
+     * @return bool
      */
     public function restore(User $user, User $model): bool
     {
@@ -138,7 +148,9 @@ final class UserPolicy
     }
 
     /**
-     * Determine whether the user can permanently delete the model.
+     * @param  User  $user
+     * @param  User  $model
+     * @return bool
      */
     public function forceDelete(User $user, User $model): bool
     {
@@ -153,6 +165,10 @@ final class UserPolicy
         return $user->role === UserRole::ADMIN->value;
     }
 
+    /**
+     * @param  User  $user
+     * @return bool
+     */
     private function isAdminOrStaff(User $user): bool
     {
         return $user->role === UserRole::ADMIN->value

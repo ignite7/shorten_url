@@ -12,6 +12,12 @@ final class StoreRequest
 {
     use AsObject;
 
+    /**
+     * @param  ActionRequest  $request
+     * @param  string  $urlId
+     * @param  string|null  $userId
+     * @return Request
+     */
     public function handle(ActionRequest $request, string $urlId, ?string $userId = null): Request
     {
         return Request::query()->create([

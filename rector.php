@@ -3,6 +3,8 @@
 declare(strict_types=1);
 
 use Rector\Config\RectorConfig;
+use Rector\DeadCode\Rector\ClassMethod\RemoveUselessParamTagRector;
+use Rector\DeadCode\Rector\ClassMethod\RemoveUselessReturnTagRector;
 
 return RectorConfig::configure()
     ->withPaths([
@@ -12,6 +14,10 @@ return RectorConfig::configure()
         __DIR__.'/database',
         __DIR__.'/routes',
         __DIR__.'/tests',
+    ])
+    ->withSkip([
+        RemoveUselessParamTagRector::class,
+        RemoveUselessReturnTagRector::class,
     ])
     ->withPreparedSets(
         deadCode: true,

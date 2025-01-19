@@ -11,13 +11,18 @@ use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Unique;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsController;
+use Lorisleiva\Actions\Concerns\AsObject;
 
 // TODO: add tests when working on the feature
 // @codeCoverageIgnoreStart
 final class Signup
 {
-    use AsController;
+    use AsController, AsObject;
 
+    /**
+     * @param  ActionRequest  $request
+     * @return User
+     */
     public function handle(ActionRequest $request): User
     {
         return User::query()->create([
@@ -31,7 +36,7 @@ final class Signup
     }
 
     /**
-     * @return array<int, string>
+     * @return string[]
      */
     public function getControllerMiddleware(): array
     {
@@ -52,6 +57,10 @@ final class Signup
         ];
     }
 
+    /**
+     * @param  ActionRequest  $request
+     * @return RedirectResponse
+     */
     public function asController(ActionRequest $request): RedirectResponse
     {
         $this->handle($request);
