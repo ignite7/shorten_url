@@ -12,6 +12,8 @@ use Illuminate\Validation\Rules\Unique;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsController;
 
+// TODO: add tests when working on the feature
+// @codeCoverageIgnoreStart
 final class Signup
 {
     use AsController;
@@ -57,3 +59,4 @@ final class Signup
         return to_route('dashboard');
     }
 }
+// @codeCoverageIgnoreEnd

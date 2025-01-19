@@ -12,7 +12,7 @@ final class StoreRequest
 {
     use AsObject;
 
-    public function handle(ActionRequest $request, string $urlId, ?string $userId): Request
+    public function handle(ActionRequest $request, string $urlId, ?string $userId = null): Request
     {
         return Request::query()->create([
             'url_id' => $urlId,

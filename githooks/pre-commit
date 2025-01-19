@@ -3,7 +3,7 @@
 echo "Running pre-commit hook..."
 
 # Command to run before committing
-docker exec app composer pre-commit
+docker exec app composer test
 
 # If the command fails, exit with a non-zero status to abort the commit
 if [ $? -ne 0 ]; then
