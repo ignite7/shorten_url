@@ -29,7 +29,7 @@ final class RequestFactory extends Factory
             'uri' => fake()->url(),
             'query' => collect(),
             'headers' => collect(),
-            'body' => fake()->text(),
+            'body' => collect(),
             'ip_address' => fake()->randomElement([fake()->ipv4(), fake()->ipv6()]),
             'user_agent' => fake()->userAgent(),
         ];

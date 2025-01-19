@@ -14,7 +14,7 @@ it('can get the user in an array format', function (): void {
         'uri' => $request->uri,
         'query' => $request->query->toArray(),
         'headers' => $request->headers->toArray(),
-        'body' => $request->body,
+        'body' => $request->body->toArray(),
         'ip_address' => $request->ip_address,
         'user_agent' => $request->user_agent,
         'updated_at' => $request->updated_at?->toISOString(),

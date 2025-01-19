@@ -22,7 +22,7 @@ return new class extends Migration
             $table->longText('uri');
             $table->json('query')->default(collect());
             $table->json('headers')->default(collect());
-            $table->longText('body')->nullable()->default(null);
+            $table->json('body')->default(collect());
             $table->ipAddress();
             $table->longText('user_agent')->nullable()->default(null);
             $table->timestamps();

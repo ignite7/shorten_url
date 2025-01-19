@@ -20,7 +20,7 @@ use Spatie\DeletedModels\Models\Concerns\KeepsDeletedModels;
  * @property string $uri
  * @property Collection<int, string> $query
  * @property Collection<int, string> $headers
- * @property string $body
+ * @property Collection<int, string> $body
  * @property string $ip_address
  * @property string $user_agent
  * @property Url $url
@@ -81,7 +81,7 @@ final class Request extends Model
             'uri' => 'string',
             'query' => 'collection',
             'headers' => 'collection',
-            'body' => 'string',
+            'body' => 'collection',
             'ip_address' => 'string',
             'user_agent' => 'string',
             'created_at' => 'datetime',

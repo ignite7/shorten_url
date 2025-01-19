@@ -10,26 +10,30 @@ use App\Http\Middleware\ShortenUrlMiddleware;
 use App\Models\Url;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsController;
+use Lorisleiva\Actions\Concerns\AsObject;
 use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
 final class ShortenUrl
 {
-    use AsController;
+    use AsController, AsObject;
 
     public function handle(ActionRequest $request): Url
     {
-        $userId = $request->user()?->id;
+        return DB::transaction(static function () use ($request): Url {
+            $userId = $request->user()?->id;
 
-        $url = Url::query()->create([
-            'user_id' => $userId,
-            'source' => $request->source,
-        ]);
+            $url = Url::query()->create([
+                'user_id' => $userId,
+                'source' => $request->source,
+            ]);
 
-        StoreRequest::run($request, $url->id, $userId);
+            StoreRequest::run($request, $url->id, $userId);
 
-        return $url;
+            return $url;
+        });
     }
 
     /**
@@ -52,6 +56,10 @@ final class ShortenUrl
 
     public function asController(ActionRequest $request): Response|ResponseFactory
     {
+        if ($request->user()?->cannot('create', Url::class)) {
+            abort(ResponseAlias::HTTP_UNAUTHORIZED);
+        }
+
         $this->handle($request);
 
         FlashHelper::message('URL created successfully!', FlashMessageType::SUCCESS);

@@ -18,10 +18,10 @@ final class StoreRequest
             'url_id' => $urlId,
             'user_id' => $userId,
             'method' => $request->method(),
-            'uri' => $request->uri(),
+            'uri' => $request->fullUrl(),
             'query' => collect($request->query->all()),
             'headers' => collect($request->headers->all()),
-            'body' => $request->getContent(),
+            'body' => collect($request->all()),
             'ip_address' => $request->ip(),
             'user_agent' => $request->userAgent(),
         ]);

@@ -26,12 +26,34 @@ it('cannot shorten a URL if the user is not authenticated and has made more than
         ->assertTooManyRequests();
 });
 
-it('can have more than 5 requests per day if the user is authenticated', function (): void {
-    $user = User::factory()->create();
+describe('unlimited requests per day if the user is authenticated', function (): void {
+    it('cannot have unlimited requests for admin user', function (): void {
+        $user = User::factory()->adminRole()->create();
 
-    for ($i = 0; $i < 10; $i++) {
-        $this->actingAs($user)
-            ->post($this->route, ['source' => fake()->url()])
-            ->assertCreated();
-    }
+        for ($i = 0; $i < 10; $i++) {
+            $this->actingAs($user)
+                ->post($this->route, ['source' => fake()->url()])
+                ->assertUnauthorized();
+        }
+    });
+
+    it('cannot have unlimited requests for staff user', function (): void {
+        $user = User::factory()->staffRole()->create();
+
+        for ($i = 0; $i < 10; $i++) {
+            $this->actingAs($user)
+                ->post($this->route, ['source' => fake()->url()])
+                ->assertUnauthorized();
+        }
+    });
+
+    it('can have unlimited request for regular user', function (): void {
+        $user = User::factory()->regularRole()->create();
+
+        for ($i = 0; $i < 10; $i++) {
+            $this->actingAs($user)
+                ->post($this->route, ['source' => fake()->url()])
+                ->assertCreated();
+        }
+    });
 });
