@@ -1,6 +1,6 @@
 #!/bin/bash
 
-printf "Running pre-commit hook... 🚀"
+printf "Running pre-commit hook... 🚀 \n"
 
 # Command to run before committing
 docker exec app composer test
@@ -8,8 +8,8 @@ docker exec app composer test
 # If the command fails, exit with a non-zero status to abort the commit
 # shellcheck disable=SC2181
 if [ $? -ne 0 ]; then
-    printf "Pre-commit hook failed. Fix the issues and try again. 🛑"
+    printf "Pre-commit hook failed. Fix the issues and try again. 🛑 \n"
     exit 1
 fi
 
-printf "Pre-commit hook completed! 🎉"
+printf "Pre-commit hook completed! 🎉 \n"
