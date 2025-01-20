@@ -1,20 +1,21 @@
 #!/bin/bash
 
-printf "Running post-commit hook... 🚀 \n"
+# shellcheck disable=SC2028
+echo "Running post-commit hook... 🚀\n"
 
 # Check if there are uncommitted changes in the working directory or index
 if [ -n "$(git status --porcelain)" ]; then
-    printf "New changes detected after the pre-commit hook 📑 \n"
+    echo "New changes detected after the pre-commit hook 📑\n"
 
     # Stage all changes
     git add .
 
     # Commit the changes with a specific message without triggering the pre-commit hook
-    git commit -m "chore: auto-save changes after pre-commit" --no-verify
+    git commit -m "style: auto-save changes after pre-commit" --no-verify
 
-    printf "Changes committed with message: 'chore: auto-save changes after pre-commit' 📝 \n"
+    echo "Changes committed with message: 'style: auto-save changes after pre-commit' 📝\n"
 else
-    printf "No new changes detected after the pre-commit hook 🤷‍♂️ \n"
+    echo "No new changes detected after the pre-commit hook 🤷‍♂️\n"
 fi
 
-printf "Post-commit hook completed! 🎉 \n"
+echo "Post-commit hook completed! 🎉\n"
