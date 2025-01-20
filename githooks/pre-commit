@@ -1,16 +1,15 @@
 #!/bin/bash
 
-# shellcheck disable=SC2028
-echo -e "Running pre-commit hook... 🚀\n"
+printf "Running pre-commit hook... 🚀\n"
 
 # Command to run before committing
 docker exec app composer test
 
-# If the command fails, exit with a non-zero status to abort the commit
 # shellcheck disable=SC2181
+# If the command fails, exit with a non-zero status to abort the commit
 if [ $? -ne 0 ]; then
-    echo -e "Pre-commit hook failed. Fix the issues and try again. 🛑\n"
+    printf -e "Pre-commit hook failed. Fix the issues and try again. 🛑\n"
     exit 1
 fi
 
-echo -e "Pre-commit hook completed! 🎉\n"
+printf -e "Pre-commit hook completed! 🎉\n"
