@@ -8,8 +8,8 @@ docker exec app composer test
 # shellcheck disable=SC2181
 # If the command fails, exit with a non-zero status to abort the commit
 if [ $? -ne 0 ]; then
-    printf -e "Pre-commit hook failed. Fix the issues and try again. 🛑\n"
+    printf "Pre-commit hook failed. Fix the issues and try again 🛑\n"
     exit 1
 fi
 
-printf -e "Pre-commit hook completed! 🎉\n"
+printf "Pre-commit hook completed! 🎉\n"
