@@ -1,10 +1,12 @@
 #!/bin/bash
 
+COMMIT_MSG="style: auto-save changes after pre-commit git hook"
+
 printf "Running post-commit hook... 🚀 \n\n"
 
 # Prevent recursive triggering by checking the commit message or setting an environment variable
-if [[ "$(git log -1 --pretty=%B)" == "style: auto-save changes after pre-commit git hook" ]]; then
-    printf "Skipping post-commit hook to avoid recursion... 🛑 \n\n"
+if [[ "$(git log -1 --pretty=%B)" == "$COMMIT_MSG" ]]; then
+    printf "Prevent rerunning the post-commit hook to avoid recursive triggering 🔄 \n\n"
     exit 0
 fi
 
@@ -15,10 +17,10 @@ if [ -n "$(git status --porcelain)" ]; then
     # Stage all changes
     git add .
 
-    # Commit the changes with a specific message without triggering the pre-commit hook
-    git commit -m "style: auto-save changes after pre-commit git hook" --no-verify
+    # Commit the changes with the predefined message without triggering the pre-commit hook
+    git commit -m "$COMMIT_MSG" --no-verify
 
-    printf "Changes committed with message: 'style: auto-save changes after pre-commit git hook' 📝 \n\n"
+    printf "Changes committed with message: '%s' 📝 \n\n" "$COMMIT_MSG"
 else
     printf "No new changes detected after the pre-commit hook 🤷‍♂️ \n\n"
 fi
