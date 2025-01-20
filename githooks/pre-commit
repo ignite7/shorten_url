@@ -12,4 +12,4 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
-printf "Pre-commit hook completed! 🎉\n"
+printf "Pre-commit hook completed! ✅\n"

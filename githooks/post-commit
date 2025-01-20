@@ -17,4 +17,4 @@ else
     printf "No new changes detected after the pre-commit hook 🤷‍♂️\n"
 fi
 
-printf "Post-commit hook completed! 🎉\n"
+printf "Post-commit hook completed! ✅\n"
