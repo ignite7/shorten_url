@@ -2,6 +2,12 @@
 
 printf "Running post-commit hook... 🚀 \n\n"
 
+# Prevent recursive triggering by checking the commit message or setting an environment variable
+if [[ "$(git log -1 --pretty=%B)" == "style: auto-save changes after pre-commit git hook" ]]; then
+    printf "Skipping post-commit hook to avoid recursion... 🛑 \n\n"
+    exit 0
+fi
+
 # Check if there are uncommitted changes in the working directory or index
 if [ -n "$(git status --porcelain)" ]; then
     printf "New changes detected after the pre-commit hook 📑 \n\n"
