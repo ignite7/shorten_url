@@ -15,7 +15,7 @@ createServer((page) =>
     resolve: (name: string) => {
       const pages: Record<string, DefineComponent> = import.meta.glob(
         './pages/**/*.vue',
-        { eager: true },
+        { eager: true }
       );
 
       return InertiaAppHelper.resolve(name, pages);
@@ -28,5 +28,5 @@ createServer((page) =>
           location: new URL(page.props.ziggy.location),
         });
     },
-  }),
+  })
 );
