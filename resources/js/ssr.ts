@@ -1,7 +1,6 @@
 import InertiaAppHelper from '@helpers/inertiaAppHelper';
 import { createInertiaApp } from '@inertiajs/vue3';
 import createServer from '@inertiajs/vue3/server';
-import '@styles/index.module.css';
 import { renderToString } from '@vue/server-renderer';
 import { createSSRApp, DefineComponent, h } from 'vue';
 import { ZiggyVue } from '../../vendor/tightenco/ziggy';
@@ -16,7 +15,7 @@ createServer((page) =>
     resolve: (name: string) => {
       const pages: Record<string, DefineComponent> = import.meta.glob(
         './pages/**/*.vue',
-        { eager: true }
+        { eager: true },
       );
 
       return InertiaAppHelper.resolve(name, pages);
@@ -29,5 +28,5 @@ createServer((page) =>
           location: new URL(page.props.ziggy.location),
         });
     },
-  })
+  }),
 );
