@@ -1,3 +1,63 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  :root {
+    --white: #ffffff;
+    --black: #000000;
+    --font-size-h1: 4rem;
+    --font-size-h2: 3.2rem;
+    --font-size-h3: 2.8rem;
+    --font-size-h4: 2.4rem;
+    --font-size-h5: 2rem;
+    --font-size-h6: 1.6rem;
+    --font-size-p: 1.6rem;
+  }
+
+  html {
+    font-size: 62.5%; /* 1rem = 10px */
+    box-sizing: border-box;
+  }
+
+  *, *::before, *::after {
+    box-sizing: inherit;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    font-size: 1.6rem;
+    line-height: 1.5;
+    color: var(--black);
+  }
+
+  #app {
+    margin: auto 1.2rem;
+  }
+
+  h1 {
+    font-size: var(--font-size-h1);
+  }
+
+  h2 {
+    font-size: var(--font-size-h2);
+  }
+
+  h3 {
+    font-size: var(--font-size-h3);
+  }
+
+  h4 {
+    font-size: var(--font-size-h4);
+  }
+
+  h5 {
+    font-size: var(--font-size-h5);
+  }
+
+  h6,
+  p {
+    font-size: var(--font-size-p);
+  }
+}

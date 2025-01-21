@@ -15,11 +15,11 @@
       "ziggy-js": [
         "./vendor/tightenco/ziggy"
       ],
-      "@styles": [
-        "./resources/js/assets/styles"
+      "@components": [
+        "./resources/js/components"
       ],
-      "@styles/*": [
-        "./resources/js/assets/styles/*"
+      "@components/*": [
+        "./resources/js/components/*"
       ],
       "@helpers": [
         "./resources/js/helpers"

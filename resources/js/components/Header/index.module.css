@@ -1,0 +1,20 @@
+.header {
+  display: flex;
+  width: 100%;
+  height: 6rem;
+
+  .logo {
+    display: flex;
+    align-items: center;
+    width: 30%;
+    font-size: var(--font-size-p);
+  }
+
+  .buttons {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    width: 70%;
+    gap: 1.2rem;
+  }
+}

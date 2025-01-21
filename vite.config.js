@@ -38,7 +38,7 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      '@styles': path.resolve(__dirname, 'resources/js/assets/styles'),
+      '@components': path.resolve(__dirname, 'resources/js/components'),
       '@helpers': path.resolve(__dirname, 'resources/js/helpers'),
       '@interfaces': path.resolve(__dirname, 'resources/js/interfaces'),
       '@layouts': path.resolve(__dirname, 'resources/js/layouts'),

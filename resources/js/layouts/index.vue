@@ -1,10 +1,13 @@
 <script setup lang="ts">
+import Footer from '@components/Footer/index.vue';
+import Header from '@components/Header/index.vue';
 import { usePage } from '@inertiajs/vue3';
 
 const { flash } = usePage().props;
 </script>
 
 <template>
+  <Header />
   <main class="main">
     <!-- Flash message -->
     <!-- TODO: Create a component for this -->
@@ -16,4 +19,5 @@ const { flash } = usePage().props;
     </div>
     <slot></slot>
   </main>
+  <Footer />
 </template>
