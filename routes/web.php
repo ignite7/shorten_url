@@ -8,4 +8,4 @@ Route::get('/', static fn () => inertia('Home', [
     'name' => 'Kai',
 ]))->name('home');
 
-require __DIR__ . '/guest.php';
+require __DIR__.'/guest.php';
