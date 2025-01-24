@@ -1,6 +1,6 @@
 import InertiaAppHelper from '@helpers/inertiaAppHelper';
 import { createInertiaApp } from '@inertiajs/vue3';
-import { createApp, DefineComponent, h } from 'vue';
+import { createSSRApp, DefineComponent, h } from 'vue';
 import { ZiggyVue } from '../../vendor/tightenco/ziggy';
 import '../css/app.css';
 import './bootstrap';
@@ -12,13 +12,13 @@ createInertiaApp({
   resolve: (name: string) => {
     const pages: Record<string, DefineComponent> = import.meta.glob(
       './pages/**/*.vue',
-      { eager: true }
+      { eager: true },
     );
 
     return InertiaAppHelper.resolve(name, pages);
   },
   setup({ el, App, props, plugin }) {
-    createApp({ render: () => h(App, props) })
+    createSSRApp({ render: () => h(App, props) })
       .use(plugin)
       .use(ZiggyVue)
       .mount(el);
