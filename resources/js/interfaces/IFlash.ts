@@ -1,5 +1,5 @@
 interface IFlash {
-  message: string;
+  message: string | null;
   type: 'success' | 'info' | 'warning' | 'error';
 }
 
