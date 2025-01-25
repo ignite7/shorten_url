@@ -1,9 +1,12 @@
+// noinspection ES6PreferShortImport
+
 import InertiaAppHelper from '@/helpers/inertiaAppHelper';
 import PageModuleType from '@/types/PageModuleType';
 import { createInertiaApp } from '@inertiajs/react';
 import createServer from '@inertiajs/react/server';
 import ReactDOMServer from 'react-dom/server';
-import { route, RouteName } from 'ziggy-js';
+import { RouteName } from 'ziggy-js';
+import { route } from '../../vendor/tightenco/ziggy';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Shorten URL';
 
@@ -27,5 +30,5 @@ createServer((page) =>
 
       return <App {...props} />;
     },
-  })
+  }),
 );
