@@ -8,11 +8,8 @@ interface IProps {
 }
 
 export default function Layout({ children }: IProps) {
-  const {
-    props: { flash },
-    component,
-  } = usePage();
-  const { message, type } = flash;
+  const { props, component } = usePage();
+  const { message, type } = props.flash || {};
 
   return (
     <>
