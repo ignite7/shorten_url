@@ -7,6 +7,8 @@ import InertiaAppHelper from '@/helpers/inertiaAppHelper';
 import PageModuleType from '@/types/PageModuleType';
 import { createInertiaApp } from '@inertiajs/react';
 import { createRoot, hydrateRoot } from 'react-dom/client';
+import { MediaQueryProvider } from '@/context/MediaQueryContext';
+import { ReactNode } from 'react';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Shorten URL';
 
@@ -17,12 +19,18 @@ createInertiaApp({
     return InertiaAppHelper.resolve(name, pages);
   },
   setup({ el, App, props }) {
+    const children: ReactNode = (
+      <MediaQueryProvider>
+        <App {...props} />
+      </MediaQueryProvider>
+    );
+
     if (import.meta.env.SSR) {
-      hydrateRoot(el, <App {...props} />);
+      hydrateRoot(el, children);
       return;
     }
 
-    createRoot(el).render(<App {...props} />);
+    createRoot(el).render(children);
   },
   progress: {
     color: '#4B5563',

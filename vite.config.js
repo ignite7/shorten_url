@@ -28,14 +28,4 @@ export default defineConfig({
       localsConvention: 'camelCase',
     },
   },
-  // resolve: {
-  //   alias: {
-  //     '@components': path.resolve(__dirname, 'resources/js/components'),
-  //     '@helpers': path.resolve(__dirname, 'resources/js/helpers'),
-  //     '@interfaces': path.resolve(__dirname, 'resources/js/interfaces'),
-  //     '@layouts': path.resolve(__dirname, 'resources/js/layouts'),
-  //     '@types': path.resolve(__dirname, 'resources/js/types'),
-  //     '@pages': path.resolve(__dirname, 'resources/js/pages'),
-  //   },
-  // },
 });
