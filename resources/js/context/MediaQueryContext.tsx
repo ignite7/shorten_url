@@ -20,7 +20,8 @@ const MediaQueryContext = createContext<IMediaQueryContext>({
   isDesktop: false,
 });
 
-export const useMediaQueryContext = (): IMediaQueryContext => useContext(MediaQueryContext);
+export const useMediaQueryContext = (): IMediaQueryContext =>
+  useContext(MediaQueryContext);
 
 export const MediaQueryProvider = ({ children }: IMediaQueryProvider) => {
   const isMobile = useMediaQuery({ maxWidth: BREAKPOINT_MD - 1 }); // Mobile: 0px - 767px

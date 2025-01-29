@@ -1,7 +1,7 @@
 import { Button } from '@/components/ui/button';
+import { useMediaQueryContext } from '@/context/MediaQueryContext';
 import { LogIn } from 'lucide-react';
 import styles from './index.module.css';
-import { useMediaQueryContext } from '@/context/MediaQueryContext';
 
 export default function Header() {
   const { isMobile } = useMediaQueryContext();

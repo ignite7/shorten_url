@@ -3,12 +3,12 @@
 import '../css/app.css';
 import './bootstrap';
 
+import { MediaQueryProvider } from '@/context/MediaQueryContext';
 import InertiaAppHelper from '@/helpers/inertiaAppHelper';
 import PageModuleType from '@/types/PageModuleType';
 import { createInertiaApp } from '@inertiajs/react';
-import { createRoot, hydrateRoot } from 'react-dom/client';
-import { MediaQueryProvider } from '@/context/MediaQueryContext';
 import { ReactNode } from 'react';
+import { createRoot, hydrateRoot } from 'react-dom/client';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Shorten URL';
 

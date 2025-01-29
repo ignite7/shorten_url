@@ -1,5 +1,6 @@
 // noinspection ES6PreferShortImport
 
+import { MediaQueryProvider } from '@/context/MediaQueryContext';
 import InertiaAppHelper from '@/helpers/inertiaAppHelper';
 import PageModuleType from '@/types/PageModuleType';
 import { createInertiaApp } from '@inertiajs/react';
@@ -7,7 +8,6 @@ import createServer from '@inertiajs/react/server';
 import ReactDOMServer from 'react-dom/server';
 import { RouteName } from 'ziggy-js';
 import { route } from '../../vendor/tightenco/ziggy';
-import { MediaQueryProvider } from '@/context/MediaQueryContext';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Shorten URL';
 
@@ -35,5 +35,5 @@ createServer((page) =>
         </MediaQueryProvider>
       );
     },
-  }),
+  })
 );
