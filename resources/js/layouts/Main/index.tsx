@@ -25,8 +25,9 @@ export default function Layout({ children }: IProps) {
     <>
       <Head title={component} />
       <Header />
-      <main
-        className={`${styles.main} ${component.toLowerCase()}`}>{children}</main>
+      <main className={`${styles.main} ${component.toLowerCase()}`}>
+        {children}
+      </main>
       <Footer />
       <Toaster position={'top-center'} />
     </>
