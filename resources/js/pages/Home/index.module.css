@@ -6,3 +6,7 @@
 .title {
   margin-bottom: var(--24px);
 }
+
+.description {
+  margin-bottom: var(--32px);
+}

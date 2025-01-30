@@ -1,4 +1,5 @@
 import styles from './index.module.css';
+import ShortenUrlForm from '@/components/ShortenUrlForm';
 
 export default function Home() {
   return (
@@ -8,6 +9,7 @@ export default function Home() {
         ShortenURL is an efficient and easy-to-use URL shortening service that
         streamlines your online experience.
       </p>
+      <ShortenUrlForm />
     </>
   );
 }

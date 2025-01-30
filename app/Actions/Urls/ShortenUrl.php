@@ -8,8 +8,7 @@ use App\Enums\FlashMessageType;
 use App\Helpers\FlashHelper;
 use App\Http\Middleware\ShortenUrlMiddleware;
 use App\Models\Url;
-use Illuminate\Contracts\Routing\ResponseFactory;
-use Illuminate\Http\Response;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsController;
@@ -21,7 +20,7 @@ final class ShortenUrl
     use AsController, AsObject;
 
     /**
-     * @param  ActionRequest  $request
+     * @param ActionRequest $request
      * @return Url
      */
     public function handle(ActionRequest $request): Url
@@ -59,10 +58,10 @@ final class ShortenUrl
     }
 
     /**
-     * @param  ActionRequest  $request
-     * @return Response|ResponseFactory
+     * @param ActionRequest $request
+     * @return RedirectResponse
      */
-    public function asController(ActionRequest $request): Response|ResponseFactory
+    public function asController(ActionRequest $request): RedirectResponse
     {
         if ($request->user()?->cannot('create', Url::class)) {
             abort(ResponseAlias::HTTP_UNAUTHORIZED);
@@ -72,6 +71,6 @@ final class ShortenUrl
 
         FlashHelper::message('URL created successfully!', FlashMessageType::SUCCESS);
 
-        return response(status: ResponseAlias::HTTP_CREATED);
+        return to_route('home');
     }
 }

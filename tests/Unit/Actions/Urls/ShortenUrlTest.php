@@ -25,7 +25,7 @@ describe('shorten a URL', function (): void {
 
             $this->actingAs($this->user)
                 ->post($this->route, ['source' => $source])
-                ->assertCreated();
+                ->assertRedirect();
 
             expect(Session::get(FlashHelper::MESSAGE_TYPE_KEY))->toBe(FlashMessageType::SUCCESS->value)
                 ->and(Session::get(FlashHelper::MESSAGE_KEY))->toBe('URL created successfully!');
@@ -47,7 +47,7 @@ describe('shorten a URL', function (): void {
             $source = fake()->url();
 
             $this->post($this->route, ['source' => $source])
-                ->assertCreated();
+                ->assertRedirect();
 
             expect(Session::get(FlashHelper::MESSAGE_TYPE_KEY))->toBe(FlashMessageType::SUCCESS->value)
                 ->and(Session::get(FlashHelper::MESSAGE_KEY))->toBe('URL created successfully!');

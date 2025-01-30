@@ -1,0 +1,17 @@
+.form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--8px);
+  margin-bottom: var(--16px);
+}
+
+.error {
+  text-align: center;
+}
+
+@screen lg {
+  .input {
+    width: 30%;
+  }
+}
