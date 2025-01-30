@@ -1,5 +1,5 @@
 import PageModule from '@/interfaces/IPageModule';
-import Layout from '@/layouts';
+import Layout from '@/layouts/Main';
 import PageModuleType from '@/types/PageModuleType';
 import React from 'react';
 

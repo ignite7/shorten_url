@@ -1,9 +1,9 @@
+import styles from './index.module.css';
+
 export default function Footer() {
   return (
-    <footer className="footer">
-      <div className="container">
-        <p>&copy; 2021</p>
-      </div>
+    <footer className={styles.footer}>
+      <p>Made with toooo much ❤️</p>
     </footer>
   );
 }

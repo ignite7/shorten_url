@@ -1,13 +1,13 @@
-import { PageProps } from '@/types';
+import styles from './index.module.css';
 
-interface IProps extends PageProps {
-  name: string;
-}
-
-export default function Home({ name }: IProps) {
+export default function Home() {
   return (
-    <div>
-      <h1>Welcome Home: {name}</h1>
-    </div>
+    <>
+      <h1 className={styles.title}>Shorten Your Loooong Links :)</h1>
+      <p className={styles.description}>
+        ShortenURL is an efficient and easy-to-use URL shortening service that
+        streamlines your online experience.
+      </p>
+    </>
   );
 }

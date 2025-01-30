@@ -1,26 +1,22 @@
 .header {
   display: flex;
-  width: 100%;
+  align-items: center;
   height: 3.75rem; /* 60px */
+  margin: 1.25rem 0 6.25rem 0; /* 20px 0 100px 0 */
+}
 
-  .logo {
-    display: flex;
-    align-items: center;
-    width: 30%;
-    font-size: var(--font-size-h6);
-  }
+.logo {
+  display: flex;
+  align-items: center;
+  width: 30%;
+  font-size: var(--font-size-h5);
+  font-weight: bold;
+}
 
-  .buttons {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    width: 70%;
-    gap: 0.75rem; /* 12px */
-  }
-
-  @screen md {
-    .logo {
-      font-size: var(--font-size-h1);
-    }
-  }
+.buttons {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: 70%;
+  gap: 0.75rem; /* 12px */
 }

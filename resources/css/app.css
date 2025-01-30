@@ -45,6 +45,10 @@
     box-sizing: border-box;
   }
 
+  html, body, #app {
+    height: 100%;
+  }
+
   *, *::before, *::after {
     @apply border-border;
     box-sizing: inherit;
@@ -52,12 +56,23 @@
     padding: 0;
   }
 
+  @font-face {
+    font-family: "Liter";
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url("../fonts/Liter-Regular.ttf");
+  }
+
   body {
     @apply bg-background text-foreground;
+    font-family: "Liter", serif;
     line-height: 1.5;
   }
 
   #app {
+    display: flex;
+    flex-direction: column;
     margin: auto 0.75rem; /* 12px */
   }
 
