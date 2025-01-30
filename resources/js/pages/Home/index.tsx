@@ -1,5 +1,5 @@
-import styles from './index.module.css';
 import ShortenUrlForm from '@/components/ShortenUrlForm';
+import styles from './index.module.css';
 
 export default function Home() {
   return (

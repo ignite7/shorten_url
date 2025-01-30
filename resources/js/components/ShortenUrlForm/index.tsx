@@ -1,9 +1,9 @@
-import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import styles from './index.module.css';
+import { Input } from '@/components/ui/input';
 import { useForm } from '@inertiajs/react';
-import { ChangeEvent, FormEvent } from 'react';
 import { Link } from 'lucide-react';
+import { ChangeEvent, FormEvent } from 'react';
+import styles from './index.module.css';
 
 export default function ShortenUrlForm() {
   const {
@@ -31,7 +31,8 @@ export default function ShortenUrlForm() {
     }
   };
 
-  const change = (e: ChangeEvent<HTMLInputElement>): void => setData('source', e.target.value);
+  const change = (e: ChangeEvent<HTMLInputElement>): void =>
+    setData('source', e.target.value);
 
   return (
     <>
@@ -46,7 +47,9 @@ export default function ShortenUrlForm() {
           onChange={change}
           required
         />
-        <Button type={'submit'} disabled={processing}>Shorten Now!</Button>
+        <Button type={'submit'} disabled={processing}>
+          Shorten Now!
+        </Button>
       </form>
       {errors.source ? <p className={styles.error}>{errors.source}</p> : null}
     </>
