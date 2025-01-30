@@ -1,15 +1,15 @@
 #app {
-  margin: auto 0.75rem; /* 12px */
+  margin: auto var(--8px);
 }
 
 @screen md {
   #app {
-    margin: auto 1.25rem; /* 20px */
+    margin: auto var(--16px);
   }
 }
 
 @screen lg {
   #app {
-    margin: auto 1.75rem; /* 28px */
+    margin: auto var(--24px);
   }
 }
