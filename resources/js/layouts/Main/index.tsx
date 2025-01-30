@@ -5,6 +5,7 @@ import { Head, usePage } from '@inertiajs/react';
 import { ReactNode, useEffect } from 'react';
 import { toast } from 'sonner';
 import styles from './index.module.css';
+import './index.css';
 
 interface IProps {
   children: ReactNode;

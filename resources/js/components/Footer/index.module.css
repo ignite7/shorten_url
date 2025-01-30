@@ -2,7 +2,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-shrink: 0;
   height: 6.25rem; /* 100px */
   font-weight: bold;
 }

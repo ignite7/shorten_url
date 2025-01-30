@@ -73,7 +73,6 @@
   #app {
     display: flex;
     flex-direction: column;
-    margin: auto 0.75rem; /* 12px */
   }
 
   h1 {
@@ -126,17 +125,5 @@
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
-  }
-
-  @screen md {
-    #app {
-      margin: auto 1.25rem; /* 20px */
-    }
-  }
-
-  @screen lg {
-    #app {
-      margin: auto 1.75rem; /* 28px */
-    }
   }
 }
