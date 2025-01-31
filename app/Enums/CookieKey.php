@@ -6,12 +6,12 @@ namespace App\Enums;
 
 use App\Traits\EnumUtils;
 
-enum SessionKey: string
+enum CookieKey: string
 {
     /**
      * @phpstan-use EnumUtils<string>
      */
     use EnumUtils;
 
-    case LAST_SHORTENED_URL = 'lastShortenedUrl';
+    case ANON_TOKEN = 'anonToken';
 }

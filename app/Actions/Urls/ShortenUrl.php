@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Actions\Urls;
 
+use App\Enums\CookieKey;
 use App\Enums\FlashMessageType;
 use App\Enums\SessionKey;
 use App\Helpers\FlashHelper;
@@ -21,7 +22,7 @@ final class ShortenUrl
     use AsController, AsObject;
 
     /**
-     * @param  ActionRequest  $request
+     * @param ActionRequest $request
      * @return Url
      */
     public function handle(ActionRequest $request): Url
@@ -31,7 +32,8 @@ final class ShortenUrl
 
             $url = Url::query()->create([
                 'user_id' => $userId,
-                'source' => $request->source,
+                'anon_token' => $request->cookie(CookieKey::ANON_TOKEN->value),
+                'source' => $request->string('source'),
             ]);
 
             StoreRequest::run($request, $url->id, $userId);
@@ -59,7 +61,7 @@ final class ShortenUrl
     }
 
     /**
-     * @param  ActionRequest  $request
+     * @param ActionRequest $request
      * @return RedirectResponse
      */
     public function asController(ActionRequest $request): RedirectResponse

@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Actions\Urls\ShortenUrl;
+use App\Enums\CookieKey;
 use App\Enums\FlashMessageType;
 use App\Enums\HttpMethod;
 use App\Helpers\FlashHelper;
@@ -32,12 +33,14 @@ describe('shorten a URL', function (): void {
 
             $this->assertDatabaseHas(Url::class, [
                 'user_id' => $this->user->id,
+                'anon_token' => null,
                 'source' => $source,
             ]);
 
             $this->assertDatabaseHas(Request::class, [
                 'url_id' => Url::query()->first()?->id,
                 'user_id' => $this->user->id,
+                'anon_token' => null,
             ]);
         });
     });
@@ -45,8 +48,10 @@ describe('shorten a URL', function (): void {
     describe('guest', function (): void {
         it('can shorten a URL', function (): void {
             $source = fake()->url();
+            $anonToken = fake()->uuid();
 
-            $this->post($this->route, ['source' => $source])
+            $this->withCookie(CookieKey::ANON_TOKEN->value, $anonToken)
+                ->post($this->route, ['source' => $source])
                 ->assertRedirect();
 
             expect(Session::get(FlashHelper::MESSAGE_TYPE_KEY))->toBe(FlashMessageType::SUCCESS->value)
@@ -54,12 +59,14 @@ describe('shorten a URL', function (): void {
 
             $this->assertDatabaseHas(Url::class, [
                 'user_id' => null,
+                'anon_token' => $anonToken,
                 'source' => $source,
             ]);
 
             $this->assertDatabaseHas(Request::class, [
                 'url_id' => Url::query()->first()?->id,
                 'user_id' => null,
+                'anon_token' => $anonToken,
             ]);
         });
     });

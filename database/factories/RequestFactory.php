@@ -31,6 +31,7 @@ final class RequestFactory extends Factory
         return [
             'url_id' => Url::factory(),
             'user_id' => User::factory(),
+            'anon_token' => null,
             'method' => fake()->randomElement(HttpMethod::values()),
             'uri' => fake()->url(),
             'query' => collect(),
@@ -46,6 +47,7 @@ final class RequestFactory extends Factory
         return $this->state(fn (array $attributes): array => [
             'url_id' => Url::factory()->withoutUser(),
             'user_id' => null,
+            'anon_token' => fake()->uuid(),
         ]);
     }
 

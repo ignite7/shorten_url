@@ -37,6 +37,7 @@ final class Url extends Model
      */
     protected $fillable = [
         'user_id',
+        'anon_token',
         'source',
     ];
 
@@ -46,6 +47,7 @@ final class Url extends Model
     protected $hidden = [
         'id',
         'user_id',
+        'anon_token',
     ];
 
     /**

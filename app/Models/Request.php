@@ -43,6 +43,7 @@ final class Request extends Model
     protected $fillable = [
         'url_id',
         'user_id',
+        'anon_token',
         'method',
         'uri',
         'query',
@@ -59,6 +60,7 @@ final class Request extends Model
         'id',
         'url_id',
         'user_id',
+        'anon_token',
     ];
 
     /**

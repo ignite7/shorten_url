@@ -80,11 +80,11 @@
       "npm run prettier:lint"
     ],
     "test": [
-      "@pest",
-      "@pest:type-coverage",
+      "@code-fixer",
       "@phpstan",
       "@peck",
-      "@code-fixer"
+      "@pest",
+      "@pest:type-coverage"
     ],
     "dbdocs-login": "dbdocs login",
     "dbdocs-build": "dbdocs build database.dbml --project shorten_url"
