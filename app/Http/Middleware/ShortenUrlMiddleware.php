@@ -17,7 +17,7 @@ final class ShortenUrlMiddleware
     /**
      * Handle an incoming request.
      *
-     * @param Closure(Request): (Response) $next
+     * @param  Closure(Request): (Response)  $next
      */
     public function handle(Request $request, Closure $next): Response
     {
@@ -25,8 +25,9 @@ final class ShortenUrlMiddleware
             return $next($request);
         }
 
-        if (!$anonToken = $request->cookie(CookieKey::ANON_TOKEN->value)) {
+        if (! $anonToken = $request->cookie(CookieKey::ANON_TOKEN->value)) {
             FlashHelper::message('Unable to determine your anonymous token.', FlashMessageType::ERROR);
+
             return redirect()->back();
         }
 
@@ -37,6 +38,7 @@ final class ShortenUrlMiddleware
 
         if ($requests >= 5) {
             FlashHelper::message('You have reached the maximum number of requests allowed per day.', FlashMessageType::ERROR);
+
             return redirect()->back();
         }
 

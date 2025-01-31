@@ -17,14 +17,14 @@ final class AnonymousTokenMiddleware
     /**
      * Handle an incoming request.
      *
-     * @param Closure(Request): (Response) $next
+     * @param  Closure(Request): (Response)  $next
      */
     public function handle(Request $request, Closure $next): Response
     {
         $anonTokenKey = CookieKey::ANON_TOKEN->value;
         $response = $next($request);
 
-        if (!$request->user() && !$request->cookie($anonTokenKey)) {
+        if (! $request->user() && ! $request->cookie($anonTokenKey)) {
             /** @phpstan-ignore method.notFound */
             $response->withCookie(cookie(
                 $anonTokenKey,
