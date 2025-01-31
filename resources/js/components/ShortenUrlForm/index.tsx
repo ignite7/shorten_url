@@ -2,7 +2,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useForm } from '@inertiajs/react';
 import { Link } from 'lucide-react';
-import { ChangeEvent, FormEvent } from 'react';
+import { ChangeEvent, FormEvent, useEffect } from 'react';
 import styles from './index.module.css';
 
 export default function ShortenUrlForm() {
@@ -19,16 +19,14 @@ export default function ShortenUrlForm() {
     source: '',
   });
 
+  useEffect((): void => {
+    if (wasSuccessful) reset();
+  }, [reset, wasSuccessful]);
+
   const submit = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
-
     if (!isDirty) return;
-
     post(route('urls.store'));
-
-    if (wasSuccessful) {
-      reset();
-    }
   };
 
   const change = (e: ChangeEvent<HTMLInputElement>): void =>

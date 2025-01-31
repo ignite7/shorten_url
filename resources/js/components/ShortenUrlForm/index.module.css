@@ -6,12 +6,17 @@
   margin-bottom: var(--16px);
 }
 
-.error {
-  text-align: center;
+.input {
+  width: 100%;
 }
 
-@screen lg {
+.error {
+  text-align: center;
+  color: hsl(var(--destructive));
+}
+
+@screen md {
   .input {
-    width: 30%;
+    width: 31.5rem; /* 504px */
   }
 }

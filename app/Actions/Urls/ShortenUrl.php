@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Actions\Urls;
 
 use App\Enums\FlashMessageType;
+use App\Enums\SessionKey;
 use App\Helpers\FlashHelper;
 use App\Http\Middleware\ShortenUrlMiddleware;
 use App\Models\Url;
@@ -67,10 +68,10 @@ final class ShortenUrl
             abort(ResponseAlias::HTTP_UNAUTHORIZED);
         }
 
-        $this->handle($request);
+        $url = $this->handle($request);
 
         FlashHelper::message('URL created successfully!', FlashMessageType::SUCCESS);
 
-        return to_route('home');
+        return to_route('home')->with(SessionKey::LAST_SHORTENED_URL->value, $url->id);
     }
 }

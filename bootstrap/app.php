@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use App\Enums\FlashMessageType;
+use App\Helpers\FlashHelper;
 use App\Http\Middleware\HandleInertiaRequests;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -33,9 +35,9 @@ return Application::configure(basePath: dirname(__DIR__))
             }
 
             if ($response->getStatusCode() === 419) {
-                return back()->with([
-                    'message' => 'The page expired, please try again.',
-                ]);
+                FlashHelper::message('The page expired, please try again.', FlashMessageType::ERROR);
+
+                return back();
             }
 
             return $response;

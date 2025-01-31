@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Middleware;
 
 use App\Enums\FlashMessageType;
+use App\Enums\SessionKey;
 use App\Helpers\FlashHelper;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
@@ -31,6 +32,7 @@ final class HandleInertiaRequests extends Middleware
     {
         /** @var array<string, mixed> $parentShare */
         $parentShare = parent::share($request);
+        $lastShortenedUrlKey = SessionKey::LAST_SHORTENED_URL->value;
 
         return [
             ...$parentShare,
@@ -48,6 +50,7 @@ final class HandleInertiaRequests extends Middleware
                     FlashMessageType::SUCCESS->value
                 ),
             ],
+            $lastShortenedUrlKey => fn () => $request->session()->get($lastShortenedUrlKey),
         ];
     }
 }
