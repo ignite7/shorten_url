@@ -19,6 +19,7 @@ use Spatie\DeletedModels\Models\Concerns\KeepsDeletedModels;
  * @property string $id
  * @property string $source
  * @property ?User $user
+ * @property string $anonymous_token
  * @property Collection<int, Request> $requests
  * @property ?Carbon $created_at
  * @property ?Carbon $updated_at
@@ -37,7 +38,7 @@ final class Url extends Model
      */
     protected $fillable = [
         'user_id',
-        'anon_token',
+        'anonymous_token',
         'source',
     ];
 
@@ -47,7 +48,7 @@ final class Url extends Model
     protected $hidden = [
         'id',
         'user_id',
-        'anon_token',
+        'anonymous_token',
     ];
 
     /**
@@ -72,6 +73,7 @@ final class Url extends Model
     protected function casts(): array
     {
         return [
+            'anonymous_token' => 'string',
             'source' => 'string',
             'created_at' => 'datetime',
             'updated_at' => 'datetime',

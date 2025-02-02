@@ -21,18 +21,21 @@ final class AnonymousTokenMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $anonTokenKey = CookieKey::ANON_TOKEN->value;
-        $response = $next($request);
+        if ($request->user()) {
+            return $next($request);
+        }
 
-        if (! $request->user() && ! $request->cookie($anonTokenKey)) {
-            /** @phpstan-ignore method.notFound */
-            $response->withCookie(cookie(
-                $anonTokenKey,
+        $anonymousTokenKey = CookieKey::ANONYMOUS_TOKEN->value;
+        $anonymousToken = $request->cookie(CookieKey::ANONYMOUS_TOKEN->value);
+
+        if (! $anonymousToken || ! Str::isUuid($anonymousToken)) {
+            cookie()->queue(cookie(
+                $anonymousTokenKey,
                 Str::uuid()->toString(),
                 self::MINUTES
             ));
         }
 
-        return $response;
+        return $next($request);
     }
 }

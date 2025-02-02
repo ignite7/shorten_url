@@ -28,7 +28,7 @@ final class UrlFactory extends Factory
     {
         return [
             'user_id' => User::factory(),
-            'anon_token' => null,
+            'anonymous_token' => null,
             'source' => fake()->url(),
         ];
     }
@@ -37,7 +37,7 @@ final class UrlFactory extends Factory
     {
         return $this->state(fn (array $attributes): array => [
             'user_id' => null,
-            'anon_token' => fake()->uuid(),
+            'anonymous_token' => fake()->uuid(),
         ]);
     }
 }

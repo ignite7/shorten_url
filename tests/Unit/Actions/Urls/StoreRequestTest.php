@@ -48,14 +48,16 @@ describe('can create request', function (): void {
             HttpMethod::POST->value,
             ['source' => fake()->url()],
         );
+        $anonymousToken = fake()->uuid();
 
-        $request = StoreRequest::run($actionRequest, $url->id);
+        $request = StoreRequest::run($actionRequest, $url->id, anonymousToken: $anonymousToken);
 
         $this->assertInstanceOf(Request::class, $request);
         $this->assertDatabaseCount(Request::class, 1);
 
         expect($request->url_id)->toEqual($url->id)
             ->and($request->user_id)->toBeNull()
+            ->and($request->anonymous_token)->toEqual($anonymousToken)
             ->and($request->method)->toEqual($actionRequest->method())
             ->and($request->uri)->toEqual($actionRequest->fullUrl())
             ->and($request->query)->toEqual(collect($actionRequest->query->all()))

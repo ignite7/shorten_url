@@ -10,6 +10,7 @@ use App\Helpers\FlashHelper;
 use App\Models\Request as RequestModel;
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\Response;
 
 final class ShortenUrlMiddleware
@@ -25,14 +26,22 @@ final class ShortenUrlMiddleware
             return $next($request);
         }
 
-        if (! $anonToken = $request->cookie(CookieKey::ANON_TOKEN->value)) {
+        if (! $ip = $request->ip()) {
+            FlashHelper::message('Unable to determine your IP address.', FlashMessageType::ERROR);
+
+            return redirect()->back();
+        }
+
+        $anonymousToken = $request->cookie(CookieKey::ANONYMOUS_TOKEN->value);
+
+        if (! $anonymousToken || ! Str::isUuid($anonymousToken)) {
             FlashHelper::message('Unable to determine your anonymous token.', FlashMessageType::ERROR);
 
             return redirect()->back();
         }
 
         $requests = RequestModel::query()
-            ->where('anon_token', $anonToken)
+            ->where('ip_address', $ip)
             ->whereDate('created_at', now())
             ->count();
 

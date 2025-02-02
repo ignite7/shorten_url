@@ -5,23 +5,27 @@ declare(strict_types=1);
 use App\Enums\CookieKey;
 use App\Http\Middleware\AnonymousTokenMiddleware;
 use App\Models\User;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\Response;
 
 beforeEach(function (): void {
-    Route::middleware(AnonymousTokenMiddleware::class)->get('/test', fn () => response('OK', Response::HTTP_OK));
+    Route::middleware(AnonymousTokenMiddleware::class)->get('/test', fn () => response('HTTP_FOUND', Response::HTTP_FOUND));
 });
 
-it('generates an anonymous token if the user is not authenticated', function (): void {
-    $response = $this->get('/test');
+it('issues a new anonymous token if not present', function (): void {
+    $this->get('/test');
 
-    $response->assertOk();
-    $response->assertCookie(CookieKey::ANON_TOKEN->value);
+    $queuedCookie = Cookie::queued(CookieKey::ANONYMOUS_TOKEN->value);
+    expect($queuedCookie)->not->toBeNull()
+        ->and(Str::isUuid($queuedCookie?->getValue()))->toBeTrue();
 });
 
-it('does not generate an anonymous token if the user is authenticated', function (): void {
-    $response = $this->actingAs(User::factory()->create())->get('/test');
+it('does not issue an anonymous token to authenticated users', function (): void {
+    $user = User::factory()->create();
 
-    $response->assertOk();
-    $response->assertCookieMissing(CookieKey::ANON_TOKEN->value);
+    $response = $this->actingAs($user)->get('/test');
+
+    $response->assertCookieMissing(CookieKey::ANONYMOUS_TOKEN->value);
 });

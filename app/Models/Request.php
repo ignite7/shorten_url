@@ -17,6 +17,7 @@ use Spatie\DeletedModels\Models\Concerns\KeepsDeletedModels;
 /**
  * @property string $id
  * @property string $method
+ * @property string $anonymous_token
  * @property string $uri
  * @property Collection<int, string> $query
  * @property Collection<int, string> $headers
@@ -43,7 +44,7 @@ final class Request extends Model
     protected $fillable = [
         'url_id',
         'user_id',
-        'anon_token',
+        'anonymous_token',
         'method',
         'uri',
         'query',
@@ -60,7 +61,7 @@ final class Request extends Model
         'id',
         'url_id',
         'user_id',
-        'anon_token',
+        'anonymous_token',
     ];
 
     /**
@@ -85,6 +86,7 @@ final class Request extends Model
     protected function casts(): array
     {
         return [
+            'anonymous_token' => 'string',
             'method' => 'string',
             'uri' => 'string',
             'query' => 'collection',

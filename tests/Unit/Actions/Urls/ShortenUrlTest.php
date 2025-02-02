@@ -33,14 +33,14 @@ describe('shorten a URL', function (): void {
 
             $this->assertDatabaseHas(Url::class, [
                 'user_id' => $this->user->id,
-                'anon_token' => null,
+                'anonymous_token' => null,
                 'source' => $source,
             ]);
 
             $this->assertDatabaseHas(Request::class, [
                 'url_id' => Url::query()->first()?->id,
                 'user_id' => $this->user->id,
-                'anon_token' => null,
+                'anonymous_token' => null,
             ]);
         });
     });
@@ -48,9 +48,9 @@ describe('shorten a URL', function (): void {
     describe('guest', function (): void {
         it('can shorten a URL', function (): void {
             $source = fake()->url();
-            $anonToken = fake()->uuid();
+            $anonymousToken = fake()->uuid();
 
-            $this->withCookie(CookieKey::ANON_TOKEN->value, $anonToken)
+            $this->withCookie(CookieKey::ANONYMOUS_TOKEN->value, $anonymousToken)
                 ->post($this->route, ['source' => $source])
                 ->assertRedirect();
 
@@ -59,14 +59,14 @@ describe('shorten a URL', function (): void {
 
             $this->assertDatabaseHas(Url::class, [
                 'user_id' => null,
-                'anon_token' => $anonToken,
+                'anonymous_token' => $anonymousToken,
                 'source' => $source,
             ]);
 
             $this->assertDatabaseHas(Request::class, [
                 'url_id' => Url::query()->first()?->id,
                 'user_id' => null,
-                'anon_token' => $anonToken,
+                'anonymous_token' => $anonymousToken,
             ]);
         });
     });

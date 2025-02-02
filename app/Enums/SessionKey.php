@@ -13,5 +13,5 @@ enum SessionKey: string
      */
     use EnumUtils;
 
-    case LAST_SHORTENED_URL = 'lastShortenedUrl';
+    case LAST_SHORTENED_URL = 'last_shortened_url';
 }

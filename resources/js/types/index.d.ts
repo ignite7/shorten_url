@@ -6,9 +6,10 @@ export type PageProps<
   T extends Record<string, unknown> = Record<string, unknown>,
 > = T & {
   auth: {
-    user: IUser;
+    user: IUser | null;
   };
   ziggy: Config & { location: string };
   flash: IFlash;
-  lastShortenedUrl: string;
+  lastShortenedUrl: string | null;
+  anonymousToken: string | null;
 };

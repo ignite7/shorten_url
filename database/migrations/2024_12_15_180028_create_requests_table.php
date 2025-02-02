@@ -18,13 +18,13 @@ return new class extends Migration
             $table->ulid('id')->primary();
             $table->foreignUlid('url_id')->constrained();
             $table->foreignUlid('user_id')->nullable()->constrained();
-            $table->uuid('anon_token')->nullable()->default(null)->index();
+            $table->uuid('anonymous_token')->nullable()->default(null)->index();
             $table->enum('method', HttpMethod::values());
             $table->longText('uri');
             $table->json('query')->default(collect());
             $table->json('headers')->default(collect());
             $table->json('body')->default(collect());
-            $table->ipAddress()->nullable()->default(null);
+            $table->ipAddress()->index();
             $table->longText('user_agent')->nullable()->default(null);
             $table->timestamps();
         });

@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('urls', static function (Blueprint $table): void {
             $table->ulid('id')->primary();
             $table->foreignUlid('user_id')->nullable()->constrained();
-            $table->uuid('anon_token')->nullable()->default(null)->index();
+            $table->uuid('anonymous_token')->nullable()->default(null)->index();
             $table->longText('source');
             $table->timestamps();
         });

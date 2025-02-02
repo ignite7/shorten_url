@@ -3,91 +3,71 @@
 declare(strict_types=1);
 
 use App\Enums\CookieKey;
-use App\Enums\FlashMessageType;
 use App\Helpers\FlashHelper;
+use App\Http\Middleware\ShortenUrlMiddleware;
 use App\Models\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Str;
+use Symfony\Component\HttpFoundation\Response;
 
 beforeEach(function (): void {
-    $this->route = route('urls.store', absolute: false);
+    Route::middleware(ShortenUrlMiddleware::class)->post('/test', fn () => response('HTTP_FOUND', Response::HTTP_FOUND));
 });
 
-it('cannot shorten a URL if the request is missing the anonymous token', function (): void {
-    $this->post($this->route)
-        ->assertRedirect();
+it('rejects requests without an IP address', function (): void {
+    $response = $this->withServerVariables(['REMOTE_ADDR' => null])
+        ->post('/test');
 
-    expect(Session::get(FlashHelper::MESSAGE_TYPE_KEY))->toBe(FlashMessageType::ERROR->value)
-        ->and(Session::get(FlashHelper::MESSAGE_KEY))->toBe('Unable to determine your anonymous token.');
+    $response->assertRedirect();
+    expect(Session::get(FlashHelper::MESSAGE_KEY))->toBe('Unable to determine your IP address.');
 });
 
-it('cannot shorten a URL if the user is not authenticated and has made more than 5 requests in a day', function (): void {
-    $anonToken = fake()->uuid();
+it('rejects requests without an anonymous token', function (): void {
+    $response = $this->post('/test');
 
-    // Simulate 5 valid requests
-    for ($i = 0; $i < 5; $i++) {
-        $this->withCookie(CookieKey::ANON_TOKEN->value, $anonToken)
-            ->post($this->route, ['source' => fake()->url()])
-            ->assertRedirect();
-    }
-
-    // 6th request should fail
-    $this->withCookie(CookieKey::ANON_TOKEN->value, $anonToken)
-        ->post($this->route, ['source' => fake()->url()])
-        ->assertRedirect();
-
-    expect(Session::get(FlashHelper::MESSAGE_TYPE_KEY))->toBe(FlashMessageType::ERROR->value)
-        ->and(Session::get(FlashHelper::MESSAGE_KEY))->toBe('You have reached the maximum number of requests allowed per day.');
-
-    $this->assertDatabaseCount(Request::class, 5);
+    $response->assertRedirect();
+    expect(Session::get(FlashHelper::MESSAGE_KEY))->toBe('Unable to determine your anonymous token.');
 });
 
-it('can shorten a URL if the user is not authenticated and has made less than 5 requests in a day', function (): void {
-    $anonToken = fake()->uuid();
+it('rejects requests with an invalid anonymous token', function (): void {
+    $response = $this->withCookie(CookieKey::ANONYMOUS_TOKEN->value, 'invalid-token')
+        ->post('/test');
 
-    // Simulate 4 valid requests
-    for ($i = 0; $i < 4; $i++) {
-        $this->withCookie(CookieKey::ANON_TOKEN->value, $anonToken)
-            ->post($this->route, ['source' => fake()->url()])
-            ->assertRedirect();
-    }
-
-    // 5th request should pass
-    $this->withCookie(CookieKey::ANON_TOKEN->value, $anonToken)
-        ->post($this->route, ['source' => fake()->url()])
-        ->assertRedirect();
-
-    $this->assertDatabaseCount(Request::class, 5);
+    $response->assertRedirect();
+    expect(Session::get(FlashHelper::MESSAGE_KEY))->toBe('Unable to determine your anonymous token.');
 });
 
-describe('unlimited requests per day if the user is authenticated', function (): void {
-    it('cannot have unlimited requests for admin user', function (): void {
-        $user = User::factory()->adminRole()->create();
+it('allows requests with a valid anonymous token', function (): void {
+    $validToken = Str::uuid()->toString();
 
-        for ($i = 0; $i < 10; $i++) {
-            $this->actingAs($user)
-                ->post($this->route, ['source' => fake()->url()])
-                ->assertUnauthorized();
-        }
-    });
+    $response = $this->withCookie(CookieKey::ANONYMOUS_TOKEN->value, $validToken)
+        ->post('/test');
 
-    it('cannot have unlimited requests for staff user', function (): void {
-        $user = User::factory()->staffRole()->create();
+    $response->assertRedirect();
+});
 
-        for ($i = 0; $i < 10; $i++) {
-            $this->actingAs($user)
-                ->post($this->route, ['source' => fake()->url()])
-                ->assertUnauthorized();
-        }
-    });
+it('enforces rate limiting per IP', function (): void {
+    $validToken = Str::uuid()->toString();
+    $ip = '192.168.1.100';
 
-    it('can have unlimited request for regular user', function (): void {
-        $user = User::factory()->regularRole()->create();
+    // Simulate 5 requests from the same IP
+    Request::factory(5)->create(['ip_address' => $ip]);
 
-        for ($i = 0; $i < 10; $i++) {
-            $this->actingAs($user)
-                ->post($this->route, ['source' => fake()->url()])
-                ->assertRedirect();
-        }
-    });
+    // 6th request should be blocked
+    $response = $this->withUnencryptedCookie(CookieKey::ANONYMOUS_TOKEN->value, $validToken)
+        ->withServerVariables(['REMOTE_ADDR' => $ip])
+        ->post('/test');
+
+    $response->assertRedirect();
+    expect(Session::get(FlashHelper::MESSAGE_KEY))->toBe('You have reached the maximum number of requests allowed per day.');
+});
+
+it('does not enforce rate limiting per IP if the user is authenticated', function (): void {
+    $user = User::factory()->create();
+
+    $response = $this->actingAs($user)->post('/test');
+
+    $response->assertRedirect();
 });

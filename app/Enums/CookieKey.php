@@ -13,5 +13,5 @@ enum CookieKey: string
      */
     use EnumUtils;
 
-    case ANON_TOKEN = 'anonToken';
+    case ANONYMOUS_TOKEN = 'anonymous_token';
 }

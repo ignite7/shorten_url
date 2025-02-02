@@ -29,14 +29,15 @@ final class ShortenUrl
     {
         return DB::transaction(static function () use ($request): Url {
             $userId = $request->user()?->id;
+            $anonymousToken = $userId ? null : $request->cookie(CookieKey::ANONYMOUS_TOKEN->value);
 
             $url = Url::query()->create([
                 'user_id' => $userId,
-                'anon_token' => $request->cookie(CookieKey::ANON_TOKEN->value),
+                'anonymous_token' => $anonymousToken,
                 'source' => $request->string('source'),
             ]);
 
-            StoreRequest::run($request, $url->id, $userId);
+            StoreRequest::run($request, $url->id, $userId, $anonymousToken);
 
             return $url;
         });
