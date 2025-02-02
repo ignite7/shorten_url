@@ -1,6 +1,6 @@
 import ShortenUrlForm from '@/components/ShortenUrlForm';
-import styles from './index.module.css';
 import { PageProps } from '@/types';
+import styles from './index.module.css';
 
 export default function Home({ anonymousToken }: PageProps) {
   return (
