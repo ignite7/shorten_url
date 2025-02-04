@@ -1,0 +1,4 @@
+.home {
+  align-items: center;
+  gap: var(--32px);
+}

@@ -1,12 +1,21 @@
 .title,
-.description {
+.description,
+.register {
   text-align: center;
 }
 
 .title {
-  margin-bottom: var(--24px);
+  font-size: var(--48px);
 }
 
-.description {
-  margin-bottom: var(--32px);
+.register {
+  display: flex;
+  align-items: center;
+  gap: var(--8px);
+}
+
+@screen md {
+  .title {
+    font-size: var(--56px);
+  }
 }

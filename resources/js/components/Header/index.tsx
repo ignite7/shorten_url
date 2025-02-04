@@ -1,9 +1,13 @@
 import { Button } from '@/components/ui/button';
+import { useMediaQueryContext } from '@/context/MediaQueryContext';
 import { router } from '@inertiajs/react';
-import { LogIn } from 'lucide-react';
+import { LogIn, UserPlus } from 'lucide-react';
 import styles from './index.module.css';
 
 export default function Header() {
+  const { isMobile } = useMediaQueryContext();
+  const buttonSize = isMobile ? 'icon' : 'default';
+
   const onClick = (): void =>
     router.push({
       url: route('home'),
@@ -16,10 +20,24 @@ export default function Header() {
         ShortenURL
       </div>
       <div className={styles.buttons}>
-        <Button variant={'secondary'}>
-          Login <LogIn />
+        <Button variant={'secondary'} size={buttonSize}>
+          {isMobile ? (
+            <LogIn />
+          ) : (
+            <>
+              Login <LogIn />
+            </>
+          )}
         </Button>
-        <Button>Register</Button>
+        <Button size={buttonSize}>
+          {isMobile ? (
+            <UserPlus />
+          ) : (
+            <>
+              Register <UserPlus />
+            </>
+          )}
+        </Button>
       </div>
     </header>
   );

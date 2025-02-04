@@ -1,0 +1,5 @@
+.auto-pate {
+  display: flex;
+  align-items: center;
+  gap: var(--8px);
+}

@@ -1,11 +1,15 @@
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { useForm } from '@inertiajs/react';
-import { Link } from 'lucide-react';
+import { useMediaQueryContext } from '@/context/MediaQueryContext';
+import LocalStorageKeys from '@/enums/LocalStorageKeys';
+import { useForm, usePage } from '@inertiajs/react';
+import { ArrowRight } from 'lucide-react';
 import { ChangeEvent, FormEvent, useEffect } from 'react';
 import styles from './index.module.css';
 
 export default function ShortenUrlForm() {
+  const { isMobile } = useMediaQueryContext();
+  const { lastShortenedUrl } = usePage().props;
   const {
     data,
     setData,
@@ -20,7 +24,15 @@ export default function ShortenUrlForm() {
   });
 
   useEffect((): void => {
-    if (wasSuccessful) reset();
+    if (!wasSuccessful) return;
+    reset();
+
+    if (
+      lastShortenedUrl &&
+      localStorage.getItem(LocalStorageKeys.AutoPaste) === 'true'
+    ) {
+      navigator.clipboard.writeText(lastShortenedUrl);
+    }
   }, [reset, wasSuccessful]);
 
   const submit = (e: FormEvent<HTMLFormElement>): void => {
@@ -35,7 +47,6 @@ export default function ShortenUrlForm() {
   return (
     <>
       <form className={styles.form} onSubmit={submit}>
-        <Link />
         <Input
           name={'source'}
           type={'url'}
@@ -45,8 +56,18 @@ export default function ShortenUrlForm() {
           onChange={change}
           required
         />
-        <Button type={'submit'} disabled={processing}>
-          Shorten Now!
+        <Button
+          type={'submit'}
+          disabled={processing}
+          size={isMobile ? 'icon' : 'default'}
+        >
+          {isMobile ? (
+            <ArrowRight />
+          ) : (
+            <>
+              Shorten <ArrowRight />
+            </>
+          )}
         </Button>
       </form>
       {errors.source ? <p className={styles.error}>{errors.source}</p> : null}
