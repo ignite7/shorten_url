@@ -11,7 +11,6 @@ it('can get the url in an array format', function (): void {
 
     expect($url->toArray())->toMatchArray([
         'source' => $url->source,
-        'updated_at' => $url->updated_at?->toISOString(),
         'created_at' => $url->created_at?->toISOString(),
     ]);
 });

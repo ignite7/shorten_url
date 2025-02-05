@@ -62,6 +62,7 @@ final class Request extends Model
         'url_id',
         'user_id',
         'anonymous_token',
+        'updated_at',
     ];
 
     /**

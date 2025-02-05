@@ -8,7 +8,7 @@ export default class InertiaAppHelper {
     name: string,
     pages: PageModuleType
   ): Promise<PageModule> {
-    const pageImport = pages[`./pages/${name}/index.tsx`];
+    const pageImport = pages[`./pages/${name}.tsx`];
 
     // Ensure the module exists
     if (!pageImport) {

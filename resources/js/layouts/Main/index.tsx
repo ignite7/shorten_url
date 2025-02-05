@@ -13,6 +13,7 @@ interface IProps {
 
 export default function Layout({ children }: IProps) {
   const { props, component } = usePage();
+  const [page] = component.split('/');
 
   useEffect((): void => {
     const { message, type } = props.flash || {};
@@ -24,11 +25,9 @@ export default function Layout({ children }: IProps) {
 
   return (
     <>
-      <Head title={component} />
+      <Head title={page} />
       <Header />
-      <main className={`${styles.main} ${component.toLowerCase()}`}>
-        {children}
-      </main>
+      <main className={`${styles.main} ${page.toLowerCase()}`}>{children}</main>
       <Footer />
       <Toaster position={'top-center'} />
     </>

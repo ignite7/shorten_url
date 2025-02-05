@@ -10,6 +10,4 @@ export type PageProps<
   };
   ziggy: Config & { location: string };
   flash: IFlash;
-  lastShortenedUrl: string | null;
-  anonymousToken: string | null;
 };

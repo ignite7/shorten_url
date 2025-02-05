@@ -10,7 +10,7 @@ use App\Models\User;
 use Lorisleiva\Actions\ActionRequest;
 
 beforeEach(function (): void {
-    $this->route = route('urls.store', absolute: false);
+    $this->route = route('urls.store');
 });
 
 describe('can create request', function (): void {

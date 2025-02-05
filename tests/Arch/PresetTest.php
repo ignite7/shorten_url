@@ -6,6 +6,7 @@ arch()->preset()->php();
 arch()->preset()->security();
 arch()->preset()->laravel()->ignoring([
     'App\Http\Middleware',
+    'App\Http\Resources',
 ]);
 
 arch('strict types')
@@ -31,6 +32,7 @@ arch('avoid mutation')
         'App\Exceptions',
         'App\Http\Requests',
         'App\Http\Middleware',
+        'App\Http\Resources',
         'App\Jobs',
         'App\Models',
         'App\Providers',
@@ -46,6 +48,7 @@ arch('avoid inheritance')
         'App\Exceptions',
         'App\Http\Requests',
         'App\Http\Middleware',
+        'App\Http\Resources',
         'App\Jobs',
         'App\Models',
         'App\Providers',

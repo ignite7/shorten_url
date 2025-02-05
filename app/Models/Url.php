@@ -49,6 +49,7 @@ final class Url extends Model
         'id',
         'user_id',
         'anonymous_token',
+        'updated_at',
     ];
 
     /**

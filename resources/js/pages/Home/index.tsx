@@ -6,11 +6,13 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip';
+import IHome from '@/interfaces/pages/IHome';
 import { CircleHelp } from 'lucide-react';
 import './index.css';
 import styles from './index.module.css';
 
-export default function Home() {
+export default function Home(props: IHome) {
+  console.log('props', props);
   return (
     <>
       <h1 className={styles.title}>Shorten Your Loooong Links :)</h1>

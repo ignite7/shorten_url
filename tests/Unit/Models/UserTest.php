@@ -16,7 +16,6 @@ it('can get the user in an array format', function (): void {
         'last_name' => $user->last_name,
         'email' => $user->email,
         'email_verified_at' => $user->email_verified_at?->toISOString(),
-        'updated_at' => $user->updated_at?->toISOString(),
         'created_at' => $user->created_at?->toISOString(),
     ]);
 });

@@ -2,6 +2,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useMediaQueryContext } from '@/context/MediaQueryContext';
 import LocalStorageKeys from '@/enums/LocalStorageKeys';
+import IHome from '@/interfaces/pages/IHome';
 import { useForm, usePage } from '@inertiajs/react';
 import { ArrowRight } from 'lucide-react';
 import { ChangeEvent, FormEvent, useEffect } from 'react';
@@ -9,7 +10,7 @@ import styles from './index.module.css';
 
 export default function ShortenUrlForm() {
   const { isMobile } = useMediaQueryContext();
-  const { lastShortenedUrl } = usePage().props;
+  const { lastShortenedUrl } = usePage<IHome>().props;
   const {
     data,
     setData,
@@ -25,6 +26,7 @@ export default function ShortenUrlForm() {
 
   useEffect((): void => {
     if (!wasSuccessful) return;
+
     reset();
 
     if (
@@ -33,7 +35,7 @@ export default function ShortenUrlForm() {
     ) {
       navigator.clipboard.writeText(lastShortenedUrl);
     }
-  }, [reset, wasSuccessful]);
+  }, [reset, wasSuccessful, lastShortenedUrl]);
 
   const submit = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault();

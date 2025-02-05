@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Middleware;
 
-use App\Enums\CookieKey;
 use App\Enums\FlashMessageType;
-use App\Enums\SessionKey;
 use App\Helpers\FlashHelper;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
@@ -50,8 +48,6 @@ final class HandleInertiaRequests extends Middleware
                     FlashMessageType::SUCCESS->value
                 ),
             ],
-            'lastShortenedUrl' => fn () => $request->session()->get(SessionKey::LAST_SHORTENED_URL->value),
-            'anonymousToken' => fn () => $request->cookie(CookieKey::ANONYMOUS_TOKEN->value),
         ];
     }
 }

@@ -15,7 +15,7 @@ use Illuminate\Support\Str;
 use Lorisleiva\Actions\ActionRequest;
 
 beforeEach(function (): void {
-    $this->route = route('urls.store', absolute: false);
+    $this->route = route('urls.store');
     $this->user = User::factory()->regularRole()->create();
 });
 

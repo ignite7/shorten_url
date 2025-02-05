@@ -33,7 +33,7 @@ final class ShortenUrl
 
             $url = Url::query()->create([
                 'user_id' => $userId,
-                'anonymous_token' => $anonymousToken,
+                'anonymous_token' => is_array($anonymousToken) ? null : $anonymousToken,
                 'source' => $request->string('source'),
             ]);
 
