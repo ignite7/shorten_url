@@ -1,0 +1,9 @@
+.data-table {
+  width: 100%;
+}
+
+@screen md {
+  .data-table {
+    width: 80%;
+  }
+}

@@ -22,7 +22,7 @@ final class ShortenUrl
     use AsController, AsObject;
 
     /**
-     * @param  ActionRequest  $request
+     * @param ActionRequest $request
      * @return Url
      */
     public function handle(ActionRequest $request): Url
@@ -62,7 +62,7 @@ final class ShortenUrl
     }
 
     /**
-     * @param  ActionRequest  $request
+     * @param ActionRequest $request
      * @return RedirectResponse
      */
     public function asController(ActionRequest $request): RedirectResponse
@@ -75,6 +75,6 @@ final class ShortenUrl
 
         FlashHelper::message('URL created successfully!', FlashMessageType::SUCCESS);
 
-        return to_route('home')->with(SessionKey::LAST_SHORTENED_URL->value, $url->id);
+        return redirect()->back()->with(SessionKey::LAST_SHORTENED_URL->value, $url->id);
     }
 }

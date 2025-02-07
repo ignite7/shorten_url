@@ -1,17 +1,17 @@
-interface ILink {
+export interface ILink {
   first: string;
   last: string;
   prev: string | null;
   next: string | null;
 }
 
-interface IMetaLink {
+export interface IMetaLink {
   url: string | null;
   label: string;
   active: boolean;
 }
 
-interface IMeta {
+export interface IMeta {
   current_page: number;
   from: number;
   last_page: number;
@@ -22,8 +22,8 @@ interface IMeta {
   total: number;
 }
 
-export default interface IPagination<IData> {
-  data: IData[];
+export default interface IPagination<TData> {
+  data: TData[];
   links: ILink;
   meta: IMeta;
 }

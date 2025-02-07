@@ -2,6 +2,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: var(--104px);
+  min-height: var(--104px);
   font-weight: bold;
 }

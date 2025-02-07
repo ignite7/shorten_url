@@ -6,13 +6,12 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip';
-import IHome from '@/interfaces/pages/IHome';
+import UrlHistoryTable from '@/components/UrlHistoryTable';
 import { CircleHelp } from 'lucide-react';
 import './index.css';
 import styles from './index.module.css';
 
-export default function Home(props: IHome) {
-  console.log('props', props);
+export default function Home() {
   return (
     <>
       <h1 className={styles.title}>Shorten Your Loooong Links :)</h1>
@@ -35,6 +34,7 @@ export default function Home(props: IHome) {
           </Tooltip>
         </p>
       </TooltipProvider>
+      <UrlHistoryTable />
     </>
   );
 }

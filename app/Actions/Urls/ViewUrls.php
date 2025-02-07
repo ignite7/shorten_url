@@ -12,7 +12,6 @@ use App\Models\Url;
 use App\Models\User;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
-use Inertia\Inertia;
 use Inertia\Response;
 use Inertia\ResponseFactory;
 use Lorisleiva\Actions\ActionRequest;
@@ -48,7 +47,7 @@ final class ViewUrls
         return UrlResource::collection(
             $query
                 ->orderBy('created_at', $request->query('order') === 'asc' ? 'asc' : 'desc')
-                ->paginate()
+                ->paginate(5)
         );
     }
 
@@ -69,7 +68,7 @@ final class ViewUrls
         return inertia('Home/index', [
             'lastShortenedUrl' => fn () => $request->session()->get(SessionKey::LAST_SHORTENED_URL->value),
             'anonymousToken' => fn () => $request->cookie(CookieKey::ANONYMOUS_TOKEN->value),
-            'urls' => Inertia::defer(fn (): LengthAwarePaginator|AnonymousResourceCollection => $this->handle($request)),
+            'urls' => fn (): LengthAwarePaginator|AnonymousResourceCollection => $this->handle($request),
         ]);
     }
 }

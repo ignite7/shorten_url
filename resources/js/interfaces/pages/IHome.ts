@@ -6,6 +6,8 @@ interface IHome extends PageProps {
   lastShortenedUrl: string | null;
   anonymousToken: string | null;
   urls: IPagination<IUrl>;
+  order: string | null;
+  page: string | null;
 }
 
 export default IHome;
