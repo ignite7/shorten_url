@@ -19,7 +19,7 @@ final class ShortenUrlMiddleware
     /**
      * Handle an incoming request.
      *
-     * @param Closure(Request): (Response) $next
+     * @param  Closure(Request): (Response)  $next
      */
     public function handle(Request $request, Closure $next): Response
     {
@@ -27,7 +27,7 @@ final class ShortenUrlMiddleware
             return $next($request);
         }
 
-        if (!$ip = $request->ip()) {
+        if (! $ip = $request->ip()) {
             FlashHelper::message('Unable to determine your IP address.', FlashMessageType::ERROR);
 
             return redirect()->back();
@@ -35,7 +35,7 @@ final class ShortenUrlMiddleware
 
         $anonymousToken = $request->cookie(CookieKey::ANONYMOUS_TOKEN->value);
 
-        if (!$anonymousToken || !Str::isUuid($anonymousToken)) {
+        if (! $anonymousToken || ! Str::isUuid($anonymousToken)) {
             FlashHelper::message('Unable to determine your anonymous token.', FlashMessageType::ERROR);
 
             return redirect()->back();

@@ -57,7 +57,7 @@ it('enforces rate limiting per IP, method and uri', function (): void {
     Request::factory(5)->create([
         'method' => HttpMethod::POST->value,
         'uri' => route('urls.store'),
-        'ip_address' => $ip
+        'ip_address' => $ip,
     ]);
 
     // 6th request should be blocked
