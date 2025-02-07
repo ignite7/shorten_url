@@ -23,9 +23,7 @@ const columns: ColumnDef<IUrl>[] = [
 
       return (
         <div className={'flex items-center gap-2'}>
-          <div className={'max-w-56'} title={shortLink}>
-            {id}
-          </div>
+          <div title={shortLink}>{id}</div>
           <Copy
             size={16}
             className={'cursor-pointer'}

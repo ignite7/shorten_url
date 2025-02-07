@@ -1,5 +1,5 @@
 enum DateFormatEnum {
-  READABLE_DATE = 'MMM D, YYYY [at] HH:mm',
+  READABLE_DATE = 'MMM D, YYYY',
 }
 
 export default DateFormatEnum;
