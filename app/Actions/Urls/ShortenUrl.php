@@ -22,7 +22,7 @@ final class ShortenUrl
     use AsController, AsObject;
 
     /**
-     * @param ActionRequest $request
+     * @param  ActionRequest  $request
      * @return Url
      */
     public function handle(ActionRequest $request): Url
@@ -62,7 +62,7 @@ final class ShortenUrl
     }
 
     /**
-     * @param ActionRequest $request
+     * @param  ActionRequest  $request
      * @return RedirectResponse
      */
     public function asController(ActionRequest $request): RedirectResponse
