@@ -16,10 +16,10 @@ it('gets empty urls if not user or anonymous token is provided', function (): vo
     $this->get($this->route)
         ->assertOk()
         ->assertInertia(fn (Assert $page): AssertableJson => $page
-            ->component('Home/index')
+            ->component('Home/index', false)
             ->has('lastShortenedUrl')
             ->has('anonymousToken')
-            ->has('urls', fn (Assert $page): \Illuminate\Testing\Fluent\AssertableJson => $page
+            ->has('urls', fn (Assert $page): AssertableJson => $page
                 ->has('data', 0)
                 ->has('links', 4)
                 ->has('meta', 8)
@@ -37,10 +37,10 @@ describe('guest', function (): void {
             ->get($this->route)
             ->assertOk()
             ->assertInertia(fn (Assert $page): AssertableJson => $page
-                ->component('Home/index')
+                ->component('Home/index', false)
                 ->has('lastShortenedUrl')
                 ->has('anonymousToken')
-                ->has('urls', fn (Assert $page): \Illuminate\Testing\Fluent\AssertableJson => $page
+                ->has('urls', fn (Assert $page): AssertableJson => $page
                     ->has('data', 1)
                     ->has('links', 4)
                     ->has('meta', 8)
@@ -65,10 +65,10 @@ describe('guest', function (): void {
             ->get($this->route)
             ->assertOk()
             ->assertInertia(fn (Assert $page): AssertableJson => $page
-                ->component('Home/index')
+                ->component('Home/index', false)
                 ->has('lastShortenedUrl')
                 ->has('anonymousToken')
-                ->has('urls', fn (Assert $page): \Illuminate\Testing\Fluent\AssertableJson => $page
+                ->has('urls', fn (Assert $page): AssertableJson => $page
                     ->has('data', 2)
                     ->has('links', 4)
                     ->has('meta', 8)
@@ -90,10 +90,10 @@ describe('guest', function (): void {
             ->get("$this->route?order=asc")
             ->assertOk()
             ->assertInertia(fn (Assert $page): AssertableJson => $page
-                ->component('Home/index')
+                ->component('Home/index', false)
                 ->has('lastShortenedUrl')
                 ->has('anonymousToken')
-                ->has('urls', fn (Assert $page): \Illuminate\Testing\Fluent\AssertableJson => $page
+                ->has('urls', fn (Assert $page): AssertableJson => $page
                     ->has('data', 2)
                     ->has('links', 4)
                     ->has('meta', 8)
@@ -116,10 +116,10 @@ describe('user', function (): void {
             ->get($this->route)
             ->assertOk()
             ->assertInertia(fn (Assert $page): AssertableJson => $page
-                ->component('Home/index')
+                ->component('Home/index', false)
                 ->has('lastShortenedUrl')
                 ->has('anonymousToken')
-                ->has('urls', fn (Assert $page): \Illuminate\Testing\Fluent\AssertableJson => $page
+                ->has('urls', fn (Assert $page): AssertableJson => $page
                     ->has('data', 1)
                     ->has('links', 4)
                     ->has('meta', 8)
@@ -145,10 +145,10 @@ describe('user', function (): void {
             ->get($this->route)
             ->assertOk()
             ->assertInertia(fn (Assert $page): AssertableJson => $page
-                ->component('Home/index')
+                ->component('Home/index', false)
                 ->has('lastShortenedUrl')
                 ->has('anonymousToken')
-                ->has('urls', fn (Assert $page): \Illuminate\Testing\Fluent\AssertableJson => $page
+                ->has('urls', fn (Assert $page): AssertableJson => $page
                     ->has('data', 2)
                     ->has('links', 4)
                     ->has('meta', 8)
@@ -169,10 +169,10 @@ describe('user', function (): void {
             ->get("$this->route?order=asc")
             ->assertOk()
             ->assertInertia(fn (Assert $page): AssertableJson => $page
-                ->component('Home/index')
+                ->component('Home/index', false)
                 ->has('lastShortenedUrl')
                 ->has('anonymousToken')
-                ->has('urls', fn (Assert $page): \Illuminate\Testing\Fluent\AssertableJson => $page
+                ->has('urls', fn (Assert $page): AssertableJson => $page
                     ->has('data', 2)
                     ->has('links', 4)
                     ->has('meta', 8)
