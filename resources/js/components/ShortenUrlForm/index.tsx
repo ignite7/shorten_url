@@ -1,11 +1,13 @@
+import InputErrorText from '@/components/InputErrorText';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useMediaQueryContext } from '@/context/MediaQueryContext';
 import LocalStorageKeys from '@/enums/LocalStorageKeys';
+import ClipboardHelper from '@/helpers/clipboardHelper';
 import IHome from '@/interfaces/pages/IHome';
 import { useForm, usePage } from '@inertiajs/react';
 import { ArrowRight } from 'lucide-react';
-import { ChangeEvent, FormEvent, useEffect } from 'react';
+import { FormEvent, useEffect } from 'react';
 import styles from './index.module.css';
 
 export default function ShortenUrlForm() {
@@ -33,7 +35,7 @@ export default function ShortenUrlForm() {
       lastShortenedUrl &&
       localStorage.getItem(LocalStorageKeys.AutoPaste) === 'true'
     ) {
-      navigator.clipboard.writeText(lastShortenedUrl);
+      ClipboardHelper.copy(lastShortenedUrl, false);
     }
   }, [reset, wasSuccessful, lastShortenedUrl]);
 
@@ -42,9 +44,6 @@ export default function ShortenUrlForm() {
     if (!isDirty) return;
     post(route('urls.store'));
   };
-
-  const change = (e: ChangeEvent<HTMLInputElement>): void =>
-    setData('source', e.target.value);
 
   return (
     <>
@@ -55,7 +54,7 @@ export default function ShortenUrlForm() {
           placeholder={'Enter the link here'}
           className={styles.input}
           value={data.source}
-          onChange={change}
+          onChange={(e) => setData('source', e.target.value)}
           required
         />
         <Button
@@ -72,7 +71,7 @@ export default function ShortenUrlForm() {
           )}
         </Button>
       </form>
-      {errors.source ? <p className={styles.error}>{errors.source}</p> : null}
+      <InputErrorText text={errors.source} />
     </>
   );
 }

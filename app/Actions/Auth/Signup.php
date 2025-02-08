@@ -20,16 +20,16 @@ final class Signup
     use AsController, AsObject;
 
     /**
-     * @param  ActionRequest  $request
+     * @param ActionRequest $request
      * @return User
      */
     public function handle(ActionRequest $request): User
     {
         return User::query()->create([
-            'first_name' => $request->first_name,
-            'last_name' => $request->last_name,
-            'email' => $request->email,
-            'password' => $request->password,
+            'first_name' => $request->string('first_name'),
+            'last_name' => $request->string('last_name'),
+            'email' => $request->string('email'),
+            'password' => $request->string('password'),
             'role' => UserRole::REGULAR->value,
             'email_verified_at' => null,
         ]);
@@ -58,7 +58,7 @@ final class Signup
     }
 
     /**
-     * @param  ActionRequest  $request
+     * @param ActionRequest $request
      * @return RedirectResponse
      */
     public function asController(ActionRequest $request): RedirectResponse

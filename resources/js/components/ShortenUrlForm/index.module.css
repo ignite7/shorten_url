@@ -6,11 +6,6 @@
   width: 100%;
 }
 
-.error {
-  text-align: center;
-  color: hsl(var(--destructive));
-}
-
 @screen md {
   .input {
     width: 31.5rem; /* 504px */

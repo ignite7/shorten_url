@@ -1,25 +1,23 @@
+import ManageAnonymousTokenAccess
+  from '@/components/ManageAnonymousTokenAccess';
 import { Button } from '@/components/ui/button';
 import { useMediaQueryContext } from '@/context/MediaQueryContext';
-import { router } from '@inertiajs/react';
+import { router, usePage } from '@inertiajs/react';
 import { LogIn, UserPlus } from 'lucide-react';
 import styles from './index.module.css';
 
 export default function Header() {
+  const { user } = usePage().props.auth;
   const { isMobile } = useMediaQueryContext();
   const buttonSize = isMobile ? 'icon' : 'default';
 
-  const onClick = (): void =>
-    router.push({
-      url: route('home'),
-      component: 'Home',
-    });
-
   return (
     <header className={styles.header}>
-      <div className={styles.logo} onClick={onClick}>
+      <div className={styles.logo} onClick={() => router.visit(route('home'))}>
         ShortenURL
       </div>
       <div className={styles.buttons}>
+        {!user ? <ManageAnonymousTokenAccess /> : null}
         <Button variant={'secondary'} size={buttonSize}>
           {isMobile ? (
             <LogIn />

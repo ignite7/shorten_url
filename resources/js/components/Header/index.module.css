@@ -2,7 +2,7 @@
   display: flex;
   align-items: center;
   height: var(--64px);
-  margin: var(--24px) 0 var(--104px) 0;
+  margin: var(--24px) 0 var(--40px) 0;
 }
 
 .logo {

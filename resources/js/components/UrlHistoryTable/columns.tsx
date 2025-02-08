@@ -1,16 +1,11 @@
 import { Button } from '@/components/ui/button';
 import DateFormat from '@/enums/DateFormat';
+import ClipboardHelper from '@/helpers/clipboardHelper';
 import IUrl from '@/interfaces/IUrl';
 import { router } from '@inertiajs/react';
 import { ColumnDef } from '@tanstack/react-table';
 import dayjs from 'dayjs';
 import { ArrowUpDown, Copy } from 'lucide-react';
-import { toast } from 'sonner';
-
-const copyToClipboard = (text: string): void => {
-  navigator.clipboard.writeText(text);
-  toast.success('Copied to clipboard');
-};
 
 const columns: ColumnDef<IUrl>[] = [
   {
@@ -24,11 +19,13 @@ const columns: ColumnDef<IUrl>[] = [
       return (
         <div className={'flex items-center gap-2'}>
           <div title={shortLink}>{id}</div>
-          <Copy
-            size={16}
-            className={'cursor-pointer'}
-            onClick={() => copyToClipboard(shortLink)}
-          />
+          <Button
+            variant={'ghost'}
+            size={'icon'}
+            onClick={() => ClipboardHelper.copy(shortLink)}
+          >
+            <Copy />
+          </Button>
         </div>
       );
     },
@@ -44,11 +41,13 @@ const columns: ColumnDef<IUrl>[] = [
           <div className={'max-w-96 truncate'} title={source}>
             {source}
           </div>
-          <Copy
-            size={16}
-            className={'cursor-pointer'}
-            onClick={() => copyToClipboard(source)}
-          />
+          <Button
+            variant={'ghost'}
+            size={'icon'}
+            onClick={() => ClipboardHelper.copy(source)}
+          >
+            <Copy />
+          </Button>
         </div>
       );
     },
@@ -71,9 +70,12 @@ const columns: ColumnDef<IUrl>[] = [
       };
 
       return (
-        <Button variant={'ghost'} onClick={handleSort}>
-          Date <ArrowUpDown />
-        </Button>
+        <div
+          className={'flex cursor-pointer items-center gap-2'}
+          onClick={handleSort}
+        >
+          Date <ArrowUpDown size={16} />
+        </div>
       );
     },
     cell: ({ row }): string => {

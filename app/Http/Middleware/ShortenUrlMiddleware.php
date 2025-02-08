@@ -33,9 +33,7 @@ final class ShortenUrlMiddleware
             return redirect()->back();
         }
 
-        $anonymousToken = $request->cookie(CookieKey::ANONYMOUS_TOKEN->value);
-
-        if (! $anonymousToken || ! Str::isUuid($anonymousToken)) {
+        if (! Str::isUuid($request->cookie(CookieKey::ANONYMOUS_TOKEN->value))) {
             FlashHelper::message('Unable to determine your anonymous token.', FlashMessageType::ERROR);
 
             return redirect()->back();

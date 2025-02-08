@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Middleware;
 
+use App\Actions\Urls\UpdateAnonymousToken;
 use App\Enums\CookieKey;
 use Closure;
 use Illuminate\Http\Request;
@@ -12,8 +13,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 final class AnonymousTokenMiddleware
 {
-    public const int MINUTES = 262980; // 6 months
-
     /**
      * Handle an incoming request.
      *
@@ -25,16 +24,9 @@ final class AnonymousTokenMiddleware
             return $next($request);
         }
 
-        $anonymousTokenKey = CookieKey::ANONYMOUS_TOKEN->value;
         $anonymousToken = $request->cookie(CookieKey::ANONYMOUS_TOKEN->value);
 
-        if (! $anonymousToken || ! Str::isUuid($anonymousToken)) {
-            cookie()->queue(cookie(
-                $anonymousTokenKey,
-                Str::uuid()->toString(),
-                self::MINUTES
-            ));
-        }
+        UpdateAnonymousToken::runIf(! Str::isUuid($anonymousToken), Str::uuid()->toString());
 
         return $next($request);
     }

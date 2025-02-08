@@ -1,0 +1,4 @@
+.input-error-text {
+  text-align: center;
+  color: hsl(var(--destructive));
+}

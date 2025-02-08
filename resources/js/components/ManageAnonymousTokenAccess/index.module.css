@@ -1,0 +1,13 @@
+.manage-anonymous-token-access {
+  gap: var(--24px);
+}
+
+.form {
+  display: flex;
+  align-items: center;
+  gap: var(--8px);
+}
+
+.footer {
+  row-gap: var(--8px);
+}
