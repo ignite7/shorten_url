@@ -13,8 +13,7 @@ const columns: ColumnDef<IUrl>[] = [
     header: 'Short Link',
     cell: ({ row }) => {
       const id: string = row.getValue('id');
-      // TODO: use route() when the route is available
-      const shortLink: string = `${window.location.origin}/${id}`;
+      const shortLink: string = route('redirect-to-source', { url: id });
 
       return (
         <div className={'flex items-center gap-2'}>
