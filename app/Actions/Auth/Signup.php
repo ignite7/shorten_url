@@ -20,7 +20,7 @@ final class Signup
     use AsController, AsObject;
 
     /**
-     * @param ActionRequest $request
+     * @param  ActionRequest  $request
      * @return User
      */
     public function handle(ActionRequest $request): User
@@ -58,7 +58,7 @@ final class Signup
     }
 
     /**
-     * @param ActionRequest $request
+     * @param  ActionRequest  $request
      * @return RedirectResponse
      */
     public function asController(ActionRequest $request): RedirectResponse
