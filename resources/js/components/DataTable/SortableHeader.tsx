@@ -10,12 +10,12 @@ interface IProps {
 }
 
 export default function SortableHeader({
-                                         title,
-                                         column,
-                                         href,
-                                         defaultOrderBy,
-                                         only,
-                                       }: IProps) {
+  title,
+  column,
+  href,
+  defaultOrderBy,
+  only,
+}: IProps) {
   const params = new URLSearchParams(window.location.search);
   const page: string | null = params.get('page');
   const order: string = params.get('order') ?? 'desc';
