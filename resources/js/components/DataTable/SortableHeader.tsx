@@ -10,16 +10,16 @@ interface IProps {
 }
 
 export default function SortableHeader({
-  title,
-  column,
-  href,
-  defaultOrderBy,
-  only,
-}: IProps) {
+                                         title,
+                                         column,
+                                         href,
+                                         defaultOrderBy,
+                                         only,
+                                       }: IProps) {
   const params = new URLSearchParams(window.location.search);
   const page: string | null = params.get('page');
   const order: string = params.get('order') ?? 'desc';
-  const orderBy: string | undefined = params.get('orderBy') ?? defaultOrderBy;
+  const orderBy: string = params.get('orderBy') ?? defaultOrderBy ?? column;
   const isActiveSort: boolean = orderBy === column;
 
   const handleSort = (): void => {
