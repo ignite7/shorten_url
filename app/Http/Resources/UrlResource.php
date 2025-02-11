@@ -11,6 +11,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * @property string $id
  * @property string $source
  * @property string $created_at
+ * @property int $requests_count
  */
 final class UrlResource extends JsonResource
 {
@@ -24,6 +25,7 @@ final class UrlResource extends JsonResource
         return [
             'id' => $this->id,
             'source' => $this->source,
+            'clicks' => $this->requests_count,
             'created_at' => $this->created_at,
         ];
     }

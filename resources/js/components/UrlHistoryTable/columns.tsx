@@ -1,11 +1,11 @@
+import SortableHeader from '@/components/DataTable/SortableHeader';
 import { Button } from '@/components/ui/button';
 import DateFormat from '@/enums/DateFormat';
 import ClipboardHelper from '@/helpers/clipboardHelper';
 import IUrl from '@/interfaces/IUrl';
-import { router } from '@inertiajs/react';
 import { ColumnDef } from '@tanstack/react-table';
 import dayjs from 'dayjs';
-import { ArrowUpDown, Copy } from 'lucide-react';
+import { Copy } from 'lucide-react';
 
 const columns: ColumnDef<IUrl>[] = [
   {
@@ -52,31 +52,12 @@ const columns: ColumnDef<IUrl>[] = [
     },
   },
   {
+    accessorKey: 'clicks',
+    header: () => <SortableHeader title={'Clicks'} column={'clicks'} />,
+  },
+  {
     accessorKey: 'created_at',
-    header: () => {
-      const handleSort = (): void => {
-        const params = new URLSearchParams(window.location.search);
-        const order: string = params.get('order') ?? 'desc';
-        const page: string | null = params.get('page');
-        router.visit(route('home'), {
-          only: ['urls'],
-          preserveScroll: true,
-          data: {
-            order: order === 'desc' ? 'asc' : 'desc',
-            ...(page ? { page } : {}),
-          },
-        });
-      };
-
-      return (
-        <div
-          className={'flex cursor-pointer items-center gap-2'}
-          onClick={handleSort}
-        >
-          Date <ArrowUpDown size={16} />
-        </div>
-      );
-    },
+    header: () => <SortableHeader title={'Date'} column={'date'} />,
     cell: ({ row }): string => {
       const createdAt: string = row.getValue('created_at');
 

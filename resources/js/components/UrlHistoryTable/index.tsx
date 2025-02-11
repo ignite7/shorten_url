@@ -7,6 +7,7 @@ export default function UrlHistoryTable() {
   const { urls } = usePage<IHome>().props;
   const params = new URLSearchParams(window.location.search);
   const order: string | null = params.get('order');
+  const orderBy: string | null = params.get('orderBy');
 
   return (
     <DataTable
@@ -15,7 +16,10 @@ export default function UrlHistoryTable() {
       links={urls.links}
       meta={urls.meta}
       only={['urls']}
-      params={order ? { order } : undefined}
+      params={{
+        ...(order ? { order } : {}),
+        ...(orderBy ? { orderBy } : {}),
+      }}
       showTableWhenNoData={false}
     />
   );
