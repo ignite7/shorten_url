@@ -7,6 +7,10 @@ import { ColumnDef } from '@tanstack/react-table';
 import dayjs from 'dayjs';
 import { Copy } from 'lucide-react';
 
+const href: string = route('home');
+const defaultOrderBy: string = 'date';
+const only: string[] = ['urls'];
+
 const columns: ColumnDef<IUrl>[] = [
   {
     accessorKey: 'id',
@@ -53,11 +57,27 @@ const columns: ColumnDef<IUrl>[] = [
   },
   {
     accessorKey: 'clicks',
-    header: () => <SortableHeader title={'Clicks'} column={'clicks'} />,
+    header: () => (
+      <SortableHeader
+        title={'Clicks'}
+        column={'clicks'}
+        href={href}
+        defaultOrderBy={defaultOrderBy}
+        only={only}
+      />
+    ),
   },
   {
     accessorKey: 'created_at',
-    header: () => <SortableHeader title={'Date'} column={'date'} />,
+    header: () => (
+      <SortableHeader
+        title={'Date'}
+        column={'date'}
+        href={href}
+        defaultOrderBy={defaultOrderBy}
+        only={only}
+      />
+    ),
     cell: ({ row }): string => {
       const createdAt: string = row.getValue('created_at');
 

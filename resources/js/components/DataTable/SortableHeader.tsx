@@ -4,22 +4,31 @@ import { ArrowUpDown } from 'lucide-react';
 interface IProps {
   title: string;
   column: string;
+  href: string;
+  defaultOrderBy?: string;
+  only?: string[];
 }
 
-export default function SortableHeader({ title, column }: IProps) {
+export default function SortableHeader({
+                                         title,
+                                         column,
+                                         href,
+                                         defaultOrderBy,
+                                         only,
+                                       }: IProps) {
   const params = new URLSearchParams(window.location.search);
   const page: string | null = params.get('page');
   const order: string = params.get('order') ?? 'desc';
-  const orderBy: string = params.get('orderBy') ?? 'date'; // Default sorting column
-  const isSorted: boolean = orderBy === column;
+  const orderBy: string | undefined = params.get('orderBy') ?? defaultOrderBy;
+  const isActiveSort: boolean = orderBy === column;
 
   const handleSort = (): void => {
-    router.visit(route('home'), {
-      only: ['urls'],
+    router.visit(href, {
+      only,
       preserveScroll: true,
       data: {
         ...(page ? { page } : {}),
-        order: order === 'desc' ? 'asc' : 'desc',
+        order: isActiveSort ? (order === 'asc' ? 'desc' : 'asc') : order,
         orderBy: column,
       },
     });
@@ -29,7 +38,7 @@ export default function SortableHeader({ title, column }: IProps) {
     <div
       className={
         'flex cursor-pointer items-center gap-2 ' +
-        (isSorted ? 'text-primary' : '')
+        (isActiveSort ? 'text-primary' : '')
       }
       onClick={handleSort}
     >
