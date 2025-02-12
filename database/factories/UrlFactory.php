@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Database\Factories;
 
+use App\Enums\UrlStatus;
 use App\Models\Url;
 use App\Models\User;
 use Database\Factories\Traits\RefreshOnCreate;
@@ -30,6 +31,7 @@ final class UrlFactory extends Factory
             'user_id' => User::factory(),
             'anonymous_token' => null,
             'source' => fake()->url(),
+            'status' => UrlStatus::ACTIVE->value,
         ];
     }
 
@@ -38,6 +40,13 @@ final class UrlFactory extends Factory
         return $this->state(fn (array $attributes): array => [
             'user_id' => null,
             'anonymous_token' => fake()->uuid(),
+        ]);
+    }
+
+    public function inactive(): static
+    {
+        return $this->state(fn (array $attributes): array => [
+            'status' => UrlStatus::INACTIVE->value,
         ]);
     }
 }

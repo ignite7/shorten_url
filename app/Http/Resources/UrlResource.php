@@ -10,8 +10,9 @@ use Illuminate\Http\Resources\Json\JsonResource;
 /**
  * @property string $id
  * @property string $source
+ * @property string $status
  * @property string $created_at
- * @property int $requests_count
+ * @property int|null $requests_count
  */
 final class UrlResource extends JsonResource
 {
@@ -25,7 +26,8 @@ final class UrlResource extends JsonResource
         return [
             'id' => $this->id,
             'source' => $this->source,
-            'clicks' => $this->requests_count,
+            'status' => $this->status,
+            'clicks' => $this->requests_count ?? 0,
             'created_at' => $this->created_at,
         ];
     }

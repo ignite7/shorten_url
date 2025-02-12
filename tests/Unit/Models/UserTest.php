@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Hash;
 it('can get the user in an array format', function (): void {
     $user = User::factory()->create();
 
-    expect($user->toArray())->toMatchArray([
+    expect($user->toArray())->toBe([
         'role' => $user->role,
         'first_name' => $user->first_name,
         'last_name' => $user->last_name,
@@ -41,7 +41,7 @@ it('can get the urls of the user', function (): void {
     expect($user->urls)->toHaveCount(5)
         ->and($urls)->toHaveCount(5)
         ->and($user->urls->pluck('id')->toArray())
-        ->toMatchArray($urls->pluck('id')->toArray());
+        ->toBe($urls->pluck('id')->toArray());
 });
 
 it('can get the requests of the user', function (): void {
@@ -53,5 +53,5 @@ it('can get the requests of the user', function (): void {
     expect($user->requests)->toHaveCount(5)
         ->and($requests)->toHaveCount(5)
         ->and($user->requests->pluck('id')->toArray())
-        ->toMatchArray($requests->pluck('id')->toArray());
+        ->toBe($requests->pluck('id')->toArray());
 });

@@ -6,6 +6,8 @@ import IUrl from '@/interfaces/IUrl';
 import { ColumnDef } from '@tanstack/react-table';
 import dayjs from 'dayjs';
 import { Copy } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
+import UrlStatus from '@/enums/UrlStatus';
 
 const href: string = route('home');
 const defaultOrderBy: string = 'date';
@@ -66,6 +68,22 @@ const columns: ColumnDef<IUrl>[] = [
         only={only}
       />
     ),
+  },
+  {
+    accessorKey: 'status',
+    header: 'Status',
+    cell: ({ row }) => {
+      const status: string = row.getValue('status');
+
+      return (
+        <Badge
+          variant={status === UrlStatus.ACTIVE ? 'default' : 'secondary'}
+          className={'capitalize'}
+        >
+          {status}
+        </Badge>
+      );
+    },
   },
   {
     accessorKey: 'created_at',

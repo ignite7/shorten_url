@@ -1,10 +1,10 @@
 import DataTable from '@/components/DataTable';
 import columns from '@/components/UrlHistoryTable/columns';
-import IHome from '@/interfaces/pages/IHome';
+import IHomePageProps from '@/interfaces/IHomePageProps';
 import { usePage } from '@inertiajs/react';
 
 export default function UrlHistoryTable() {
-  const { urls } = usePage<IHome>().props;
+  const { urls } = usePage<IHomePageProps>().props;
   const params = new URLSearchParams(window.location.search);
   const order: string | null = params.get('order');
   const orderBy: string | null = params.get('orderBy');

@@ -12,7 +12,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { useMediaQueryContext } from '@/context/MediaQueryContext';
 import ClipboardHelper from '@/helpers/clipboardHelper';
-import IHome from '@/interfaces/pages/IHome';
+import IHomePageProps from '@/interfaces/IHomePageProps';
 import { useForm, usePage } from '@inertiajs/react';
 import { Copy, KeyRound } from 'lucide-react';
 import { FormEvent, useEffect, useState } from 'react';
@@ -21,7 +21,7 @@ import { v4 as uuidv4 } from 'uuid';
 import styles from './index.module.css';
 
 export default function ManageAnonymousTokenAccess() {
-  const { anonymousToken } = usePage<IHome>().props;
+  const { anonymousToken } = usePage<IHomePageProps>().props;
   const { isMobile } = useMediaQueryContext();
   const [open, setOpen] = useState<boolean>(false);
   const {

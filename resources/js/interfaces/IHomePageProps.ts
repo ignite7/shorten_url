@@ -2,7 +2,7 @@ import IPagination from '@/interfaces/IPagination';
 import IUrl from '@/interfaces/IUrl';
 import { PageProps } from '@/types';
 
-interface IHome extends PageProps {
+interface IHomePageProps extends PageProps {
   lastShortenedUrl: string | null;
   anonymousToken: string | null;
   urls: IPagination<IUrl>;
@@ -10,4 +10,4 @@ interface IHome extends PageProps {
   page: string | null;
 }
 
-export default IHome;
+export default IHomePageProps;

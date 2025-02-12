@@ -7,6 +7,7 @@ namespace App\Actions\Urls;
 use App\Enums\CookieKey;
 use App\Enums\FlashMessageType;
 use App\Enums\SessionKey;
+use App\Enums\UrlStatus;
 use App\Helpers\FlashHelper;
 use App\Http\Middleware\ShortenUrlMiddleware;
 use App\Models\Url;
@@ -35,6 +36,7 @@ final class ShortenUrl
                 'user_id' => $userId,
                 'anonymous_token' => is_array($anonymousToken) ? null : $anonymousToken,
                 'source' => $request->string('source'),
+                'status' => UrlStatus::ACTIVE->value,
             ]);
 
             StoreRequest::run($request, $url->id, $userId, $anonymousToken);

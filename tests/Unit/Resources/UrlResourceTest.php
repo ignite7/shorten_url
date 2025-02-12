@@ -10,16 +10,10 @@ it('can get the URL resource', function (): void {
 
     $resource = new UrlResource($url);
 
-    expect($resource->toArray(request()))
-        ->toHaveKeys([
-            'id',
-            'source',
-            'clicks',
-            'created_at',
-        ])
-        ->toMatchArray([
-            'id' => $url->id,
-            'source' => $url->source,
-            'created_at' => $url->created_at,
-        ]);
+    expect($resource->toArray(request()))->toMatchArray([
+        'id' => $url->id,
+        'source' => $url->source,
+        'clicks' => 0,
+        'created_at' => $url->created_at
+    ]);
 });

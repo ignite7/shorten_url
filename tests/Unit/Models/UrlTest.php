@@ -9,8 +9,9 @@ use App\Models\User;
 it('can get the url in an array format', function (): void {
     $url = Url::factory()->create();
 
-    expect($url->toArray())->toMatchArray([
+    expect($url->toArray())->toBe([
         'source' => $url->source,
+        'status' => $url->status,
         'created_at' => $url->created_at?->toISOString(),
     ]);
 });
@@ -37,5 +38,5 @@ it('can get the requests of the url', function (): void {
     expect($url->requests)->toHaveCount(5)
         ->and($requests)->toHaveCount(5)
         ->and($url->requests->pluck('id')->toArray())
-        ->toMatchArray($requests->pluck('id')->toArray());
+        ->toBe($requests->pluck('id')->toArray());
 });

@@ -25,7 +25,7 @@ final class ViewUrls
     use AsController, AsObject;
 
     /**
-     * @param  ActionRequest  $request
+     * @param ActionRequest $request
      * @return LengthAwarePaginator<Url>|AnonymousResourceCollection
      */
     public function handle(ActionRequest $request): LengthAwarePaginator|AnonymousResourceCollection
@@ -50,7 +50,7 @@ final class ViewUrls
 
         return UrlResource::collection(
             $query
-                ->select('id', 'source', 'created_at')
+                ->select('id', 'source', 'status', 'created_at')
                 ->withCount([
                     'requests' => static function (Builder $query): void {
                         $route = mb_rtrim(route('redirect-to-source', ['url' => 0]), '0');
@@ -80,7 +80,7 @@ final class ViewUrls
     }
 
     /**
-     * @param  ActionRequest  $request
+     * @param ActionRequest $request
      * @return Response|ResponseFactory
      */
     public function asController(ActionRequest $request): Response|ResponseFactory

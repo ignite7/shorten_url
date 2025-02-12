@@ -4,7 +4,7 @@ import { Input } from '@/components/ui/input';
 import { useMediaQueryContext } from '@/context/MediaQueryContext';
 import LocalStorageKeys from '@/enums/LocalStorageKeys';
 import ClipboardHelper from '@/helpers/clipboardHelper';
-import IHome from '@/interfaces/pages/IHome';
+import IHomePageProps from '@/interfaces/IHomePageProps';
 import { Page } from '@inertiajs/core';
 import { useForm } from '@inertiajs/react';
 import { ArrowRight } from 'lucide-react';
@@ -17,7 +17,7 @@ export default function ShortenUrlForm() {
     source: '',
   });
 
-  const handleOnSuccess = (params: Page<IHome>): void => {
+  const handleOnSuccess = (params: Page<IHomePageProps>): void => {
     const { lastShortenedUrl } = params.props;
     reset();
 
@@ -33,7 +33,7 @@ export default function ShortenUrlForm() {
     e.preventDefault();
     if (!isDirty) return;
     post(route('urls.store'), {
-      onSuccess: (params): void => handleOnSuccess(params as Page<IHome>),
+      onSuccess: (params): void => handleOnSuccess(params as Page<IHomePageProps>),
     });
   };
 

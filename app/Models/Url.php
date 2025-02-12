@@ -18,6 +18,7 @@ use Spatie\DeletedModels\Models\Concerns\KeepsDeletedModels;
 /**
  * @property string $id
  * @property string $source
+ * @property string $status
  * @property ?User $user
  * @property string $anonymous_token
  * @property Collection<int, Request> $requests
@@ -40,6 +41,7 @@ final class Url extends Model
         'user_id',
         'anonymous_token',
         'source',
+        'status',
     ];
 
     /**
@@ -76,6 +78,7 @@ final class Url extends Model
         return [
             'anonymous_token' => 'string',
             'source' => 'string',
+            'status' => 'string',
             'created_at' => 'datetime',
             'updated_at' => 'datetime',
         ];

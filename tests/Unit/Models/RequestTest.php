@@ -9,7 +9,7 @@ use App\Models\User;
 it('can get the user in an array format', function (): void {
     $request = Request::factory()->create();
 
-    expect($request->toArray())->toMatchArray([
+    expect($request->toArray())->toBe([
         'method' => $request->method,
         'uri' => $request->uri,
         'query' => $request->query->toArray(),

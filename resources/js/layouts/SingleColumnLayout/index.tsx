@@ -11,7 +11,7 @@ interface IProps {
   children: ReactNode;
 }
 
-export default function Layout({ children }: IProps) {
+export default function SingleColumnLayout({ children }: IProps) {
   const { props, component } = usePage();
   const [page] = component.split('/');
 
