@@ -24,31 +24,34 @@ export default function ManageAnonymousTokenAccess() {
   const { anonymousToken } = usePage<IHome>().props;
   const { isMobile } = useMediaQueryContext();
   const [open, setOpen] = useState<boolean>(false);
-  const { data, setData, put, processing, wasSuccessful, errors, clearErrors } =
-    useForm({
-      anonymous_token: anonymousToken ?? '',
-    });
-  const isDirty: boolean = data.anonymous_token !== anonymousToken;
+  const {
+    data,
+    setData,
+    put,
+    processing,
+    errors,
+    isDirty,
+    setDefaults,
+    clearErrors,
+    reset,
+  } = useForm({
+    anonymous_token: anonymousToken ?? '',
+  });
 
   useEffect((): void => {
-    if (!wasSuccessful) return;
+    if (!open) reset();
+  }, [open, reset]);
+
+  const onSuccess = (): void => {
     toast.success('Token updated successfully.');
+    setDefaults();
     setOpen(false);
-  }, [wasSuccessful]);
+  };
 
   const submit = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
     if (!isDirty) return;
-    put(route('urls.anonymous-token.update'));
-  };
-
-  const openChange = (value: boolean): void => {
-    setOpen(value);
-
-    if (isDirty) {
-      setData('anonymous_token', anonymousToken ?? '');
-      clearErrors();
-    }
+    put(route('urls.anonymous-token.update'), { onSuccess });
   };
 
   const generateToken = (): void => {
@@ -57,7 +60,7 @@ export default function ManageAnonymousTokenAccess() {
   };
 
   return (
-    <Dialog open={open} onOpenChange={openChange}>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button variant={'outline'} size={isMobile ? 'icon' : 'default'}>
           {isMobile ? (

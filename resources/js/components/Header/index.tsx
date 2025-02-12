@@ -1,4 +1,5 @@
-import ManageAnonymousTokenAccess from '@/components/ManageAnonymousTokenAccess';
+import ManageAnonymousTokenAccess
+  from '@/components/ManageAnonymousTokenAccess';
 import { Button } from '@/components/ui/button';
 import { useMediaQueryContext } from '@/context/MediaQueryContext';
 import { router, usePage } from '@inertiajs/react';
@@ -12,8 +13,8 @@ export default function Header() {
 
   return (
     <header className={styles.header}>
-      <div className={styles.logo} onClick={() => router.visit(route('home'))}>
-        ShortenURL
+      <div className={styles.logo}>
+        <h5 onClick={() => router.visit(route('home'))}>ShortenURL</h5>
       </div>
       <div className={styles.buttons}>
         {!user ? <ManageAnonymousTokenAccess /> : null}

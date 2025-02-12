@@ -5,44 +5,36 @@ import { useMediaQueryContext } from '@/context/MediaQueryContext';
 import LocalStorageKeys from '@/enums/LocalStorageKeys';
 import ClipboardHelper from '@/helpers/clipboardHelper';
 import IHome from '@/interfaces/pages/IHome';
-import { useForm, usePage } from '@inertiajs/react';
+import { Page } from '@inertiajs/core';
+import { useForm } from '@inertiajs/react';
 import { ArrowRight } from 'lucide-react';
-import { FormEvent, useEffect } from 'react';
+import { FormEvent } from 'react';
 import styles from './index.module.css';
 
 export default function ShortenUrlForm() {
   const { isMobile } = useMediaQueryContext();
-  const { lastShortenedUrl } = usePage<IHome>().props;
-  const {
-    data,
-    setData,
-    post,
-    processing,
-    errors,
-    isDirty,
-    wasSuccessful,
-    reset,
-  } = useForm({
+  const { data, setData, post, processing, errors, isDirty, reset } = useForm({
     source: '',
   });
 
-  useEffect((): void => {
-    if (!wasSuccessful) return;
-
+  const handleOnSuccess = (params: Page<IHome>): void => {
+    const { lastShortenedUrl } = params.props;
     reset();
 
     if (
-      lastShortenedUrl &&
-      localStorage.getItem(LocalStorageKeys.AutoPaste) === 'true'
+      localStorage.getItem(LocalStorageKeys.AutoPaste) === 'true' &&
+      lastShortenedUrl
     ) {
       ClipboardHelper.copy(lastShortenedUrl, false);
     }
-  }, [reset, wasSuccessful, lastShortenedUrl]);
+  };
 
   const submit = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
     if (!isDirty) return;
-    post(route('urls.store'));
+    post(route('urls.store'), {
+      onSuccess: (params): void => handleOnSuccess(params as Page<IHome>),
+    });
   };
 
   return (
