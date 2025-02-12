@@ -1,5 +1,4 @@
-import ManageAnonymousTokenAccess
-  from '@/components/ManageAnonymousTokenAccess';
+import ManageAnonymousTokenAccess from '@/components/ManageAnonymousTokenAccess';
 import { Button } from '@/components/ui/button';
 import { useMediaQueryContext } from '@/context/MediaQueryContext';
 import { router, usePage } from '@inertiajs/react';
