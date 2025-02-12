@@ -1,6 +1,6 @@
-import Footer from '@/components/Footer';
-import Header from '@/components/Header';
 import { Toaster } from '@/components/ui/sonner';
+import Footer from '@/layouts/SingleColumnLayout/components/Footer';
+import Header from '@/layouts/SingleColumnLayout/components/Header';
 import { Head, usePage } from '@inertiajs/react';
 import { ReactNode, useEffect } from 'react';
 import { toast } from 'sonner';

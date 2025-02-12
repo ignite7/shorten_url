@@ -1,12 +1,12 @@
-import AutoPaste from '@/components/AutoPaste';
-import ShortenUrlForm from '@/components/ShortenUrlForm';
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip';
-import UrlHistoryTable from '@/components/UrlHistoryTable';
+import AutoPaste from '@/pages/Home/components/AutoPaste';
+import ShortenUrlForm from '@/pages/Home/components/ShortenUrlForm';
+import UrlHistoryTable from '@/pages/Home/components/UrlHistoryTable';
 import { CircleHelp } from 'lucide-react';
 import './index.css';
 import styles from './index.module.css';

@@ -1,6 +1,6 @@
 import DataTable from '@/components/DataTable';
-import columns from '@/components/UrlHistoryTable/columns';
 import IHomePageProps from '@/interfaces/IHomePageProps';
+import columns from '@/pages/Home/components/UrlHistoryTable/columns';
 import { usePage } from '@inertiajs/react';
 
 export default function UrlHistoryTable() {

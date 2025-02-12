@@ -1,12 +1,12 @@
-import ManageAnonymousTokenAccess from '@/components/ManageAnonymousTokenAccess';
 import { Button } from '@/components/ui/button';
 import { useMediaQueryContext } from '@/context/MediaQueryContext';
+import ManageAnonymousTokenAccess from '@/pages/Home/components/ManageAnonymousTokenAccess';
 import { router, usePage } from '@inertiajs/react';
 import { LogIn, UserPlus } from 'lucide-react';
 import styles from './index.module.css';
 
 export default function Header() {
-  const { user } = usePage().props.auth;
+  const { user } = usePage().props.auth || {};
   const { isMobile } = useMediaQueryContext();
   const buttonSize = isMobile ? 'icon' : 'default';
 
