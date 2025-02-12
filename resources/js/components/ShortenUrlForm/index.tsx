@@ -33,7 +33,8 @@ export default function ShortenUrlForm() {
     e.preventDefault();
     if (!isDirty) return;
     post(route('urls.store'), {
-      onSuccess: (params): void => handleOnSuccess(params as Page<IHomePageProps>),
+      onSuccess: (params): void =>
+        handleOnSuccess(params as Page<IHomePageProps>),
     });
   };
 

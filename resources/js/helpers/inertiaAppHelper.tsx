@@ -6,7 +6,7 @@ import React from 'react';
 export default class InertiaAppHelper {
   public static async resolve(
     name: string,
-    pages: PageModuleType,
+    pages: PageModuleType
   ): Promise<PageModule> {
     const pageImport = pages[`./pages/${name}.tsx`];
 
@@ -17,8 +17,11 @@ export default class InertiaAppHelper {
     const pageModule = (await pageImport()) as PageModule;
     const Page = pageModule.default;
 
-    Page.layout = Page.layout || ((page: React.ReactNode) =>
-      <SingleColumnLayout>{page}</SingleColumnLayout>);
+    Page.layout =
+      Page.layout ||
+      ((page: React.ReactNode) => (
+        <SingleColumnLayout>{page}</SingleColumnLayout>
+      ));
 
     return pageModule;
   }

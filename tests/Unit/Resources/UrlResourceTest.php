@@ -14,6 +14,6 @@ it('can get the URL resource', function (): void {
         'id' => $url->id,
         'source' => $url->source,
         'clicks' => 0,
-        'created_at' => $url->created_at
+        'created_at' => $url->created_at,
     ]);
 });
