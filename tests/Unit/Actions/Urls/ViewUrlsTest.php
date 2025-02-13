@@ -2,8 +2,10 @@
 
 declare(strict_types=1);
 
+use App\Actions\Urls\ViewUrls;
 use App\Enums\CookieKey;
 use App\Enums\HttpMethod;
+use App\Http\Middleware\AnonymousTokenMiddleware;
 use App\Models\Request;
 use App\Models\Url;
 use App\Models\User;
@@ -203,4 +205,11 @@ describe('user', function (): void {
                 ->where('urls.data.2.id', $url3->id)
             );
     });
+});
+
+it('has controller middleware', function (): void {
+    $viewUrls = new ViewUrls();
+
+    expect($viewUrls->getControllerMiddleware())->toBeArray()
+        ->and($viewUrls->getControllerMiddleware())->toBe([AnonymousTokenMiddleware::class]);
 });

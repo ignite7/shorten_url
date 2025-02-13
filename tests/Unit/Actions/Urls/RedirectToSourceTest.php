@@ -5,6 +5,7 @@ declare(strict_types=1);
 use App\Actions\Urls\RedirectToSource;
 use App\Enums\CookieKey;
 use App\Enums\HttpMethod;
+use App\Http\Middleware\RedirectToSourceMiddleware;
 use App\Models\Request;
 use App\Models\Url;
 use App\Models\User;
@@ -113,4 +114,11 @@ describe('action', function (): void {
             'user_id' => $user->id,
         ]);
     });
+});
+
+it('has controller middleware', function (): void {
+    $redirectToSource = new RedirectToSource();
+
+    expect($redirectToSource->getControllerMiddleware())->toBeArray()
+        ->and($redirectToSource->getControllerMiddleware())->toBe([RedirectToSourceMiddleware::class]);
 });

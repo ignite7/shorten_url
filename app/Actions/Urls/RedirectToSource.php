@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Actions\Urls;
 
 use App\Enums\CookieKey;
+use App\Http\Middleware\RedirectToSourceMiddleware;
 use App\Models\Url;
 use Illuminate\Http\RedirectResponse;
 use Lorisleiva\Actions\ActionRequest;
@@ -30,6 +31,14 @@ final class RedirectToSource
         );
 
         return redirect()->away($url->source);
+    }
+
+    /**
+     * @return array<int, string>
+     */
+    public function getControllerMiddleware(): array
+    {
+        return [RedirectToSourceMiddleware::class];
     }
 
     /**

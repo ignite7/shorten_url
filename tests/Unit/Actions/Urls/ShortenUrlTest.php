@@ -7,6 +7,7 @@ use App\Enums\CookieKey;
 use App\Enums\FlashMessageType;
 use App\Enums\HttpMethod;
 use App\Helpers\FlashHelper;
+use App\Http\Middleware\ShortenUrlMiddleware;
 use App\Models\Request;
 use App\Models\Url;
 use App\Models\User;
@@ -237,4 +238,11 @@ describe('can run `ShortenUrl` action', function (): void {
             ->and($shortenUrlRequest->user_id)->toBeNull()
             ->and($shortenUrlRequest->url_id)->toBe($shortenUrl->id);
     });
+});
+
+it('has controller middleware', function (): void {
+    $shortenUrl = new ShortenUrl();
+
+    expect($shortenUrl->getControllerMiddleware())->toBeArray()
+        ->and($shortenUrl->getControllerMiddleware())->toBe([ShortenUrlMiddleware::class]);
 });

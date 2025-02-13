@@ -26,15 +26,17 @@ return Application::configure(basePath: dirname(__DIR__))
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         $exceptions->respond(function (Response $response, Throwable $exception, Request $request) {
-            if (! app()->environment(['local', 'testing']) && in_array($response->getStatusCode(), [500, 503, 404, 403])) {
+            $statusCode = $response->getStatusCode();
+
+            if (in_array($statusCode, [500, 503, 404, 403]) && ! app()->environment(['local', 'testing'])) {
                 return inertia('Error/index', [
-                    'status' => $response->getStatusCode(),
+                    'status' => $statusCode,
                 ])
                     ->toResponse($request)
                     ->setStatusCode($response->getStatusCode());
             }
 
-            if ($response->getStatusCode() === 419) {
+            if ($statusCode === 419) {
                 FlashHelper::message('The page expired, please try again.', FlashMessageType::ERROR);
 
                 return back();

@@ -14,6 +14,7 @@ use App\Models\User;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Support\Facades\Cookie;
 use Inertia\Response;
 use Inertia\ResponseFactory;
 use Lorisleiva\Actions\ActionRequest;
@@ -25,7 +26,7 @@ final class ViewUrls
     use AsController, AsObject;
 
     /**
-     * @param  ActionRequest  $request
+     * @param ActionRequest $request
      * @return LengthAwarePaginator<Url>|AnonymousResourceCollection
      */
     public function handle(ActionRequest $request): LengthAwarePaginator|AnonymousResourceCollection
@@ -80,14 +81,17 @@ final class ViewUrls
     }
 
     /**
-     * @param  ActionRequest  $request
+     * @param ActionRequest $request
      * @return Response|ResponseFactory
      */
     public function asController(ActionRequest $request): Response|ResponseFactory
     {
         return inertia('Home/index', [
             'lastShortenedUrl' => fn () => $request->session()->get(SessionKey::LAST_SHORTENED_URL->value),
-            'anonymousToken' => fn () => $request->cookie(CookieKey::ANONYMOUS_TOKEN->value),
+            'anonymousToken' => fn () => $request->cookie(
+                CookieKey::ANONYMOUS_TOKEN->value,
+                Cookie::queued(CookieKey::ANONYMOUS_TOKEN->value)?->getValue()
+            ),
             'urls' => fn (): LengthAwarePaginator|AnonymousResourceCollection => $this->handle($request),
         ]);
     }
