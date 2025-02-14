@@ -39,7 +39,10 @@ export default function ManageAnonymousTokenAccess() {
   });
 
   useEffect((): void => {
-    if (!open) reset();
+    if (open) return;
+
+    reset();
+    clearErrors();
   }, [open, reset]);
 
   const onSuccess = (): void => {
