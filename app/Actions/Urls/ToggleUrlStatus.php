@@ -17,7 +17,7 @@ final class ToggleUrlStatus
     use AsController, AsObject;
 
     /**
-     * @param Url $url
+     * @param  Url  $url
      * @return void
      */
     public function handle(Url $url): void
@@ -38,7 +38,7 @@ final class ToggleUrlStatus
     }
 
     /**
-     * @param Url $url
+     * @param  Url  $url
      * @return RedirectResponse
      */
     public function asController(Url $url): RedirectResponse

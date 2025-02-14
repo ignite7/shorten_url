@@ -1,12 +1,12 @@
 import { AlertDialog } from '@/components/AlertDialog';
 import { Button } from '@/components/ui/button';
 import {
-  DropdownMenu as DropdownMenuUI,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
+  DropdownMenu as DropdownMenuUI,
 } from '@/components/ui/dropdown-menu';
 import UrlStatus from '@/enums/UrlStatus';
 import ClipboardHelper from '@/helpers/clipboardHelper';
