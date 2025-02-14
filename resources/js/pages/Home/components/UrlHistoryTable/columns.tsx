@@ -1,13 +1,11 @@
 import SortableHeader from '@/components/DataTable/SortableHeader';
 import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
 import DateFormat from '@/enums/DateFormat';
 import UrlStatus from '@/enums/UrlStatus';
-import ClipboardHelper from '@/helpers/clipboardHelper';
 import IUrl from '@/interfaces/IUrl';
+import DropdownMenu from '@/pages/Home/components/UrlHistoryTable/DropdownMenu';
 import { ColumnDef } from '@tanstack/react-table';
 import dayjs from 'dayjs';
-import { Copy } from 'lucide-react';
 
 const href: string = route('home');
 const defaultOrderBy: string = 'date';
@@ -21,18 +19,7 @@ const columns: ColumnDef<IUrl>[] = [
       const id: string = row.getValue('id');
       const shortLink: string = route('redirect-to-source', { url: id });
 
-      return (
-        <div className={'flex items-center gap-2'}>
-          <div title={shortLink}>{id}</div>
-          <Button
-            variant={'ghost'}
-            size={'icon'}
-            onClick={() => ClipboardHelper.copy(shortLink)}
-          >
-            <Copy />
-          </Button>
-        </div>
-      );
+      return <div title={shortLink}>{id}</div>;
     },
   },
   {
@@ -42,17 +29,8 @@ const columns: ColumnDef<IUrl>[] = [
       const source: string = row.getValue('source');
 
       return (
-        <div className={'flex items-center gap-2'}>
-          <div className={'max-w-96 truncate'} title={source}>
-            {source}
-          </div>
-          <Button
-            variant={'ghost'}
-            size={'icon'}
-            onClick={() => ClipboardHelper.copy(source)}
-          >
-            <Copy />
-          </Button>
+        <div className={'max-w-96 truncate'} title={source}>
+          {source}
         </div>
       );
     },
@@ -101,6 +79,11 @@ const columns: ColumnDef<IUrl>[] = [
 
       return dayjs(createdAt).format(DateFormat.READABLE_DATE);
     },
+  },
+  {
+    accessorKey: 'actions',
+    header: () => null,
+    cell: ({ row }) => <DropdownMenu row={row} />,
   },
 ];
 

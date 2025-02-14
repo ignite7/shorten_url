@@ -16,7 +16,6 @@ use Illuminate\Support\Facades\DB;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsController;
 use Lorisleiva\Actions\Concerns\AsObject;
-use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
 final class ShortenUrl
 {
@@ -50,7 +49,7 @@ final class ShortenUrl
      */
     public function getControllerMiddleware(): array
     {
-        return [ShortenUrlMiddleware::class];
+        return ['can:create,'.Url::class, ShortenUrlMiddleware::class];
     }
 
     /**
@@ -69,10 +68,6 @@ final class ShortenUrl
      */
     public function asController(ActionRequest $request): RedirectResponse
     {
-        if ($request->user()?->cannot('create', Url::class)) {
-            abort(ResponseAlias::HTTP_UNAUTHORIZED);
-        }
-
         $url = $this->handle($request);
 
         FlashHelper::message('URL created successfully!', FlashMessageType::SUCCESS);

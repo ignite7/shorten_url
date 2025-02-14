@@ -17,10 +17,11 @@ use Spatie\DeletedModels\Models\Concerns\KeepsDeletedModels;
 
 /**
  * @property string $id
+ * @property ?User $user_id
  * @property string $source
  * @property string $status
  * @property ?User $user
- * @property string $anonymous_token
+ * @property ?string $anonymous_token
  * @property Collection<int, Request> $requests
  * @property ?Carbon $created_at
  * @property ?Carbon $updated_at

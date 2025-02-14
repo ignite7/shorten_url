@@ -127,7 +127,7 @@ describe('cannot shorten a URL', function (): void {
 
         $this->actingAs($admin)
             ->post($this->route, ['source' => fake()->url()])
-            ->assertUnauthorized();
+            ->assertForbidden();
 
         $this->assertDatabaseCount(Url::class, 0);
         $this->assertDatabaseCount(Request::class, 0);
@@ -138,7 +138,7 @@ describe('cannot shorten a URL', function (): void {
 
         $this->actingAs($staff)
             ->post($this->route, ['source' => fake()->url()])
-            ->assertUnauthorized();
+            ->assertForbidden();
 
         $this->assertDatabaseCount(Url::class, 0);
         $this->assertDatabaseCount(Request::class, 0);
@@ -244,5 +244,8 @@ it('has controller middleware', function (): void {
     $shortenUrl = new ShortenUrl();
 
     expect($shortenUrl->getControllerMiddleware())->toBeArray()
-        ->and($shortenUrl->getControllerMiddleware())->toBe([ShortenUrlMiddleware::class]);
+        ->and($shortenUrl->getControllerMiddleware())->toBe([
+            'can:create,'.Url::class,
+            ShortenUrlMiddleware::class,
+        ]);
 });
