@@ -48,7 +48,7 @@ describe('regular', function (): void {
         ]);
     });
 
-    it('cannot toggle url if there status field was not changed', function (): void {
+    it('cannot toggle url if the status field was not changed', function (): void {
         $user = User::factory()->regularRole()->create();
         $url = Url::factory()->for($user)->create([
             'status' => UrlStatus::ACTIVE->value,
@@ -106,7 +106,7 @@ describe('guest', function (): void {
         ]);
     });
 
-    it('cannot toggle url if there status field was not changed', function (): void {
+    it('cannot toggle url if the status field was not changed', function (): void {
         $url = Url::factory()->withoutUser()->create();
 
         // Prevent updates on the model
@@ -152,7 +152,7 @@ describe('can handle action', function (): void {
     });
 });
 
-it('has controller middleware', function (): void {
+it('has middlewares', function (): void {
     $action = new ToggleUrlStatus();
 
     expect($action->getControllerMiddleware())->toBeArray()

@@ -43,7 +43,7 @@ export default function ManageAnonymousTokenAccess() {
 
     reset();
     clearErrors();
-  }, [open, reset]);
+  }, [open, reset, clearErrors]);
 
   const onSuccess = (): void => {
     toast.success('Token updated successfully.');

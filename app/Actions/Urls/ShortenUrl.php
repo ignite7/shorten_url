@@ -11,6 +11,7 @@ use App\Enums\UrlStatus;
 use App\Helpers\FlashHelper;
 use App\Http\Middleware\ShortenUrlMiddleware;
 use App\Models\Url;
+use App\Rules\SourceRule;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
 use Lorisleiva\Actions\ActionRequest;
@@ -57,9 +58,7 @@ final class ShortenUrl
      */
     public function rules(): array
     {
-        return [
-            'source' => ['required', 'url', 'min:10', 'max:255'],
-        ];
+        return SourceRule::rules();
     }
 
     /**

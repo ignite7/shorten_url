@@ -11,6 +11,7 @@ use App\Http\Middleware\ShortenUrlMiddleware;
 use App\Models\Request;
 use App\Models\Url;
 use App\Models\User;
+use App\Rules\SourceRule;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use Lorisleiva\Actions\ActionRequest;
@@ -77,6 +78,7 @@ describe('cannot shorten a URL if rules are not met', function (): void {
     it('must be required', function (): void {
         $this->actingAs($this->user)
             ->post($this->route)
+            ->assertRedirect()
             ->assertInvalid(['source' => 'The source field is required.']);
 
         $this->assertDatabaseCount(Url::class, 0);
@@ -86,6 +88,7 @@ describe('cannot shorten a URL if rules are not met', function (): void {
     it('must be a valid URL', function (): void {
         $this->actingAs($this->user)
             ->post($this->route, ['source' => 'invalid-url'])
+            ->assertRedirect()
             ->assertInvalid(['source' => 'The source field must be a valid URL.']);
 
         $this->assertDatabaseCount(Url::class, 0);
@@ -95,6 +98,7 @@ describe('cannot shorten a URL if rules are not met', function (): void {
     it('must have at least 10 characters', function (): void {
         $this->actingAs($this->user)
             ->post($this->route, ['source' => 'short.c'])
+            ->assertRedirect()
             ->assertInvalid([
                 'source' => [
                     'The source field must be a valid URL.',
@@ -109,6 +113,7 @@ describe('cannot shorten a URL if rules are not met', function (): void {
     it('must have a maximum of 255 characters', function (): void {
         $this->actingAs($this->user)
             ->post($this->route, ['source' => Str::random(256)])
+            ->assertRedirect()
             ->assertInvalid([
                 'source' => [
                     'The source field must be a valid URL.',
@@ -240,12 +245,19 @@ describe('can run `ShortenUrl` action', function (): void {
     });
 });
 
-it('has controller middleware', function (): void {
+it('has middlewares', function (): void {
     $shortenUrl = new ShortenUrl();
 
     expect($shortenUrl->getControllerMiddleware())->toBeArray()
         ->and($shortenUrl->getControllerMiddleware())->toBe([
-            'can:create,'.Url::class,
+            'can:create,' . Url::class,
             ShortenUrlMiddleware::class,
         ]);
+});
+
+it('has rules', function (): void {
+    $action = new ShortenUrl();
+
+    expect($action->rules())->toBeArray()
+        ->and($action->rules())->toBe(SourceRule::rules());
 });

@@ -40,3 +40,12 @@ describe('can run `UpdateAnonymousToken` action', function (): void {
         $this->assertEquals($anonymousToken, Cookie::queued(CookieKey::ANONYMOUS_TOKEN->value)?->getValue());
     });
 });
+
+it('has rules', function (): void {
+    $action = new UpdateAnonymousToken();
+
+    expect($action->rules())->toBeArray()
+        ->and($action->rules())->toBe([
+            'anonymous_token' => ['required', 'uuid']
+        ]);
+});

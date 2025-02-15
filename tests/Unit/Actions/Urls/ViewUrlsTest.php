@@ -207,7 +207,7 @@ describe('user', function (): void {
     });
 });
 
-it('has controller middleware', function (): void {
+it('has middlewares', function (): void {
     $viewUrls = new ViewUrls();
 
     expect($viewUrls->getControllerMiddleware())->toBeArray()

@@ -116,7 +116,7 @@ describe('action', function (): void {
     });
 });
 
-it('has controller middleware', function (): void {
+it('has middlewares', function (): void {
     $redirectToSource = new RedirectToSource();
 
     expect($redirectToSource->getControllerMiddleware())->toBeArray()

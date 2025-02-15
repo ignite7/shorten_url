@@ -15,7 +15,7 @@ final class UpdateAnonymousToken
     use AsController, AsObject;
 
     /**
-     * @param  string  $anonymousToken
+     * @param string $anonymousToken
      * @return void
      */
     public function handle(string $anonymousToken): void
@@ -38,12 +38,12 @@ final class UpdateAnonymousToken
     }
 
     /**
-     * @param  ActionRequest  $request
+     * @param ActionRequest $request
      * @return RedirectResponse
      */
     public function asController(ActionRequest $request): RedirectResponse
     {
-        $this->handle($request->string('anonymous_token')->toString());
+        $this->handle($request->string('anonymous_token')->value());
 
         return to_route('home');
     }
