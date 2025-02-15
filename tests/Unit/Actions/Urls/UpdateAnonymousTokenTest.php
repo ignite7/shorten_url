@@ -46,6 +46,6 @@ it('has rules', function (): void {
 
     expect($action->rules())->toBeArray()
         ->and($action->rules())->toBe([
-            'anonymous_token' => ['required', 'uuid']
+            'anonymous_token' => ['required', 'uuid'],
         ]);
 });

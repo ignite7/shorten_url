@@ -250,7 +250,7 @@ it('has middlewares', function (): void {
 
     expect($shortenUrl->getControllerMiddleware())->toBeArray()
         ->and($shortenUrl->getControllerMiddleware())->toBe([
-            'can:create,' . Url::class,
+            'can:create,'.Url::class,
             ShortenUrlMiddleware::class,
         ]);
 });

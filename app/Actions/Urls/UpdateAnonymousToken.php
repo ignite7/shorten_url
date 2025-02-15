@@ -15,7 +15,7 @@ final class UpdateAnonymousToken
     use AsController, AsObject;
 
     /**
-     * @param string $anonymousToken
+     * @param  string  $anonymousToken
      * @return void
      */
     public function handle(string $anonymousToken): void
@@ -38,7 +38,7 @@ final class UpdateAnonymousToken
     }
 
     /**
-     * @param ActionRequest $request
+     * @param  ActionRequest  $request
      * @return RedirectResponse
      */
     public function asController(ActionRequest $request): RedirectResponse
