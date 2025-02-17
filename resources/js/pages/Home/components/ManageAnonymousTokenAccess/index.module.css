@@ -1,7 +1,3 @@
-.manage-anonymous-token-access {
-  gap: var(--24px);
-}
-
 .form {
   display: flex;
   align-items: center;

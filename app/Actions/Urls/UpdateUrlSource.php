@@ -44,6 +44,14 @@ final class UpdateUrlSource
     }
 
     /**
+     * @return array<string, string>
+     */
+    public function getValidationMessages(): array
+    {
+        return SourceRule::validationMessages();
+    }
+
+    /**
      * @param  ActionRequest  $request
      * @param  Url  $url
      * @return RedirectResponse

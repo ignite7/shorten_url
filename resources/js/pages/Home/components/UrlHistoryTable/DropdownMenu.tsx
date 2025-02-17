@@ -11,6 +11,7 @@ import {
 import UrlStatus from '@/enums/UrlStatus';
 import ClipboardHelper from '@/helpers/clipboardHelper';
 import IUrl from '@/interfaces/IUrl';
+import UpdateUrlSourceForm from '@/pages/Home/components/UrlHistoryTable/UpdateUrlSourceForm';
 import { router } from '@inertiajs/react';
 import { Row } from '@tanstack/react-table';
 import { MoreHorizontal } from 'lucide-react';
@@ -21,13 +22,12 @@ interface IProps {
 
 export default function DropdownMenu({ row }: IProps) {
   const id: string = row.getValue('id');
-  const params: { [key: string]: string } = { url: id };
-  const shortLink: string = route('redirect-to-source', params);
+  const shortLink: string = route('redirect-to-source', { id });
   const source: string = row.getValue('source');
   const status: string = row.getValue('status');
 
   const handleOnAction = (): void =>
-    router.put(route('urls.toggle-status', params));
+    router.put(route('urls.toggle-status', { id }));
 
   return (
     <DropdownMenuUI>
@@ -39,32 +39,36 @@ export default function DropdownMenu({ row }: IProps) {
       <DropdownMenuContent align={'end'}>
         <DropdownMenuLabel>Actions</DropdownMenuLabel>
         <DropdownMenuItem onClick={() => ClipboardHelper.copy(shortLink)}>
-          Copy Short Link
+          Copy Shortened URL
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => ClipboardHelper.copy(source)}>
-          Copy Original Link
+          Copy Full URL
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         {status === UrlStatus.ACTIVE ? (
           <AlertDialog
-            headerTitle={'Do you want to inactivate this URL?'}
+            headerTitle={'Turn Off this URL?'}
             headerDescription={
-              'When inactivated, the URL will no longer be accessible.'
+              'Turning off this URL will make it inaccessible.'
             }
             onAction={handleOnAction}
+            actionBtnText={'Turn Off'}
           >
-            <DropdownMenuItem>Inactivate URL</DropdownMenuItem>
+            <DropdownMenuItem>Turn Off URL</DropdownMenuItem>
           </AlertDialog>
         ) : (
           <AlertDialog
-            headerTitle={'Do you want to activate this URL?'}
-            headerDescription={'When activated, the URL will be accessible.'}
+            headerTitle={'Turn On this URL?'}
+            headerDescription={'Turning on this URL will make it accessible.'}
             onAction={handleOnAction}
+            actionBtnText={'Turn On'}
           >
-            <DropdownMenuItem>Activate URL</DropdownMenuItem>
+            <DropdownMenuItem>Turn On URL</DropdownMenuItem>
           </AlertDialog>
         )}
-        <DropdownMenuItem>Update Original Link</DropdownMenuItem>
+        <UpdateUrlSourceForm id={id} source={source}>
+          <DropdownMenuItem>Edit Destination URL</DropdownMenuItem>
+        </UpdateUrlSourceForm>
       </DropdownMenuContent>
     </DropdownMenuUI>
   );

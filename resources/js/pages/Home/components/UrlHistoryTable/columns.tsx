@@ -14,17 +14,17 @@ const only: string[] = ['urls'];
 const columns: ColumnDef<IUrl>[] = [
   {
     accessorKey: 'id',
-    header: 'Short Link',
+    header: 'Shortened URL',
     cell: ({ row }) => {
       const id: string = row.getValue('id');
-      const shortLink: string = route('redirect-to-source', { url: id });
+      const shortLink: string = route('redirect-to-source', { id });
 
       return <div title={shortLink}>{id}</div>;
     },
   },
   {
     accessorKey: 'source',
-    header: 'Original Link',
+    header: 'Destination URL',
     cell: ({ row }) => {
       const source: string = row.getValue('source');
 
@@ -39,7 +39,7 @@ const columns: ColumnDef<IUrl>[] = [
     accessorKey: 'clicks',
     header: () => (
       <SortableHeader
-        title={'Clicks'}
+        title={'Total Clicks'}
         column={'clicks'}
         href={href}
         defaultOrderBy={defaultOrderBy}
@@ -49,7 +49,7 @@ const columns: ColumnDef<IUrl>[] = [
   },
   {
     accessorKey: 'status',
-    header: 'Status',
+    header: 'Link Status',
     cell: ({ row }) => {
       const status: string = row.getValue('status');
 
@@ -67,7 +67,7 @@ const columns: ColumnDef<IUrl>[] = [
     accessorKey: 'created_at',
     header: () => (
       <SortableHeader
-        title={'Date'}
+        title={'Created On'}
         column={'date'}
         href={href}
         defaultOrderBy={defaultOrderBy}

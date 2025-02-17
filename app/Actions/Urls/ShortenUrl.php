@@ -62,6 +62,14 @@ final class ShortenUrl
     }
 
     /**
+     * @return array<string, string>
+     */
+    public function getValidationMessages(): array
+    {
+        return SourceRule::validationMessages();
+    }
+
+    /**
      * @param  ActionRequest  $request
      * @return RedirectResponse
      */

@@ -16,6 +16,7 @@ interface IProps {
   headerTitle?: ReactNode | string;
   headerDescription?: ReactNode | string;
   onAction?: MouseEventHandler<HTMLButtonElement>;
+  actionBtnText?: string;
 }
 
 export function AlertDialog({
@@ -23,6 +24,7 @@ export function AlertDialog({
   headerTitle,
   headerDescription,
   onAction,
+  actionBtnText = 'Continue',
 }: IProps) {
   return (
     <AlertDialogUI>
@@ -42,7 +44,9 @@ export function AlertDialog({
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction onClick={onAction}>Continue</AlertDialogAction>
+          <AlertDialogAction onClick={onAction}>
+            {actionBtnText}
+          </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialogUI>

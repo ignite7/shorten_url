@@ -5,17 +5,24 @@ import { useMediaQueryContext } from '@/context/MediaQueryContext';
 import LocalStorageKeys from '@/enums/LocalStorageKeys';
 import ClipboardHelper from '@/helpers/clipboardHelper';
 import IHomePageProps from '@/interfaces/IHomePageProps';
+import IUrl from '@/interfaces/IUrl';
+import FormDataType from '@/types/FormDataType';
 import { Page } from '@inertiajs/core';
 import { useForm } from '@inertiajs/react';
 import { ArrowRight } from 'lucide-react';
 import { FormEvent } from 'react';
 import styles from './index.module.css';
 
+interface IForm extends FormDataType {
+  source: IUrl['source'];
+}
+
 export default function ShortenUrlForm() {
   const { isMobile } = useMediaQueryContext();
-  const { data, setData, post, processing, errors, isDirty, reset } = useForm({
-    source: '',
-  });
+  const { data, setData, post, processing, errors, isDirty, reset } =
+    useForm<IForm>({
+      source: '',
+    });
 
   const handleOnSuccess = (params: Page<IHomePageProps>): void => {
     const { lastShortenedUrl } = params.props;
@@ -42,7 +49,6 @@ export default function ShortenUrlForm() {
     <>
       <form className={styles.form} onSubmit={submit}>
         <Input
-          name={'source'}
           type={'url'}
           placeholder={'Enter the link here'}
           className={styles.input}

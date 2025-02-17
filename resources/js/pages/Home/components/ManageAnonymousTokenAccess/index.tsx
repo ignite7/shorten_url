@@ -12,44 +12,26 @@ import {
 import { Input } from '@/components/ui/input';
 import { useMediaQueryContext } from '@/context/MediaQueryContext';
 import ClipboardHelper from '@/helpers/clipboardHelper';
+import useFormDialog from '@/hooks/useFormDialog';
 import IHomePageProps from '@/interfaces/IHomePageProps';
-import { useForm, usePage } from '@inertiajs/react';
+import FormDataType from '@/types/FormDataType';
+import { usePage } from '@inertiajs/react';
 import { Copy, KeyRound } from 'lucide-react';
-import { FormEvent, useEffect, useState } from 'react';
-import { toast } from 'sonner';
+import { FormEvent } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import styles from './index.module.css';
+
+interface IForm extends FormDataType {
+  anonymous_token: NonNullable<IHomePageProps['anonymousToken']>;
+}
 
 export default function ManageAnonymousTokenAccess() {
   const { anonymousToken } = usePage<IHomePageProps>().props;
   const { isMobile } = useMediaQueryContext();
-  const [open, setOpen] = useState<boolean>(false);
-  const {
-    data,
-    setData,
-    put,
-    processing,
-    errors,
-    isDirty,
-    setDefaults,
-    clearErrors,
-    reset,
-  } = useForm({
+  const { form, onSuccess, open, setOpen } = useFormDialog<IForm>({
     anonymous_token: anonymousToken ?? '',
   });
-
-  useEffect((): void => {
-    if (open) return;
-
-    reset();
-    clearErrors();
-  }, [open, reset, clearErrors]);
-
-  const onSuccess = (): void => {
-    toast.success('Token updated successfully.');
-    setDefaults();
-    setOpen(false);
-  };
+  const { data, setData, put, processing, errors, isDirty, clearErrors } = form;
 
   const submit = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
@@ -75,7 +57,7 @@ export default function ManageAnonymousTokenAccess() {
           )}
         </Button>
       </DialogTrigger>
-      <DialogContent className={styles.manageAnonymousTokenAccess}>
+      <DialogContent>
         <DialogHeader>
           <DialogTitle>Manage Access</DialogTitle>
           <DialogDescription>
@@ -86,7 +68,6 @@ export default function ManageAnonymousTokenAccess() {
         </DialogHeader>
         <form id={'form-token'} className={styles.form} onSubmit={submit}>
           <Input
-            name={'anonymous_token'}
             type={'text'}
             placeholder={'Enter the token here'}
             value={data.anonymous_token}
@@ -112,7 +93,7 @@ export default function ManageAnonymousTokenAccess() {
             type={'submit'}
             disabled={processing || !isDirty}
           >
-            Save
+            Save Changes
           </Button>
         </DialogFooter>
       </DialogContent>

@@ -17,4 +17,17 @@ final readonly class SourceRule implements RuleContract
             'source' => ['required', 'url', 'min:10', 'max:255'],
         ];
     }
+
+    /**
+     * @return array<string, string>
+     */
+    public static function validationMessages(): array
+    {
+        return [
+            'source.required' => 'The destination URL is required.',
+            'source.url' => 'The destination URL must be a valid URL.',
+            'source.min' => 'The destination URL must be at least :min characters.',
+            'source.max' => 'The destination URL must not be greater than :max characters.',
+        ];
+    }
 }

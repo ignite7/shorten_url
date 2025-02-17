@@ -47,7 +47,7 @@ describe('regular', function (): void {
             ->put(route('urls.source.update', ['url' => $url->id]))
             ->assertRedirect()
             ->assertInvalid([
-                'source' => 'The source field is required.',
+                'source' => 'The destination URL is required.',
             ]);
 
         $this->assertDatabaseMissing(Url::class, [
@@ -72,7 +72,7 @@ describe('regular', function (): void {
             ])
             ->assertRedirect()
             ->assertInvalid([
-                'source' => 'The source field must be a valid URL.',
+                'source' => 'The destination URL must be a valid URL.',
             ]);
 
         $this->assertDatabaseMissing(Url::class, [
@@ -98,8 +98,8 @@ describe('regular', function (): void {
             ->assertRedirect()
             ->assertInvalid([
                 'source' => [
-                    'The source field must be a valid URL.',
-                    'The source field must be at least 10 characters.',
+                    'The destination URL must be a valid URL.',
+                    'The destination URL must be at least 10 characters.',
                 ],
             ]);
 
@@ -126,8 +126,8 @@ describe('regular', function (): void {
             ->assertRedirect()
             ->assertInvalid([
                 'source' => [
-                    'The source field must be a valid URL.',
-                    'The source field must not be greater than 255 characters.',
+                    'The destination URL must be a valid URL.',
+                    'The destination URL must not be greater than 255 characters.',
                 ],
             ]);
 
@@ -204,7 +204,7 @@ describe('guest', function (): void {
             ->put(route('urls.source.update', ['url' => $url->id]))
             ->assertRedirect()
             ->assertInvalid([
-                'source' => 'The source field is required.',
+                'source' => 'The destination URL is required.',
             ]);
 
         $this->assertDatabaseMissing(Url::class, [
@@ -228,7 +228,7 @@ describe('guest', function (): void {
             ])
             ->assertRedirect()
             ->assertInvalid([
-                'source' => 'The source field must be a valid URL.',
+                'source' => 'The destination URL must be a valid URL.',
             ]);
 
         $this->assertDatabaseMissing(Url::class, [
@@ -253,8 +253,8 @@ describe('guest', function (): void {
             ->assertRedirect()
             ->assertInvalid([
                 'source' => [
-                    'The source field must be a valid URL.',
-                    'The source field must be at least 10 characters.',
+                    'The destination URL must be a valid URL.',
+                    'The destination URL must be at least 10 characters.',
                 ],
             ]);
 
@@ -280,8 +280,8 @@ describe('guest', function (): void {
             ->assertRedirect()
             ->assertInvalid([
                 'source' => [
-                    'The source field must be a valid URL.',
-                    'The source field must not be greater than 255 characters.',
+                    'The destination URL must be a valid URL.',
+                    'The destination URL must not be greater than 255 characters.',
                 ],
             ]);
 

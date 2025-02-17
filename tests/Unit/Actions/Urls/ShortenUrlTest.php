@@ -79,7 +79,7 @@ describe('cannot shorten a URL if rules are not met', function (): void {
         $this->actingAs($this->user)
             ->post($this->route)
             ->assertRedirect()
-            ->assertInvalid(['source' => 'The source field is required.']);
+            ->assertInvalid(['source' => 'The destination URL is required.']);
 
         $this->assertDatabaseCount(Url::class, 0);
         $this->assertDatabaseCount(Request::class, 0);
@@ -89,7 +89,7 @@ describe('cannot shorten a URL if rules are not met', function (): void {
         $this->actingAs($this->user)
             ->post($this->route, ['source' => 'invalid-url'])
             ->assertRedirect()
-            ->assertInvalid(['source' => 'The source field must be a valid URL.']);
+            ->assertInvalid(['source' => 'The destination URL must be a valid URL.']);
 
         $this->assertDatabaseCount(Url::class, 0);
         $this->assertDatabaseCount(Request::class, 0);
@@ -101,8 +101,8 @@ describe('cannot shorten a URL if rules are not met', function (): void {
             ->assertRedirect()
             ->assertInvalid([
                 'source' => [
-                    'The source field must be a valid URL.',
-                    'The source field must be at least 10 characters.',
+                    'The destination URL must be a valid URL.',
+                    'The destination URL must be at least 10 characters.',
                 ],
             ]);
 
@@ -116,8 +116,8 @@ describe('cannot shorten a URL if rules are not met', function (): void {
             ->assertRedirect()
             ->assertInvalid([
                 'source' => [
-                    'The source field must be a valid URL.',
-                    'The source field must not be greater than 255 characters.',
+                    'The destination URL must be a valid URL.',
+                    'The destination URL must not be greater than 255 characters.',
                 ],
             ]);
 

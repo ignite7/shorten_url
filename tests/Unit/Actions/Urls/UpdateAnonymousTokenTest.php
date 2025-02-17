@@ -4,7 +4,10 @@ declare(strict_types=1);
 
 use App\Actions\Urls\UpdateAnonymousToken;
 use App\Enums\CookieKey;
+use App\Enums\FlashMessageType;
+use App\Helpers\FlashHelper;
 use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Facades\Session;
 
 beforeEach(function (): void {
     $this->route = route('urls.anonymous-token.update');
@@ -18,16 +21,19 @@ describe('UpdateAnonymousToken action', function (): void {
             ->assertRedirect();
 
         $this->assertEquals($anonymousToken, Cookie::queued(CookieKey::ANONYMOUS_TOKEN->value)?->getValue());
+
+        expect(Session::get(FlashHelper::MESSAGE_TYPE_KEY))->toBe(FlashMessageType::SUCCESS->value)
+            ->and(Session::get(FlashHelper::MESSAGE_KEY))->toBe('Token updated successfully.');
     });
 
     it('validates that anonymous_token is required', function (): void {
         $this->put($this->route)
-            ->assertInvalid(['anonymous_token' => 'The anonymous token field is required.']);
+            ->assertInvalid(['anonymous_token' => 'The token is required.']);
     });
 
     it('validates that anonymous_token is a UUID', function (): void {
         $this->put($this->route, ['anonymous_token' => 'invalid-token'])
-            ->assertInvalid(['anonymous_token' => 'The anonymous token field must be a valid UUID.']);
+            ->assertInvalid(['anonymous_token' => 'The token must be a valid UUID.']);
     });
 });
 
