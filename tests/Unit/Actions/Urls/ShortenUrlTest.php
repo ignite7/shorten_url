@@ -11,7 +11,7 @@ use App\Http\Middleware\ShortenUrlMiddleware;
 use App\Models\Request;
 use App\Models\Url;
 use App\Models\User;
-use App\Rules\SourceRule;
+use App\Validations\SourceValidation;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use Lorisleiva\Actions\ActionRequest;
@@ -79,7 +79,7 @@ describe('cannot shorten a URL if rules are not met', function (): void {
         $this->actingAs($this->user)
             ->post($this->route)
             ->assertRedirect()
-            ->assertInvalid(['source' => 'The destination URL is required.']);
+            ->assertInvalid(['source' => 'The destination URL field is required.']);
 
         $this->assertDatabaseCount(Url::class, 0);
         $this->assertDatabaseCount(Request::class, 0);
@@ -89,7 +89,7 @@ describe('cannot shorten a URL if rules are not met', function (): void {
         $this->actingAs($this->user)
             ->post($this->route, ['source' => 'invalid-url'])
             ->assertRedirect()
-            ->assertInvalid(['source' => 'The destination URL must be a valid URL.']);
+            ->assertInvalid(['source' => 'The destination URL field must be a valid URL.']);
 
         $this->assertDatabaseCount(Url::class, 0);
         $this->assertDatabaseCount(Request::class, 0);
@@ -101,8 +101,8 @@ describe('cannot shorten a URL if rules are not met', function (): void {
             ->assertRedirect()
             ->assertInvalid([
                 'source' => [
-                    'The destination URL must be a valid URL.',
-                    'The destination URL must be at least 10 characters.',
+                    'The destination URL field must be a valid URL.',
+                    'The destination URL field must be at least 10 characters.',
                 ],
             ]);
 
@@ -116,8 +116,8 @@ describe('cannot shorten a URL if rules are not met', function (): void {
             ->assertRedirect()
             ->assertInvalid([
                 'source' => [
-                    'The destination URL must be a valid URL.',
-                    'The destination URL must not be greater than 255 characters.',
+                    'The destination URL field must be a valid URL.',
+                    'The destination URL field must not be greater than 255 characters.',
                 ],
             ]);
 
@@ -259,5 +259,5 @@ it('has rules', function (): void {
     $action = new ShortenUrl();
 
     expect($action->rules())->toBeArray()
-        ->and($action->rules())->toBe(SourceRule::rules());
+        ->and($action->rules())->toBe(SourceValidation::rules());
 });

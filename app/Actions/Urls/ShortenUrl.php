@@ -5,18 +5,18 @@ declare(strict_types=1);
 namespace App\Actions\Urls;
 
 use App\Enums\CookieKey;
-use App\Enums\FlashMessageType;
 use App\Enums\SessionKey;
 use App\Enums\UrlStatus;
 use App\Helpers\FlashHelper;
 use App\Http\Middleware\ShortenUrlMiddleware;
 use App\Models\Url;
-use App\Rules\SourceRule;
+use App\Validations\SourceValidation;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsController;
 use Lorisleiva\Actions\Concerns\AsObject;
+use Throwable;
 
 final class ShortenUrl
 {
@@ -25,6 +25,8 @@ final class ShortenUrl
     /**
      * @param  ActionRequest  $request
      * @return Url
+     *
+     * @throws Throwable
      */
     public function handle(ActionRequest $request): Url
     {
@@ -58,27 +60,29 @@ final class ShortenUrl
      */
     public function rules(): array
     {
-        return SourceRule::rules();
+        return SourceValidation::rules();
     }
 
     /**
      * @return array<string, string>
      */
-    public function getValidationMessages(): array
+    public function getValidationAttributes(): array
     {
-        return SourceRule::validationMessages();
+        return SourceValidation::validationAttributes();
     }
 
     /**
      * @param  ActionRequest  $request
      * @return RedirectResponse
+     *
+     * @throws Throwable
      */
     public function asController(ActionRequest $request): RedirectResponse
     {
         $url = $this->handle($request);
 
-        FlashHelper::message('URL created successfully!', FlashMessageType::SUCCESS);
+        FlashHelper::message('URL created successfully!');
 
-        return redirect()->back()->with(SessionKey::LAST_SHORTENED_URL->value, $url->id);
+        return back()->with(SessionKey::LAST_SHORTENED_URL->value, $url->id);
     }
 }

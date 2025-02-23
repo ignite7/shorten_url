@@ -7,6 +7,7 @@ arch()->preset()->security();
 arch()->preset()->laravel()->ignoring([
     'App\Http\Middleware',
     'App\Http\Resources',
+    'App\Mail',
 ]);
 
 arch('strict types')
@@ -37,6 +38,8 @@ arch('avoid mutation')
         'App\Models',
         'App\Providers',
         'App\Actions',
+        'App\Rules',
+        'App\Mail',
     ]);
 
 arch('avoid inheritance')
@@ -53,6 +56,7 @@ arch('avoid inheritance')
         'App\Models',
         'App\Providers',
         'App\Actions',
+        'App\Mail',
     ]);
 
 arch('annotations')

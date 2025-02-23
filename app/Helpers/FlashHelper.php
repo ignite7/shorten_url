@@ -18,7 +18,7 @@ final readonly class FlashHelper
      * @param  FlashMessageType  $type
      * @return void
      */
-    public static function message(string $message, FlashMessageType $type): void
+    public static function message(string $message, FlashMessageType $type = FlashMessageType::SUCCESS): void
     {
         Session::flash(self::MESSAGE_KEY, $message);
         Session::flash(self::MESSAGE_TYPE_KEY, $type->value);

@@ -8,7 +8,7 @@ use App\Enums\FlashMessageType;
 use App\Helpers\FlashHelper;
 use App\Models\Url;
 use App\Models\User;
-use App\Rules\SourceRule;
+use App\Validations\SourceValidation;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 
@@ -47,7 +47,7 @@ describe('regular', function (): void {
             ->put(route('urls.source.update', ['url' => $url->id]))
             ->assertRedirect()
             ->assertInvalid([
-                'source' => 'The destination URL is required.',
+                'source' => 'The destination URL field is required.',
             ]);
 
         $this->assertDatabaseMissing(Url::class, [
@@ -72,7 +72,7 @@ describe('regular', function (): void {
             ])
             ->assertRedirect()
             ->assertInvalid([
-                'source' => 'The destination URL must be a valid URL.',
+                'source' => 'The destination URL field must be a valid URL.',
             ]);
 
         $this->assertDatabaseMissing(Url::class, [
@@ -98,8 +98,8 @@ describe('regular', function (): void {
             ->assertRedirect()
             ->assertInvalid([
                 'source' => [
-                    'The destination URL must be a valid URL.',
-                    'The destination URL must be at least 10 characters.',
+                    'The destination URL field must be a valid URL.',
+                    'The destination URL field must be at least 10 characters.',
                 ],
             ]);
 
@@ -126,8 +126,8 @@ describe('regular', function (): void {
             ->assertRedirect()
             ->assertInvalid([
                 'source' => [
-                    'The destination URL must be a valid URL.',
-                    'The destination URL must not be greater than 255 characters.',
+                    'The destination URL field must be a valid URL.',
+                    'The destination URL field must not be greater than 255 characters.',
                 ],
             ]);
 
@@ -204,7 +204,7 @@ describe('guest', function (): void {
             ->put(route('urls.source.update', ['url' => $url->id]))
             ->assertRedirect()
             ->assertInvalid([
-                'source' => 'The destination URL is required.',
+                'source' => 'The destination URL field is required.',
             ]);
 
         $this->assertDatabaseMissing(Url::class, [
@@ -228,7 +228,7 @@ describe('guest', function (): void {
             ])
             ->assertRedirect()
             ->assertInvalid([
-                'source' => 'The destination URL must be a valid URL.',
+                'source' => 'The destination URL field must be a valid URL.',
             ]);
 
         $this->assertDatabaseMissing(Url::class, [
@@ -253,8 +253,8 @@ describe('guest', function (): void {
             ->assertRedirect()
             ->assertInvalid([
                 'source' => [
-                    'The destination URL must be a valid URL.',
-                    'The destination URL must be at least 10 characters.',
+                    'The destination URL field must be a valid URL.',
+                    'The destination URL field must be at least 10 characters.',
                 ],
             ]);
 
@@ -280,8 +280,8 @@ describe('guest', function (): void {
             ->assertRedirect()
             ->assertInvalid([
                 'source' => [
-                    'The destination URL must be a valid URL.',
-                    'The destination URL must not be greater than 255 characters.',
+                    'The destination URL field must be a valid URL.',
+                    'The destination URL field must not be greater than 255 characters.',
                 ],
             ]);
 
@@ -357,5 +357,5 @@ it('has rules', function (): void {
     $action = new UpdateUrlSource();
 
     expect($action->rules())->toBeArray()
-        ->and($action->rules())->toBe(SourceRule::rules());
+        ->and($action->rules())->toBe(SourceValidation::rules());
 });

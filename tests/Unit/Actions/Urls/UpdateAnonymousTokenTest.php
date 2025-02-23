@@ -28,12 +28,12 @@ describe('UpdateAnonymousToken action', function (): void {
 
     it('validates that anonymous_token is required', function (): void {
         $this->put($this->route)
-            ->assertInvalid(['anonymous_token' => 'The token is required.']);
+            ->assertInvalid(['anonymous_token' => 'The token field is required.']);
     });
 
     it('validates that anonymous_token is a UUID', function (): void {
         $this->put($this->route, ['anonymous_token' => 'invalid-token'])
-            ->assertInvalid(['anonymous_token' => 'The token must be a valid UUID.']);
+            ->assertInvalid(['anonymous_token' => 'The token field must be a valid UUID.']);
     });
 });
 

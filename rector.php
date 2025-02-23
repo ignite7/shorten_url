@@ -5,6 +5,7 @@ declare(strict_types=1);
 use Rector\Config\RectorConfig;
 use Rector\DeadCode\Rector\ClassMethod\RemoveUselessParamTagRector;
 use Rector\DeadCode\Rector\ClassMethod\RemoveUselessReturnTagRector;
+use Rector\Php71\Rector\FuncCall\RemoveExtraParametersRector;
 
 return RectorConfig::configure()
     ->withPaths([
@@ -18,6 +19,7 @@ return RectorConfig::configure()
     ->withSkip([
         RemoveUselessParamTagRector::class,
         RemoveUselessReturnTagRector::class,
+        RemoveExtraParametersRector::class,
     ])
     ->withPreparedSets(
         deadCode: true,

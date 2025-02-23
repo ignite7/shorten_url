@@ -16,6 +16,8 @@ use Spatie\DeletedModels\Models\Concerns\KeepsDeletedModels;
 
 /**
  * @property string $id
+ * @property string $url_id
+ * @property ?string $user_id
  * @property string $method
  * @property ?string $anonymous_token
  * @property string $uri

@@ -46,11 +46,11 @@ final class ToggleUrlStatus
         $this->handle($url);
 
         if ($url->wasChanged('status')) {
-            FlashHelper::message("The url status now is $url->status.", FlashMessageType::SUCCESS);
+            FlashHelper::message("The url status now is $url->status.");
         } else {
             FlashHelper::message('The url status could not be changed.', FlashMessageType::ERROR);
         }
 
-        return redirect()->back();
+        return back();
     }
 }

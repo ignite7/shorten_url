@@ -30,13 +30,13 @@ final class ShortenUrlMiddleware
         if (! $ip = $request->ip()) {
             FlashHelper::message('Unable to determine your IP address.', FlashMessageType::ERROR);
 
-            return redirect()->back();
+            return back();
         }
 
         if (! Str::isUuid($request->cookie(CookieKey::ANONYMOUS_TOKEN->value))) {
             FlashHelper::message('Unable to determine your anonymous token.', FlashMessageType::ERROR);
 
-            return redirect()->back();
+            return back();
         }
 
         $requests = RequestModel::query()
@@ -49,7 +49,7 @@ final class ShortenUrlMiddleware
         if ($requests >= 5) {
             FlashHelper::message('You have reached the maximum number of requests allowed per day.', FlashMessageType::ERROR);
 
-            return redirect()->back();
+            return back();
         }
 
         return $next($request);

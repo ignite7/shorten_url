@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 beforeEach(function (): void {
-    $this->modelCount = 3;
+    $this->modelCount = 4;
 });
 
 arch('models')

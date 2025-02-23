@@ -11,7 +11,6 @@ use App\Http\Middleware\AnonymousTokenMiddleware;
 use App\Http\Resources\UrlResource;
 use App\Models\Url;
 use App\Models\User;
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Facades\Cookie;
@@ -27,30 +26,16 @@ final class ViewUrls
 
     /**
      * @param  ActionRequest  $request
-     * @return LengthAwarePaginator<Url>|AnonymousResourceCollection
+     * @return AnonymousResourceCollection
      */
-    public function handle(ActionRequest $request): LengthAwarePaginator|AnonymousResourceCollection
+    public function handle(ActionRequest $request): AnonymousResourceCollection
     {
         $user = $request->user();
         $anonymousToken = $request->cookie(CookieKey::ANONYMOUS_TOKEN->value);
-        $query = Url::query();
-
-        if (is_null($user) && is_null($anonymousToken)) {
-            return UrlResource::collection($query->whereRaw('1 = 0')->paginate());
-        }
-
-        if ($user instanceof User) {
-            $query->where('user_id', $user->id);
-        } else {
-            $query
-                ->whereNull('user_id')
-                ->where('anonymous_token', $anonymousToken);
-        }
-
         $order = $request->query('order') === 'asc' ? 'asc' : 'desc';
 
         return UrlResource::collection(
-            $query
+            Url::query()
                 ->select('id', 'source', 'status', 'created_at')
                 ->withCount([
                     'requests' => static function (Builder $query): void {
@@ -59,6 +44,16 @@ final class ViewUrls
                             ->whereRaw("uri = CONCAT('$route', urls.id)");
                     },
                 ])
+                ->when(
+                    $user instanceof User,
+                    static function (Builder $query) use ($user): void {
+                        $query->where('user_id', $user?->id);
+                    },
+                    static function (Builder $query) use ($anonymousToken): void {
+                        $query->whereNull('user_id')
+                            ->where('anonymous_token', $anonymousToken);
+                    }
+                )
                 ->when(
                     $request->query('orderBy') === 'clicks',
                     static function (Builder $query) use ($order): void {
@@ -92,7 +87,7 @@ final class ViewUrls
                 CookieKey::ANONYMOUS_TOKEN->value,
                 Cookie::queued(CookieKey::ANONYMOUS_TOKEN->value)?->getValue()
             ),
-            'urls' => fn (): LengthAwarePaginator|AnonymousResourceCollection => $this->handle($request),
+            'urls' => fn (): AnonymousResourceCollection => $this->handle($request),
         ]);
     }
 }

@@ -7,7 +7,7 @@ namespace App\Actions\Urls;
 use App\Enums\FlashMessageType;
 use App\Helpers\FlashHelper;
 use App\Models\Url;
-use App\Rules\SourceRule;
+use App\Validations\SourceValidation;
 use Illuminate\Http\RedirectResponse;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsController;
@@ -40,15 +40,15 @@ final class UpdateUrlSource
      */
     public function rules(): array
     {
-        return SourceRule::rules();
+        return SourceValidation::rules();
     }
 
     /**
      * @return array<string, string>
      */
-    public function getValidationMessages(): array
+    public function getValidationAttributes(): array
     {
-        return SourceRule::validationMessages();
+        return SourceValidation::validationAttributes();
     }
 
     /**
@@ -61,11 +61,11 @@ final class UpdateUrlSource
         $this->handle($url, $request->string('source')->value());
 
         if ($url->wasChanged('source')) {
-            FlashHelper::message('The original link has been updated.', FlashMessageType::SUCCESS);
+            FlashHelper::message('The original link has been updated.');
         } else {
             FlashHelper::message('The original link could not be updated.', FlashMessageType::ERROR);
         }
 
-        return redirect()->back();
+        return back();
     }
 }

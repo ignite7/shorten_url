@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Traits\SelfCastingModel;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -52,6 +51,7 @@ final class User extends Authenticatable
         'last_name',
         'email',
         'password',
+        'email_verified_at',
     ];
 
     /**
