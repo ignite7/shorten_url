@@ -90,7 +90,7 @@ export default function SignupForm({ children }: IProps) {
     if (!isEmailDirty) {
       setError(
         'email',
-        'The Email field is required to send the verification code.',
+        'The Email field is required to send the verification code.'
       );
       return;
     }

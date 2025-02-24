@@ -3,7 +3,7 @@ import { useForm } from '@inertiajs/react';
 import { useEffect, useState } from 'react';
 
 export default function useFormDialog<TForm extends FormDataType>(
-  initialValues?: TForm,
+  initialValues?: TForm
 ) {
   const [open, setOpen] = useState<boolean>(false);
   const form = useForm<TForm>(initialValues);
