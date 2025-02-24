@@ -43,7 +43,16 @@ export default function SignupForm({ children }: IProps) {
     },
     setCurrentValuesAsNewDefaults: false,
   });
-  const { data, setData, post, processing, errors, isDirty, setError } = form;
+  const {
+    data,
+    setData,
+    post,
+    processing,
+    errors,
+    isDirty,
+    setError,
+    hasErrors,
+  } = form;
   const isEmailDirty: boolean = data.email.trim() !== '';
   const isVerificationCodeDirty: boolean = data.verification_code.trim() !== '';
   const [codeSent, setCodeSent] = useState<boolean>(false);
@@ -81,13 +90,23 @@ export default function SignupForm({ children }: IProps) {
     if (!isEmailDirty) {
       setError(
         'email',
-        'The Email field is required to send the verification code.'
+        'The Email field is required to send the verification code.',
       );
       return;
     }
 
     setCodeSent(true);
-    post(route('send-verification-code'));
+    post(route('send-verification-code'), {
+      onSuccess: (): void => {
+        if (hasErrors) setError(errors as Record<keyof IForm, string>);
+      },
+      onError: (newErrors): void => {
+        setError({
+          ...errors,
+          ...newErrors,
+        } as Record<keyof IForm, string>);
+      },
+    });
   };
 
   return (
