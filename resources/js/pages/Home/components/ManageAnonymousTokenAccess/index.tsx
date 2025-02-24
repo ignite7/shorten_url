@@ -28,9 +28,12 @@ interface IForm extends FormDataType {
 export default function ManageAnonymousTokenAccess() {
   const { anonymousToken } = usePage<IHomePageProps>().props;
   const { isMobile } = useMediaQueryContext();
-  const { form, onSuccess, open, setOpen } = useFormDialog<IForm>({
-    initialValues: { anonymous_token: anonymousToken ?? '' },
-  });
+  const {
+    form,
+    onSuccess,
+    open,
+    setOpen,
+  } = useFormDialog<IForm>({ anonymous_token: anonymousToken ?? '' });
   const { data, setData, put, processing, errors, isDirty, clearErrors } = form;
 
   const submit = (e: FormEvent<HTMLFormElement>): void => {

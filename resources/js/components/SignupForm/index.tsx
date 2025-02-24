@@ -33,16 +33,13 @@ interface IForm extends FormDataType {
 const codeSentCountDownSec: number = 60;
 
 export default function SignupForm({ children }: IProps) {
-  const { form, onSuccess, open, setOpen } = useFormDialog<IForm>({
-    initialValues: {
-      first_name: '',
-      last_name: '',
-      email: '',
-      password: '',
-      password_confirmation: '',
-      verification_code: '',
-    },
-    setCurrentValuesAsNewDefaults: false,
+  const { form, open, setOpen } = useFormDialog<IForm>({
+    first_name: '',
+    last_name: '',
+    email: '',
+    password: '',
+    password_confirmation: '',
+    verification_code: '',
   });
   const {
     data,
@@ -82,7 +79,9 @@ export default function SignupForm({ children }: IProps) {
   const submit = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
     if (!isDirty) return;
-    post(route('signup'), { onSuccess });
+    post(route('signup'), {
+      onSuccess: (): void => setOpen(false),
+    });
   };
 
   const handleSendVerificationCode = (): void => {
@@ -91,7 +90,7 @@ export default function SignupForm({ children }: IProps) {
     if (!isEmailDirty) {
       setError(
         'email',
-        'The Email field is required to send the verification code.'
+        'The Email field is required to send the verification code.',
       );
       return;
     }
