@@ -15,6 +15,7 @@ import useFormDialog from '@/hooks/useFormDialog';
 import FormDataType from '@/types/FormDataType';
 import { FormEvent, ReactNode, useEffect, useState } from 'react';
 import styles from './index.module.css';
+import FormErrorsType from '@/types/FormErrorsType';
 
 interface IProps {
   children: ReactNode;
@@ -90,7 +91,7 @@ export default function SignupForm({ children }: IProps) {
     if (!isEmailDirty) {
       setError(
         'email',
-        'The Email field is required to send the verification code.'
+        'The Email field is required to send the verification code.',
       );
       return;
     }
@@ -98,13 +99,13 @@ export default function SignupForm({ children }: IProps) {
     setCodeSent(true);
     post(route('send-verification-code'), {
       onSuccess: (): void => {
-        if (hasErrors) setError(errors as Record<keyof IForm, string>);
+        if (hasErrors) setError(errors as FormErrorsType<IForm>);
       },
       onError: (newErrors): void => {
         setError({
           ...errors,
           ...newErrors,
-        } as Record<keyof IForm, string>);
+        } as FormErrorsType<IForm>);
       },
     });
   };
