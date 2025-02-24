@@ -1,0 +1,10 @@
+.signup-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--8px);
+}
+
+.verification-code {
+  display: flex;
+  gap: var(--8px);
+}

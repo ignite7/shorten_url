@@ -2,9 +2,15 @@ import FormDataType from '@/types/FormDataType';
 import { useForm } from '@inertiajs/react';
 import { useEffect, useState } from 'react';
 
-export default function useFormDialog<TForm extends FormDataType>(
-  initialValues?: TForm
-) {
+interface IProps<TForm extends FormDataType> {
+  initialValues: TForm;
+  setCurrentValuesAsNewDefaults?: boolean;
+}
+
+export default function useFormDialog<TForm extends FormDataType>({
+  initialValues,
+  setCurrentValuesAsNewDefaults = true,
+}: IProps<TForm>) {
   const [open, setOpen] = useState<boolean>(false);
   const form = useForm<TForm>(initialValues);
   const { setDefaults, reset, clearErrors } = form;
@@ -17,7 +23,7 @@ export default function useFormDialog<TForm extends FormDataType>(
   }, [open]);
 
   const onSuccess = (): void => {
-    setDefaults();
+    if (setCurrentValuesAsNewDefaults) setDefaults();
     setOpen(false);
   };
 

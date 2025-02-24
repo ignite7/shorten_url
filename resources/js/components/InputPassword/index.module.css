@@ -1,0 +1,4 @@
+.input-password {
+  display: flex;
+  gap: var(--8px);
+}

@@ -26,7 +26,9 @@ interface IForm extends FormDataType {
 }
 
 export default function UpdateUrlSourceForm({ id, source, children }: IProps) {
-  const { form, onSuccess, open, setOpen } = useFormDialog<IForm>({ source });
+  const { form, onSuccess, open, setOpen } = useFormDialog<IForm>({
+    initialValues: { source },
+  });
   const { data, setData, put, processing, errors, isDirty } = form;
 
   const submit = (e: FormEvent<HTMLFormElement>): void => {

@@ -29,7 +29,7 @@ export default function ManageAnonymousTokenAccess() {
   const { anonymousToken } = usePage<IHomePageProps>().props;
   const { isMobile } = useMediaQueryContext();
   const { form, onSuccess, open, setOpen } = useFormDialog<IForm>({
-    anonymous_token: anonymousToken ?? '',
+    initialValues: { anonymous_token: anonymousToken ?? '' },
   });
   const { data, setData, put, processing, errors, isDirty, clearErrors } = form;
 

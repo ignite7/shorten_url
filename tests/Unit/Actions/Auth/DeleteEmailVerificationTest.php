@@ -7,7 +7,7 @@ use App\Models\EmailVerification;
 
 describe('as job', function (): void {
     it('can delete email verification for a given email', function (): void {
-        $email = fake()->email();
+        $email = fake()->safeEmail();
         $emailVerification = EmailVerification::factory()->create(['email' => $email]);
 
         Queue::fake();
@@ -29,7 +29,7 @@ describe('as job', function (): void {
 
 describe('as action', function (): void {
     it('can delete email verification for a given email', function (): void {
-        $email = fake()->email();
+        $email = fake()->safeEmail();
         $emailVerification = EmailVerification::factory()->create(['email' => $email]);
 
         DeleteEmailVerification::run($email);

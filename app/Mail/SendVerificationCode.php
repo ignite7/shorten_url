@@ -28,7 +28,7 @@ final class SendVerificationCode extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Send Verification Code',
+            subject: 'Email Verification Code',
         );
     }
 

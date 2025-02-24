@@ -42,6 +42,12 @@ return Application::configure(basePath: dirname(__DIR__))
                 return back();
             }
 
+            if ($statusCode === 429) {
+                FlashHelper::message('Too many requests, please try again later.', FlashMessageType::ERROR);
+
+                return back();
+            }
+
             return $response;
         });
     })->create();

@@ -1,3 +1,4 @@
+import SignupForm from '@/components/SignupForm';
 import { Button } from '@/components/ui/button';
 import { useMediaQueryContext } from '@/context/MediaQueryContext';
 import ManageAnonymousTokenAccess from '@/pages/Home/components/ManageAnonymousTokenAccess';
@@ -26,15 +27,17 @@ export default function Header() {
             </>
           )}
         </Button>
-        <Button size={buttonSize}>
-          {isMobile ? (
-            <UserPlus />
-          ) : (
-            <>
-              Register <UserPlus />
-            </>
-          )}
-        </Button>
+        <SignupForm>
+          <Button size={buttonSize}>
+            {isMobile ? (
+              <UserPlus />
+            ) : (
+              <>
+                Register <UserPlus />
+              </>
+            )}
+          </Button>
+        </SignupForm>
       </div>
     </header>
   );

@@ -29,7 +29,7 @@ describe('as controller', function (): void {
             'email' => $email,
         ]);
 
-        Mail::assertQueued(SendVerificationCode::class, static fn (SendVerificationCode $mail): bool => $mail->assertTo($email) && $mail->assertHasSubject('Send Verification Code'));
+        Mail::assertQueued(SendVerificationCode::class, static fn (SendVerificationCode $mail): bool => $mail->assertTo($email) && $mail->assertHasSubject('Email Verification Code'));
 
         expect(Session::get(FlashHelper::MESSAGE_TYPE_KEY))->toBe(FlashMessageType::SUCCESS->value)
             ->and(Session::get(FlashHelper::MESSAGE_KEY))->toBe('Verification code sent successfully.');
@@ -59,7 +59,7 @@ describe('as controller', function (): void {
             'email' => $email,
         ]);
 
-        Mail::assertQueued(SendVerificationCode::class, static fn (SendVerificationCode $mail): bool => $mail->assertTo($email) && $mail->assertHasSubject('Send Verification Code'));
+        Mail::assertQueued(SendVerificationCode::class, static fn (SendVerificationCode $mail): bool => $mail->assertTo($email) && $mail->assertHasSubject('Email Verification Code'));
 
         expect(Session::get(FlashHelper::MESSAGE_TYPE_KEY))->toBe(FlashMessageType::SUCCESS->value)
             ->and(Session::get(FlashHelper::MESSAGE_KEY))->toBe('Verification code sent successfully.');
@@ -113,36 +113,36 @@ describe('as controller', function (): void {
         $email = fake()->safeEmail();
         Mail::fake();
 
-        // First request - Should be allowed
-        $this->post($this->route, ['email' => $email])->assertRedirect();
+        for ($i = 0; $i < 3; $i++) {
+            $this->post($this->route, ['email' => $email])->assertRedirect();
+            expect(Session::get(FlashHelper::MESSAGE_TYPE_KEY))->not->toBe(FlashMessageType::ERROR->value)
+                ->and(Session::get(FlashHelper::MESSAGE_KEY))->not->toBe('Too many requests, please try again later.');
+        }
 
-        // Second request - Should be allowed
         $this->post($this->route, ['email' => $email])->assertRedirect();
-
-        // Third request - Should be allowed
-        $this->post($this->route, ['email' => $email])->assertRedirect();
-
-        // Fourth request (within 5 min) - Should be blocked
-        $this->post($this->route, ['email' => $email])->assertTooManyRequests();
+        expect(Session::get(FlashHelper::MESSAGE_TYPE_KEY))->toBe(FlashMessageType::ERROR->value)
+            ->and(Session::get(FlashHelper::MESSAGE_KEY))->toBe('Too many requests, please try again later.');
     });
 
     it('allows requests again after five minutes', function (): void {
         $email = fake()->safeEmail();
         Mail::fake();
 
-        // Hit the throttle limit (3 requests)
         for ($i = 0; $i < 3; $i++) {
             $this->post($this->route, ['email' => $email])->assertRedirect();
+            expect(Session::get(FlashHelper::MESSAGE_TYPE_KEY))->not->toBe(FlashMessageType::ERROR->value)
+                ->and(Session::get(FlashHelper::MESSAGE_KEY))->not->toBe('Too many requests, please try again later.');
         }
 
-        // Fourth request should be blocked
-        $this->post($this->route, ['email' => $email])->assertTooManyRequests();
+        $this->post($this->route, ['email' => $email])->assertRedirect();
+        expect(Session::get(FlashHelper::MESSAGE_TYPE_KEY))->toBe(FlashMessageType::ERROR->value)
+            ->and(Session::get(FlashHelper::MESSAGE_KEY))->toBe('Too many requests, please try again later.');
 
-        // Move time forward by 5 minutes
         $this->travel(5)->minutes();
 
-        // Now, the request should be allowed again
         $this->post($this->route, ['email' => $email])->assertRedirect();
+        expect(Session::get(FlashHelper::MESSAGE_TYPE_KEY))->not->toBe(FlashMessageType::ERROR->value)
+            ->and(Session::get(FlashHelper::MESSAGE_KEY))->not->toBe('Too many requests, please try again later.');
     });
 });
 
@@ -159,7 +159,7 @@ describe('as object', function (): void {
 
         expect($emailVerification->email)->toBe($email);
 
-        Mail::assertQueued(SendVerificationCode::class, static fn (SendVerificationCode $mail): bool => $mail->assertTo($email) && $mail->assertHasSubject('Send Verification Code'));
+        Mail::assertQueued(SendVerificationCode::class, static fn (SendVerificationCode $mail): bool => $mail->assertTo($email) && $mail->assertHasSubject('Email Verification Code'));
     });
 
     it('can update and sent verification code email', function (): void {
@@ -188,7 +188,7 @@ describe('as object', function (): void {
             ->and($newEmailVerification->verification_code)->not()->toBe($emailVerification->verification_code)
             ->and($newEmailVerification->expires_at)->not()->toBe($expiresAt);
 
-        Mail::assertQueued(SendVerificationCode::class, static fn (SendVerificationCode $mail): bool => $mail->assertTo($email) && $mail->assertHasSubject('Send Verification Code'));
+        Mail::assertQueued(SendVerificationCode::class, static fn (SendVerificationCode $mail): bool => $mail->assertTo($email) && $mail->assertHasSubject('Email Verification Code'));
     });
 });
 
