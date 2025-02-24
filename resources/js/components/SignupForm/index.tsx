@@ -13,9 +13,9 @@ import {
 import { Input } from '@/components/ui/input';
 import useFormDialog from '@/hooks/useFormDialog';
 import FormDataType from '@/types/FormDataType';
+import FormErrorsType from '@/types/FormErrorsType';
 import { FormEvent, ReactNode, useEffect, useState } from 'react';
 import styles from './index.module.css';
-import FormErrorsType from '@/types/FormErrorsType';
 
 interface IProps {
   children: ReactNode;
@@ -91,7 +91,7 @@ export default function SignupForm({ children }: IProps) {
     if (!isEmailDirty) {
       setError(
         'email',
-        'The Email field is required to send the verification code.',
+        'The Email field is required to send the verification code.'
       );
       return;
     }
