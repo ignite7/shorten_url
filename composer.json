@@ -19,7 +19,6 @@
     "tightenco/ziggy": "^2.0"
   },
   "require-dev": {
-    "aaronfrancis/solo": "^0.2.2",
     "barryvdh/laravel-debugbar": "^3.14",
     "fakerphp/faker": "^1.23",
     "larastan/larastan": "^3.0",
